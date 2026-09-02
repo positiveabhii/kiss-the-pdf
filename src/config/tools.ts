@@ -1,0 +1,103 @@
+import { ToolDefinition } from "@/types";
+
+export const tools: ToolDefinition[] = [
+  // PDF Utilities
+  {
+    id: "merge-pdf",
+    name: "Merge PDF",
+    description: "Combine multiple PDFs into one unified document.",
+    category: "PDF",
+    href: "/merge-pdf",
+    icon: "Combine",
+    status: "planned",
+    seoTitle: "Merge PDF Files Online for Free | Kiss the PDF",
+    seoDescription: "Combine multiple PDF files into one document directly in your browser. Free, private, and easy to use with Kiss the PDF.",
+    keywords: ["merge pdf", "combine pdf", "join pdf", "pdf merger free", "kiss the pdf"],
+  },
+  {
+    id: "split-pdf",
+    name: "Split PDF",
+    description: "Separate one page or a whole set for easy conversion into independent PDF files.",
+    category: "PDF",
+    href: "/split-pdf",
+    icon: "SplitSquareHorizontal",
+    status: "planned",
+    seoTitle: "Split PDF Pages Online for Free | Kiss the PDF",
+    seoDescription: "Extract pages from your PDF or split a document into multiple files directly in your browser. Private and secure.",
+    keywords: ["split pdf", "extract pdf pages", "cut pdf", "separate pdf", "kiss the pdf"],
+  },
+  {
+    id: "compress-pdf",
+    name: "Compress PDF",
+    description: "Reduce file size while optimizing for maximal PDF quality.",
+    category: "PDF",
+    href: "/compress-pdf",
+    icon: "Minimize",
+    status: "planned",
+    seoTitle: "Compress PDF Size Online for Free | Kiss the PDF",
+    seoDescription: "Reduce the file size of your PDF documents without losing quality. Works locally in your browser for maximum privacy.",
+    keywords: ["compress pdf", "reduce pdf size", "shrink pdf", "pdf optimizer", "kiss the pdf"],
+  },
+  
+  // Convert
+  {
+    id: "pdf-to-jpg",
+    name: "PDF to JPG",
+    description: "Convert each PDF page into a JPG or extract all images contained in a PDF.",
+    category: "Convert",
+    href: "/pdf-to-jpg",
+    icon: "Image",
+    status: "planned",
+    seoTitle: "Convert PDF to JPG Free Online | Kiss the PDF",
+    seoDescription: "Turn your PDF pages into high-quality JPG images securely in your browser. Fast, free, and no watermark.",
+    keywords: ["pdf to jpg", "convert pdf to image", "extract images from pdf", "pdf to jpeg", "kiss the pdf"],
+  },
+  {
+    id: "jpg-to-pdf",
+    name: "JPG to PDF",
+    description: "Convert JPG images to PDF in seconds. Easily adjust orientation and margins.",
+    category: "Convert",
+    href: "/jpg-to-pdf",
+    icon: "FileImage",
+    status: "planned",
+    seoTitle: "Convert JPG to PDF Free Online | Kiss the PDF",
+    seoDescription: "Combine multiple JPG or PNG images into a single PDF document. Processes entirely on your device.",
+    keywords: ["jpg to pdf", "image to pdf", "convert images to pdf", "png to pdf", "kiss the pdf"],
+  },
+
+  // Organize
+  {
+    id: "rotate-pdf",
+    name: "Rotate PDF",
+    description: "Rotate your PDFs the way you need them. You can even rotate multiple PDFs at once!",
+    category: "Organize",
+    href: "/rotate-pdf",
+    icon: "RotateCw",
+    status: "planned",
+    seoTitle: "Rotate PDF Pages Online for Free | Kiss the PDF",
+    seoDescription: "Quickly rotate individual PDF pages or the entire document. Private, browser-based processing.",
+    keywords: ["rotate pdf", "turn pdf", "change pdf orientation", "rotate pdf pages", "kiss the pdf"],
+  },
+  {
+    id: "delete-pdf-pages",
+    name: "Delete PDF Pages",
+    description: "Remove pages from your PDF securely and for free.",
+    category: "Organize",
+    href: "/delete-pdf-pages",
+    icon: "Trash2",
+    status: "planned",
+    seoTitle: "Delete PDF Pages Online for Free | Kiss the PDF",
+    seoDescription: "Easily select and remove specific pages from your PDF document without uploading files to a server.",
+    keywords: ["delete pdf pages", "remove pdf pages", "delete page from pdf", "kiss the pdf"],
+  }
+];
+
+export const getToolsByCategory = () => {
+  return tools.reduce((acc, tool) => {
+    if (!acc[tool.category]) {
+      acc[tool.category] = [];
+    }
+    acc[tool.category].push(tool);
+    return acc;
+  }, {} as Record<string, ToolDefinition[]>);
+};
