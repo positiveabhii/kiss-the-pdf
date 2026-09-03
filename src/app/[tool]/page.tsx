@@ -2,16 +2,23 @@ import { notFound } from "next/navigation";
 import { tools } from "@/config/tools";
 import { Metadata } from "next";
 
+import { MergePdfTool } from "@/features/pdf/components/MergePdfTool";
+import { SplitPdfTool } from "@/features/pdf/components/SplitPdfTool";
+import { RotatePdfTool } from "@/features/pdf/components/RotatePdfTool";
+import { DeletePdfPagesTool } from "@/features/pdf/components/DeletePdfPagesTool";
+import { ExtractPdfPagesTool } from "@/features/pdf/components/ExtractPdfPagesTool";
+
 interface Props {
-  params: {
+  params: Promise<{
     tool: string;
-  };
+  }>;
 }
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://kissthepdf.space";
 
-export function generateMetadata({ params }: Props): Metadata {
-  const toolConfig = tools.find((t) => t.id === params.tool);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const resolvedParams = await params;
+  const toolConfig = tools.find((t) => t.id === resolvedParams.tool);
   if (!toolConfig) {
     return {
       title: "Tool Not Found | Kiss the PDF",
@@ -46,8 +53,17 @@ export function generateStaticParams() {
   }));
 }
 
-export default function ToolPage({ params }: Props) {
-  const toolConfig = tools.find((t) => t.id === params.tool);
+const ToolComponents: Record<string, React.FC> = {
+  "merge-pdf": MergePdfTool,
+  "split-pdf": SplitPdfTool,
+  "rotate-pdf": RotatePdfTool,
+  "delete-pdf-pages": DeletePdfPagesTool,
+  "extract-pdf-pages": ExtractPdfPagesTool,
+};
+
+export default async function ToolPage({ params }: Props) {
+  const resolvedParams = await params;
+  const toolConfig = tools.find((t) => t.id === resolvedParams.tool);
 
   if (!toolConfig) {
     notFound();
@@ -69,6 +85,8 @@ export default function ToolPage({ params }: Props) {
     }
   };
 
+  const ActiveToolComponent = ToolComponents[toolConfig.id];
+
   return (
     <div className="flex flex-col max-w-4xl mx-auto py-12 px-4 sm:px-6">
       {/* Inject Structured Data */}
@@ -86,7 +104,7 @@ export default function ToolPage({ params }: Props) {
         </p>
       </div>
 
-      {toolConfig.status === "planned" ? (
+      {toolConfig.status === "planned" || !ActiveToolComponent ? (
         <div className="flex flex-col items-center justify-center p-12 sm:p-20 border border-slate-200 rounded-2xl bg-white shadow-sm text-center">
           <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-6">
             <span className="text-2xl">⏳</span>
@@ -98,14 +116,7 @@ export default function ToolPage({ params }: Props) {
           </p>
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center p-12 sm:p-20 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50">
-          <p className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-2">
-            Upload Area
-          </p>
-          <p className="text-sm text-slate-500">
-            Interactive tool interface goes here.
-          </p>
-        </div>
+        <ActiveToolComponent />
       )}
     </div>
   );

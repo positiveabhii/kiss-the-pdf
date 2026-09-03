@@ -9,7 +9,7 @@ export const tools: ToolDefinition[] = [
     category: "PDF",
     href: "/merge-pdf",
     icon: "Combine",
-    status: "planned",
+    status: "active",
     seoTitle: "Merge PDF Files Online for Free | Kiss the PDF",
     seoDescription: "Combine multiple PDF files into one document directly in your browser. Free, private, and easy to use with Kiss the PDF.",
     keywords: ["merge pdf", "combine pdf", "join pdf", "pdf merger free", "kiss the pdf"],
@@ -21,7 +21,7 @@ export const tools: ToolDefinition[] = [
     category: "PDF",
     href: "/split-pdf",
     icon: "SplitSquareHorizontal",
-    status: "planned",
+    status: "active",
     seoTitle: "Split PDF Pages Online for Free | Kiss the PDF",
     seoDescription: "Extract pages from your PDF or split a document into multiple files directly in your browser. Private and secure.",
     keywords: ["split pdf", "extract pdf pages", "cut pdf", "separate pdf", "kiss the pdf"],
@@ -73,7 +73,7 @@ export const tools: ToolDefinition[] = [
     category: "Organize",
     href: "/rotate-pdf",
     icon: "RotateCw",
-    status: "planned",
+    status: "active",
     seoTitle: "Rotate PDF Pages Online for Free | Kiss the PDF",
     seoDescription: "Quickly rotate individual PDF pages or the entire document. Private, browser-based processing.",
     keywords: ["rotate pdf", "turn pdf", "change pdf orientation", "rotate pdf pages", "kiss the pdf"],
@@ -85,10 +85,22 @@ export const tools: ToolDefinition[] = [
     category: "Organize",
     href: "/delete-pdf-pages",
     icon: "Trash2",
-    status: "planned",
+    status: "active",
     seoTitle: "Delete PDF Pages Online for Free | Kiss the PDF",
     seoDescription: "Easily select and remove specific pages from your PDF document without uploading files to a server.",
     keywords: ["delete pdf pages", "remove pdf pages", "delete page from pdf", "kiss the pdf"],
+  },
+  {
+    id: "extract-pdf-pages",
+    name: "Extract PDF Pages",
+    description: "Extract specific pages from your PDF securely and for free.",
+    category: "Organize",
+    href: "/extract-pdf-pages",
+    icon: "FileOutput",
+    status: "active",
+    seoTitle: "Extract Pages from PDF Online for Free | Kiss the PDF",
+    seoDescription: "Extract selected pages from a PDF into a new document directly in your browser.",
+    keywords: ["extract pdf pages", "extract pages from pdf", "pull pages from pdf", "kiss the pdf"],
   }
 ];
 
@@ -101,3 +113,4 @@ export const getToolsByCategory = () => {
     return acc;
   }, {} as Record<string, ToolDefinition[]>);
 };
+
