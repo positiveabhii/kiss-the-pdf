@@ -18,7 +18,8 @@ export type PdfOperation =
   | "split"
   | "rotate"
   | "deletePages"
-  | "extractPages";
+  | "extractPages"
+  | "compress";
 
 export type PageRotation = {
   pageIndex: number; // 0-based

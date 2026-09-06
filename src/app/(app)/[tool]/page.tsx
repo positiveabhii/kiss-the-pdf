@@ -7,6 +7,10 @@ import { SplitPdfTool } from "@/features/pdf/components/SplitPdfTool";
 import { RotatePdfTool } from "@/features/pdf/components/RotatePdfTool";
 import { DeletePdfPagesTool } from "@/features/pdf/components/DeletePdfPagesTool";
 import { ExtractPdfPagesTool } from "@/features/pdf/components/ExtractPdfPagesTool";
+import { CompressPdfTool } from "@/features/pdf/components/CompressPdfTool";
+import { PdfToJpgTool } from "@/features/pdf/components/PdfToJpgTool";
+import { PdfToPngTool } from "@/features/pdf/components/PdfToPngTool";
+import { PdfToWebpTool } from "@/features/pdf/components/PdfToWebpTool";
 
 interface Props {
   params: Promise<{
@@ -59,6 +63,10 @@ const ToolComponents: Record<string, React.FC> = {
   "rotate-pdf": RotatePdfTool,
   "delete-pdf-pages": DeletePdfPagesTool,
   "extract-pdf-pages": ExtractPdfPagesTool,
+  "compress-pdf": CompressPdfTool,
+  "pdf-to-jpg": PdfToJpgTool,
+  "pdf-to-png": PdfToPngTool,
+  "pdf-to-webp": PdfToWebpTool,
 };
 
 export default async function ToolPage({ params }: Props) {

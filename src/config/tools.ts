@@ -33,12 +33,12 @@ export const tools: ToolDefinition[] = [
     category: "PDF",
     href: "/compress-pdf",
     icon: "Minimize",
-    status: "planned",
-    seoTitle: "Compress PDF Size Online for Free | Kiss the PDF",
-    seoDescription: "Reduce the file size of your PDF documents without losing quality. Works locally in your browser for maximum privacy.",
+    status: "active",
+    seoTitle: "Compress PDF Online for Free | Kiss the PDF",
+    seoDescription: "Reduce PDF file size with quality-aware compression. Structural optimization and image compression run locally in your browser.",
     keywords: ["compress pdf", "reduce pdf size", "shrink pdf", "pdf optimizer", "kiss the pdf"],
   },
-  
+
   // Convert
   {
     id: "pdf-to-jpg",
@@ -47,10 +47,34 @@ export const tools: ToolDefinition[] = [
     category: "Convert",
     href: "/pdf-to-jpg",
     icon: "Image",
-    status: "planned",
-    seoTitle: "Convert PDF to JPG Free Online | Kiss the PDF",
-    seoDescription: "Turn your PDF pages into high-quality JPG images securely in your browser. Fast, free, and no watermark.",
+    status: "active",
+    seoTitle: "Convert PDF to JPG Online for Free | Kiss the PDF",
+    seoDescription: "Convert PDF pages to high-quality JPG images in your browser. Select pages, set DPI and quality, download individually or as ZIP.",
     keywords: ["pdf to jpg", "convert pdf to image", "extract images from pdf", "pdf to jpeg", "kiss the pdf"],
+  },
+  {
+    id: "pdf-to-png",
+    name: "PDF to PNG",
+    description: "Convert PDF pages to lossless PNG images.",
+    category: "Convert",
+    href: "/pdf-to-png",
+    icon: "Image",
+    status: "active",
+    seoTitle: "Convert PDF to PNG Online for Free | Kiss the PDF",
+    seoDescription: "Convert PDF pages to lossless PNG images locally in your browser. Select pages and resolution, download as ZIP.",
+    keywords: ["pdf to png", "convert pdf to png", "pdf to image", "kiss the pdf"],
+  },
+  {
+    id: "pdf-to-webp",
+    name: "PDF to WebP",
+    description: "Convert PDF pages to WebP images with quality control.",
+    category: "Convert",
+    href: "/pdf-to-webp",
+    icon: "Image",
+    status: "active",
+    seoTitle: "Convert PDF to WebP Online for Free | Kiss the PDF",
+    seoDescription: "Convert PDF pages to WebP images in your browser. Adjustable quality and DPI, with ZIP download for multiple pages.",
+    keywords: ["pdf to webp", "convert pdf to webp", "pdf to image", "kiss the pdf"],
   },
   {
     id: "jpg-to-pdf",
@@ -75,7 +99,7 @@ export const tools: ToolDefinition[] = [
     icon: "RotateCw",
     status: "active",
     seoTitle: "Rotate PDF Pages Online for Free | Kiss the PDF",
-    seoDescription: "Quickly rotate individual PDF pages or the entire document. Private, browser-based processing.",
+    seoDescription: "Rotate individual PDF pages or the entire document with visual page preview. Private, browser-based processing.",
     keywords: ["rotate pdf", "turn pdf", "change pdf orientation", "rotate pdf pages", "kiss the pdf"],
   },
   {
@@ -101,7 +125,7 @@ export const tools: ToolDefinition[] = [
     seoTitle: "Extract Pages from PDF Online for Free | Kiss the PDF",
     seoDescription: "Extract selected pages from a PDF into a new document directly in your browser.",
     keywords: ["extract pdf pages", "extract pages from pdf", "pull pages from pdf", "kiss the pdf"],
-  }
+  },
 ];
 
 export const getToolsByCategory = () => {
@@ -113,4 +137,3 @@ export const getToolsByCategory = () => {
     return acc;
   }, {} as Record<string, ToolDefinition[]>);
 };
-

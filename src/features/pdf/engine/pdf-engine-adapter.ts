@@ -1,4 +1,5 @@
 import { PDFDocument, degrees } from "pdf-lib";
+import { compressPdf, type CompressOptions, type CompressResult } from "./operations/compress";
 
 export class PdfEngineAdapter {
   
@@ -70,4 +71,10 @@ export class PdfEngineAdapter {
     
     return await newPdf.save();
   }
+
+  static async compress(pdfBytes: Uint8Array, options: CompressOptions): Promise<CompressResult> {
+    return compressPdf(pdfBytes, options);
+  }
 }
+
+export type { CompressOptions, CompressResult };

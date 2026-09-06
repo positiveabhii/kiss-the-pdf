@@ -1,4 +1,5 @@
 import { pdfEngine } from "../engine/pdf-engine";
+import type { CompressOptions, CompressResult } from "../engine/operations/compress";
 
 class PdfProcessingService {
   async merge(pdfs: Uint8Array[]): Promise<Uint8Array> {
@@ -9,7 +10,7 @@ class PdfProcessingService {
     return pdfEngine.split(pdf, ranges);
   }
 
-  async rotate(pdf: Uint8Array, rotations: { pageIndex: number, angle: 90 | 180 | 270 }[]): Promise<Uint8Array> {
+  async rotate(pdf: Uint8Array, rotations: { pageIndex: number; angle: 90 | 180 | 270 }[]): Promise<Uint8Array> {
     return pdfEngine.rotate(pdf, rotations);
   }
 
@@ -19,6 +20,10 @@ class PdfProcessingService {
 
   async extractPages(pdf: Uint8Array, pages: number[]): Promise<Uint8Array> {
     return pdfEngine.extractPages(pdf, pages);
+  }
+
+  async compress(pdf: Uint8Array, options: CompressOptions): Promise<CompressResult> {
+    return pdfEngine.compress(pdf, options);
   }
 }
 

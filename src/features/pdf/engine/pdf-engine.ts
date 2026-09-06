@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { WorkerMessage, WorkerResponse } from "../workers/pdf.worker";
+import type { CompressOptions, CompressResult } from "./operations/compress";
 
 class PdfEngine {
   private worker: Worker | null = null;
@@ -62,6 +63,10 @@ class PdfEngine {
 
   async extractPages(pdf: Uint8Array, pages: number[]): Promise<Uint8Array> {
     return this.dispatch<Uint8Array>({ type: "EXTRACT", payload: { pdf, pages } });
+  }
+
+  async compress(pdf: Uint8Array, options: CompressOptions): Promise<CompressResult> {
+    return this.dispatch<CompressResult>({ type: "COMPRESS", payload: { pdf, options } });
   }
 }
 

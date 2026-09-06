@@ -10,6 +10,7 @@ export interface UsePdfToolResult<TResult> {
   setSuccess: (data: TResult) => void;
   setFailed: (err: Error | unknown) => void;
   reset: () => void;
+  cancelProcessing: () => void;
 }
 
 export function usePdfTool<TResult = Uint8Array>(): UsePdfToolResult<TResult> {
@@ -46,6 +47,10 @@ export function usePdfTool<TResult = Uint8Array>(): UsePdfToolResult<TResult> {
     setResult(null);
   }, []);
 
+  const cancelProcessing = useCallback(() => {
+    setState("idle");
+  }, []);
+
   return {
     state,
     error,
@@ -54,5 +59,6 @@ export function usePdfTool<TResult = Uint8Array>(): UsePdfToolResult<TResult> {
     setSuccess,
     setFailed,
     reset,
+    cancelProcessing,
   };
 }

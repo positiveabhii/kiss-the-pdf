@@ -1,113 +1,250 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
+import { RotateCw, RotateCcw } from "lucide-react";
 import { usePdfTool } from "../hooks/use-pdf-tool";
+import { usePdfDocument } from "../hooks/use-pdf-document";
+import { usePageSelection } from "../hooks/use-page-selection";
 import { pdfService } from "../services/pdf-processing-service";
 import { downloadBlob } from "../utils/download-utils";
-import { parsePageRange } from "../utils/page-range-parser";
-import { getPdfInfo } from "../engine/pdf-utils";
+import { PdfUploadArea } from "./shared/PdfUploadArea";
+import { PdfDocumentHeader } from "./shared/PdfDocumentHeader";
+import { PdfPageGrid } from "./shared/PdfPageGrid";
+import { PageScopeSelector } from "./shared/PageScopeSelector";
+import { SegmentedControl } from "./shared/SegmentedControl";
+import { ToolProcessingState } from "./shared/ToolProcessingState";
+import { ToolSuccessState } from "./shared/ToolSuccessState";
+
+type RotationAngle = 90 | 180 | 270;
+
+function normalizeRotation(degrees: number): number {
+  return ((degrees % 360) + 360) % 360;
+}
 
 export function RotatePdfTool() {
-  const { state, error, startProcessing, setSuccess, setFailed, reset } = usePdfTool();
-  const [file, setFile] = useState<File | null>(null);
-  const [pageCount, setPageCount] = useState<number>(0);
-  const [pagesInput, setPagesInput] = useState<string>("");
-  const [angle, setAngle] = useState<90 | 180 | 270>(90);
+  const { state, error, result, startProcessing, setSuccess, setFailed, reset: resetTool } =
+    usePdfTool<Uint8Array>();
+  const doc = usePdfDocument();
+  const selection = usePageSelection(doc.pageCount);
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const f = e.target.files[0];
-      setFile(f);
-      try {
-        const info = await getPdfInfo(f);
-        setPageCount(info.pageCount);
-        setPagesInput(`1-${info.pageCount}`); // Default to all pages
-      } catch (err) {
-        console.error("Failed to read PDF page count", err);
-      }
+  const [globalAngle, setGlobalAngle] = useState<RotationAngle>(90);
+  const [pendingRotations, setPendingRotations] = useState<Map<number, number>>(new Map());
+  const [processedCount, setProcessedCount] = useState(0);
+
+  const previewRotations = useMemo(() => {
+    const map = new Map<number, number>();
+    pendingRotations.forEach((val, page) => map.set(page, normalizeRotation(val)));
+    return map;
+  }, [pendingRotations]);
+
+  const hasPendingChanges = pendingRotations.size > 0;
+
+  const applyGlobalRotation = useCallback(
+    (angle: RotationAngle) => {
+      const pages =
+        selection.scope === "selected" && selection.selectedPages.size > 0
+          ? selection.resolvedPages
+          : selection.resolvedPages.length > 0
+            ? selection.resolvedPages
+            : Array.from({ length: doc.pageCount }, (_, i) => i + 1);
+
+      setPendingRotations((prev) => {
+        const next = new Map(prev);
+        for (const page of pages) {
+          const current = next.get(page) ?? 0;
+          next.set(page, normalizeRotation(current + angle));
+        }
+        return next;
+      });
+    },
+    [selection.resolvedPages, selection.scope, selection.selectedPages.size, doc.pageCount]
+  );
+
+  const rotatePage = useCallback((page: number, direction: "cw" | "ccw") => {
+    const delta = direction === "cw" ? 90 : 270;
+    setPendingRotations((prev) => {
+      const next = new Map(prev);
+      const current = next.get(page) ?? 0;
+      const updated = normalizeRotation(current + delta);
+      if (updated === 0) next.delete(page);
+      else next.set(page, updated);
+      return next;
+    });
+  }, []);
+
+  const resetChanges = useCallback(() => {
+    setPendingRotations(new Map());
+  }, []);
+
+  const handleApply = async () => {
+    if (!doc.pdfBytes || !doc.file) return;
+
+    let rotationsToApply: { pageIndex: number; angle: RotationAngle }[];
+
+    if (pendingRotations.size > 0) {
+      rotationsToApply = [];
+      pendingRotations.forEach((angle, page) => {
+        const normalized = normalizeRotation(angle);
+        if (normalized === 90 || normalized === 180 || normalized === 270) {
+          rotationsToApply.push({ pageIndex: page - 1, angle: normalized as RotationAngle });
+        }
+      });
+    } else {
+      const pages = selection.resolvedPages;
+      if (pages.length === 0) return;
+      rotationsToApply = pages.map((p) => ({ pageIndex: p - 1, angle: globalAngle }));
     }
-  };
 
-  const handleRotate = async () => {
-    if (!file) return;
+    if (rotationsToApply.length === 0) return;
 
+    startProcessing();
     try {
-      const pages = parsePageRange(pagesInput, pageCount);
-      if (pages.length === 0) {
-        alert("Please enter a valid page range.");
-        return;
-      }
-
-      startProcessing();
-      const buffer = await file.arrayBuffer();
-      const rotations = pages.map(p => ({ pageIndex: p - 1, angle }));
-      const rotatedPdf = await pdfService.rotate(new Uint8Array(buffer), rotations);
-      
-      setSuccess(rotatedPdf);
-      downloadBlob(rotatedPdf, `rotated-${file.name}`);
+      const rotated = await pdfService.rotate(doc.pdfBytes, rotationsToApply);
+      setProcessedCount(rotationsToApply.length);
+      setSuccess(rotated);
     } catch (err) {
       setFailed(err);
     }
   };
 
-  if (state === "processing") return <div className="text-center p-8">Processing your PDF...</div>;
-  if (state === "success") {
+  const handleDownload = () => {
+    if (!result || !doc.file) return;
+    downloadBlob(result, `rotated-${doc.file.name}`);
+  };
+
+  const handleResetAll = () => {
+    resetChanges();
+    selection.reset();
+    doc.removeFile();
+    resetTool();
+    setProcessedCount(0);
+  };
+
+  if (state === "processing") {
+    return <ToolProcessingState message="Rotating PDF…" />;
+  }
+
+  if (state === "success" && result) {
     return (
-      <div className="text-center p-8">
-        <p className="text-green-600 font-medium mb-4">PDF rotated successfully!</p>
-        <button onClick={reset} className="px-4 py-2 bg-slate-900 text-white rounded-md">Rotate another file</button>
-      </div>
+      <ToolSuccessState
+        title="Rotation complete"
+        description={`${processedCount || doc.pageCount} ${(processedCount || doc.pageCount) === 1 ? "page" : "pages"} processed.`}
+        primaryAction={{ label: "Download PDF", onClick: handleDownload }}
+        secondaryAction={{ label: "Rotate another PDF", onClick: handleResetAll }}
+      />
     );
   }
 
   return (
-    <div className="flex flex-col items-center justify-center p-12 sm:p-20 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50 w-full">
-      <div className="mb-6 w-full max-w-md">
-        <label className="block text-sm font-medium text-slate-700 mb-2">Select a PDF</label>
-        <input 
-          type="file" 
-          accept="application/pdf" 
-          onChange={handleFileChange}
-          className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200"
-        />
-      </div>
+    <div className="w-full min-w-0 max-w-3xl mx-auto space-y-6">
+      {!doc.file ? (
+        <PdfUploadArea onFileSelect={doc.loadFile} disabled={doc.loading} />
+      ) : (
+        <>
+          <PdfDocumentHeader
+            filename={doc.file.name}
+            fileSize={doc.file.size}
+            pageCount={doc.pageCount}
+            onReplace={doc.loadFile}
+            onRemove={() => {
+              doc.removeFile();
+              resetChanges();
+              selection.reset();
+            }}
+          />
 
-      {file && (
-        <div className="mb-6 w-full max-w-md space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Pages to rotate (1-{pageCount})</label>
-            <input
-              type="text"
-              value={pagesInput}
-              onChange={(e) => setPagesInput(e.target.value)}
-              placeholder="e.g. 1-5"
-              className="w-full px-3 py-2 border border-slate-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+          <section className="space-y-4 min-w-0">
+            <h2 className="text-sm font-medium text-slate-700">Page preview</h2>
+            <PdfPageGrid
+              pageCount={doc.pageCount}
+              thumbnails={doc.thumbnails}
+              selectedPages={selection.selectedPages}
+              pageRotations={previewRotations}
+              onTogglePage={selection.togglePage}
+              onLoadThumbnail={doc.loadThumbnail}
+              onRotatePage={rotatePage}
             />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Rotation Angle</label>
-            <select
-              value={angle}
-              onChange={(e) => setAngle(parseInt(e.target.value) as 90 | 180 | 270)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+          </section>
+
+          <section className="space-y-4 pt-2 border-t border-slate-200">
+            <PageScopeSelector
+              scope={selection.scope}
+              onScopeChange={(s) => {
+                selection.setScope(s);
+                if (s === "all") selection.selectAll();
+              }}
+              rangeInput={selection.rangeInput}
+              onRangeInputChange={selection.setRangeInput}
+              pageCount={doc.pageCount}
+              selectedCount={selection.selectedPages.size}
+            />
+
+            <SegmentedControl
+              label="Rotation"
+              value={globalAngle}
+              onChange={setGlobalAngle}
+              options={[
+                {
+                  value: 90 as RotationAngle,
+                  label: "CW",
+                  icon: <RotateCw className="w-4 h-4" aria-hidden="true" />,
+                },
+                { value: 180 as RotationAngle, label: "180°" },
+                {
+                  value: 270 as RotationAngle,
+                  label: "CCW",
+                  icon: <RotateCcw className="w-4 h-4" aria-hidden="true" />,
+                },
+              ]}
+            />
+
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => applyGlobalRotation(globalAngle)}
+                className="px-4 py-2 text-sm font-medium bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-md transition-colors"
+              >
+                Apply to {selection.scope === "all" ? "all pages" : "selection"}
+              </button>
+              {hasPendingChanges && (
+                <button
+                  type="button"
+                  onClick={resetChanges}
+                  className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors"
+                >
+                  Reset changes
+                </button>
+              )}
+            </div>
+          </section>
+
+          {error && (
+            <p className="text-sm text-red-600" role="alert">
+              {error.message}
+            </p>
+          )}
+
+          <div className="pt-2">
+            <button
+              type="button"
+              onClick={handleApply}
+              disabled={doc.pageCount === 0}
+              className="w-full sm:w-auto px-6 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white text-sm font-medium rounded-md transition-colors"
             >
-              <option value={90}>90° Clockwise</option>
-              <option value={180}>180°</option>
-              <option value={270}>90° Counter-Clockwise</option>
-            </select>
+              Apply rotation
+            </button>
           </div>
-        </div>
+        </>
       )}
 
-      {error && <p className="text-red-500 text-sm mb-4">{error.message}</p>}
-
-      <button 
-        onClick={handleRotate}
-        disabled={!file || !pagesInput.trim()}
-        className="px-6 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white rounded-md transition-colors"
-      >
-        Rotate PDF
-      </button>
+      {doc.loading && (
+        <p className="text-sm text-slate-500 text-center">Loading document…</p>
+      )}
+      {doc.error && (
+        <p className="text-sm text-red-600 text-center" role="alert">
+          {doc.error}
+        </p>
+      )}
     </div>
   );
 }
