@@ -14,7 +14,7 @@
   <br />
 
   <a href="https://kissthepdf.space">
-    <img src="ss.png" alt="KissThePDF Web Application Screenshot" width="100%" style="border-radius: 12px; border: 1px solid #e2e8f0;" />
+    <img src="public/ss.png" alt="KissThePDF Web Application Screenshot" width="100%" style="border-radius: 12px; border: 1px solid #e2e8f0;" />
   </a>
 </div>
 
