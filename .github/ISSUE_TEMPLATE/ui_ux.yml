@@ -1,0 +1,118 @@
+name: "🎨 UI / UX Issue"
+description: Report a usability, layout, design, or accessibility issue
+title: "[UI/UX]: "
+labels: ["ui/ux"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for user interface design, layout responsiveness, navigation usability, or accessibility (a11y) improvements.
+        
+        > For functional PDF processing bugs, please use the **Bug Report** form instead.
+
+  - type: input
+    id: page-or-tool
+    attributes:
+      label: Page or Tool where issue occurs
+      description: Specify the exact page or tool (e.g. Navigation Header, Sidebar, /merge-pdf, /docs/architecture).
+      placeholder: E.g., Header navigation dropdown / Merge PDF upload arena
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-is-wrong
+    attributes:
+      label: What is wrong?
+      description: Describe the UI design, layout alignment, or usability issue.
+      placeholder: E.g., The action button overlaps with the page preview canvas on mobile viewports under 375px.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-ui
+    attributes:
+      label: Expected UI/UX
+      description: Describe how the design or layout should appear or behave.
+      placeholder: E.g., The action button should stack below the preview canvas on mobile viewports.
+    validations:
+      required: true
+
+  - type: textarea
+    id: why-problematic
+    attributes:
+      label: Why it is confusing or problematic
+      description: Explain how this affects usability, readability, or user workflow.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      description: Browser where the visual or usability issue was observed.
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Opera
+        - Brave
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      description: Operating system used.
+      options:
+        - macOS
+        - Windows
+        - Linux
+        - Android
+        - iOS
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: screen-size
+    attributes:
+      label: Screen size / device
+      description: Device type or screen resolution (e.g. iPhone 14, 1920x1080 desktop, iPad Air).
+      placeholder: E.g., 375x812 (Mobile viewport)
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot or video
+      description: Attach screenshots or screen recordings highlighting the UI issue.
+    validations:
+      required: false
+
+  - type: textarea
+    id: accessibility-impact
+    attributes:
+      label: Accessibility impact (a11y)
+      description: Describe any accessibility concerns (e.g. keyboard focus trap, low color contrast, missing ARIA attributes, screen reader issue).
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any additional design tokens, CSS notes, or context.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have searched existing issues and could not find a duplicate.
+          required: true

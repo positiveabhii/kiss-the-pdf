@@ -15,6 +15,19 @@ Free, open-source, privacy-first PDF toolkit running 100% locally in your browse
 ## Product
 KissThePDF provides 100 free online PDF tools categorized across 8 primary domain groups: Organization, Pages, Convert, Edit, Security, Forms, Enhancement, and Reading. All PDF manipulation tasks execute inside the user's local web browser environment.
 
+## Documentation Index
+- **Documentation Portal**: ${siteConfig.url}/docs
+- **Getting Started**: ${siteConfig.url}/docs/getting-started
+- **100 Tools Documentation Directory**: ${siteConfig.url}/docs/tools
+- **How It Works**: ${siteConfig.url}/docs/how-it-works
+- **Privacy Model**: ${siteConfig.url}/docs/privacy
+- **Technical Architecture**: ${siteConfig.url}/docs/architecture
+- **Development Setup Guide**: ${siteConfig.url}/docs/development
+- **Contributing Guide**: ${siteConfig.url}/docs/contributing
+- **Security Policy**: ${siteConfig.url}/docs/security
+- **FAQ**: ${siteConfig.url}/docs/faq
+- **Changelog**: ${siteConfig.url}/docs/changelog
+
 ## Tools
 - **Tool Directory**: ${siteConfig.url}/tools
 - **Featured Tools**:
@@ -32,10 +45,6 @@ KissThePDF provides 100 free online PDF tools categorized across 8 primary domai
 - **Repository**: ${siteConfig.githubUrl}
 - **Open Source Page**: ${siteConfig.url}/open-source
 
-## Documentation
-- **Full Machine-Readable Index**: ${siteConfig.url}/llms-full.txt
-- **Repository README**: ${siteConfig.githubUrl}#readme
-
 ## Architecture
 - **Framework**: Next.js (App Router), TypeScript, Tailwind CSS v4
 - **Engine**: Client-Side WASM & JavaScript PDF Engines (pdf-lib, pdfjs-dist)
@@ -43,10 +52,10 @@ KissThePDF provides 100 free online PDF tools categorized across 8 primary domai
 
 ## Contributing
 - **Issues & Requests**: ${siteConfig.issuesUrl}
-- **Contribution Guide**: ${siteConfig.contributingUrl}
+- **Contribution Guide**: ${siteConfig.url}/docs/contributing
 
 ## Security
-- **Security Policy**: ${siteConfig.securityUrl}
+- **Security Policy**: ${siteConfig.url}/docs/security
 - **Well-Known Security Info**: ${siteConfig.url}/.well-known/security.txt
 
 ## Privacy
@@ -58,6 +67,7 @@ KissThePDF provides 100 free online PDF tools categorized across 8 primary domai
 
 ## Important Pages
 - Homepage: ${siteConfig.url}/
+- Documentation: ${siteConfig.url}/docs
 - Tool Directory: ${siteConfig.url}/tools
 - Open Source Page: ${siteConfig.url}/open-source
 `;

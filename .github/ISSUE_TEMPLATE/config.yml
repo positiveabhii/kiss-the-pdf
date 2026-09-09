@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📚 Official Documentation
+    url: https://kissthepdf.space/docs
+    about: Read user guides, tool specs, architecture details, and FAQs before opening an issue.
+  - name: 🛡️ Security Vulnerability Reporting
+    url: https://github.com/positiveabhii/kiss-the-pdf/security/advisories
+    about: Report sensitive security vulnerabilities privately to maintainers via GitHub Security Advisories.
+  - name: 🤝 Contribution Guide
+    url: https://kissthepdf.space/docs/contributing
+    about: Learn how to set up your environment, implement features, and submit pull requests.

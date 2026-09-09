@@ -1,0 +1,142 @@
+name: "🛠️ New PDF Tool Proposal"
+description: Propose a completely new PDF processing tool for the KissThePDF suite
+title: "[Tool]: "
+labels: ["tool", "feature"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        KissThePDF maintains a registry of 100 browser-local PDF tools. Propose a new PDF utility to expand our suite!
+
+  - type: input
+    id: tool-name
+    attributes:
+      label: Tool Name
+      description: Name of the proposed PDF tool.
+      placeholder: E.g., PDF Page Nup Generator / PDF Booklet Creator / PDF OCR Text Extractor
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-it-does
+    attributes:
+      label: What does the tool do?
+      description: Provide a clear description of the functionality.
+      placeholder: E.g., Combines multiple pages onto a single sheet grid (e.g. 2-up, 4-up) for efficient printing or booklet binding.
+    validations:
+      required: true
+
+  - type: textarea
+    id: why-support
+    attributes:
+      label: Why should KissThePDF support it?
+      description: Explain the value to users and open-source contributors.
+      placeholder: E.g., Printing multiple pages per sheet reduces paper consumption and is widely requested by students and printing shops.
+    validations:
+      required: true
+
+  - type: textarea
+    id: workflow
+    attributes:
+      label: Example user workflow
+      description: Describe step-by-step how a user would use this new tool.
+      placeholder: |
+        1. User uploads a 12-page PDF.
+        2. User selects grid option "2 pages per sheet".
+        3. Click 'Generate 2-Up PDF'.
+        4. User downloads a 6-page PDF with 2 original pages per output page.
+    validations:
+      required: true
+
+  - type: textarea
+    id: input-formats
+    attributes:
+      label: Input formats
+      description: Supported input formats (e.g. PDF, JPG, PNG).
+      placeholder: E.g., PDF (.pdf)
+    validations:
+      required: true
+
+  - type: textarea
+    id: output-formats
+    attributes:
+      label: Output formats
+      description: Expected output formats (e.g. PDF, ZIP, Images).
+      placeholder: E.g., PDF (.pdf)
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: Describe detailed output settings (e.g., margins, page orientation, scaling).
+    validations:
+      required: false
+
+  - type: dropdown
+    id: partial-availability
+    attributes:
+      label: Is this functionality already partially available in KissThePDF?
+      options:
+        - "No"
+        - "Yes"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: textarea
+    id: existing-tools
+    attributes:
+      label: Existing tools that partially solve this
+      description: List any current KissThePDF tools that partially address this need (e.g. Resize PDF, Custom Page Size).
+    validations:
+      required: false
+
+  - type: textarea
+    id: technical-considerations
+    attributes:
+      label: Technical considerations / suggested libraries
+      description: Mention any open-source JavaScript or WebAssembly libraries that could implement this in the browser (e.g., pdf-lib, PDF.js, Tesseract.js, WASM).
+    validations:
+      required: false
+
+  - type: textarea
+    id: performance-considerations
+    attributes:
+      label: Performance considerations
+      description: Note any client memory or background Web Worker execution requirements.
+    validations:
+      required: false
+
+  - type: textarea
+    id: browser-compatibility
+    attributes:
+      label: Browser compatibility considerations
+      description: Note any specific browser API dependencies (e.g., Web Workers, Canvas, OffscreenCanvas).
+    validations:
+      required: false
+
+  - type: textarea
+    id: reference-implementations
+    attributes:
+      label: Example / reference implementations
+      description: Link to open-source implementations or specs if available.
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any additional context, diagrams, or notes.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have searched existing tools and issues to ensure this is not a duplicate.
+          required: true

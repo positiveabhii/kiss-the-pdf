@@ -1,0 +1,131 @@
+name: "⚡ Performance Issue"
+description: Report a performance bottleneck, high memory usage, or browser UI freeze
+title: "[Performance]: "
+labels: ["performance"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Report performance bottlenecks, high memory consumption, or main UI thread freezing during PDF processing.
+        
+        > **Privacy Note**: **DO NOT** upload private or sensitive PDF documents. Describe file characteristics instead.
+
+  - type: input
+    id: tool-or-page
+    attributes:
+      label: Tool or Page
+      description: Specify the tool or page where performance degraded (e.g. /merge-pdf, /pdf-to-jpg, /compress-pdf).
+      placeholder: E.g., Merge PDF / PDF to JPG
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-feels-slow
+    attributes:
+      label: What feels slow?
+      description: Describe the performance bottleneck (e.g., UI freezes during upload, rendering thumbnails takes minutes, memory usage spikes).
+      placeholder: E.g., Selecting 10 PDFs (total 40MB) causes the browser tab to freeze for 25 seconds before showing page previews.
+    validations:
+      required: true
+
+  - type: textarea
+    id: file-characteristics
+    attributes:
+      label: Approximate PDF / file characteristics
+      description: Provide details on file size, page count, and content (e.g. 50MB PDF, 300 pages, scanned image PDF). DO NOT upload private files.
+      placeholder: E.g., 40MB PDF file, 250 pages, vector diagrams and images.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      description: Web browser used during performance test.
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Opera
+        - Brave
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      description: Operating system used.
+      options:
+        - macOS
+        - Windows
+        - Linux
+        - Android
+        - iOS
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: processing-time
+    attributes:
+      label: Approximate processing time
+      description: How long did the operation take? (e.g., 45 seconds, 2 minutes).
+      placeholder: E.g., 30 seconds
+    validations:
+      required: false
+
+  - type: input
+    id: expected-time
+    attributes:
+      label: Expected processing time if known
+      description: How fast did you expect the operation to finish?
+      placeholder: E.g., Under 5 seconds
+    validations:
+      required: false
+
+  - type: dropdown
+    id: reproducibility
+    attributes:
+      label: Reproducibility
+      description: Does this performance issue occur consistently?
+      options:
+        - Always
+        - Sometimes
+        - Once
+    validations:
+      required: true
+
+  - type: textarea
+    id: console-errors
+    attributes:
+      label: Console or runtime errors
+      description: Paste any console warnings, memory errors, or Web Worker crash messages.
+    validations:
+      required: false
+
+  - type: textarea
+    id: measurements
+    attributes:
+      label: Performance measurements if available
+      description: Paste Chrome DevTools Performance profile measurements, memory heap size, or Lighthouse metrics if recorded.
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any hardware specs (e.g. 16GB RAM, M1 Mac) or background tabs context.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have searched existing issues and could not find a duplicate.
+          required: true

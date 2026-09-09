@@ -1,0 +1,59 @@
+name: "📚 Documentation Issue"
+description: Report missing, incorrect, or confusing documentation in /docs or README
+title: "[Docs]: "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Report errors, missing technical steps, typos, or outdated information in the KissThePDF documentation portal (/docs) or README files.
+
+  - type: input
+    id: doc-page
+    attributes:
+      label: Documentation Page
+      description: Specify the exact documentation URL or markdown file (e.g. /docs/architecture, /docs/contributing, README.md).
+      placeholder: E.g., /docs/architecture / CONTRIBUTING.md
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-is-incorrect
+    attributes:
+      label: What is incorrect, missing, or confusing?
+      description: Describe what needs to be added, corrected, or clarified.
+      placeholder: E.g., The development setup guide references Node 18, but the project requires Node 20 or higher.
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-doc
+    attributes:
+      label: Current documentation
+      description: Paste the existing text or code snippet from the documentation.
+    validations:
+      required: false
+
+  - type: textarea
+    id: suggested-correction
+    attributes:
+      label: Suggested correction
+      description: Provide the revised explanation, command, or code block.
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any related links, references, or context.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have searched existing issues and docs before submitting.
+          required: true

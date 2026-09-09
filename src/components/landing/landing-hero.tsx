@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRef, type MouseEvent } from "react";
-import { ArrowRight, FileText, LockKeyhole, Sparkles } from "lucide-react";
+import { ArrowRight, FileText, LockKeyhole, Sparkles, BookOpen } from "lucide-react";
 import {
   Combine,
   Minimize2,
@@ -107,8 +107,8 @@ export function LandingHero() {
               <a href="#tools" className="inline-flex items-center gap-2 rounded-md bg-white px-4 py-3 text-sm font-semibold text-[var(--kp-text)] transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
                 Explore all tools <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </a>
-              <Link href="/merge-pdf" className="inline-flex items-center rounded-md border border-white/45 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
-                Merge a PDF
+              <Link href="/docs" className="inline-flex items-center gap-2 rounded-md bg-orange-500 hover:bg-orange-600 px-4 py-3 text-sm font-semibold text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                <BookOpen className="h-4 w-4" /> View Docs
               </Link>
             </div>
             <div className="mt-9 flex items-center gap-5 text-xs font-medium text-white/80">

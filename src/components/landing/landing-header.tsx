@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X, Search } from "lucide-react";
+import { Menu, X, Search, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useScrolled } from "@/hooks/use-scroll-progress";
 
@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { label: "Convert", href: "#convert" },
   { label: "Organize", href: "#organization" },
   { label: "Security", href: "#security" },
+  { label: "Docs", href: "/docs" },
   { label: "How it works", href: "#how-it-works" },
 ];
 
@@ -44,13 +45,24 @@ export function LandingHeader({ onSearchFocus }: LandingHeaderProps) {
 
         <nav className="hidden lg:flex items-center gap-0.5 ml-8" aria-label="Main">
           {NAV_ITEMS.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="kp-nav-link px-3 py-2 text-sm text-[var(--kp-text-muted)] hover:text-[var(--kp-text)] rounded-md transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--kp-accent)]"
-            >
-              {item.label}
-            </a>
+            item.href.startsWith("/") ? (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="kp-nav-link px-3 py-2 text-sm text-[var(--kp-text-muted)] hover:text-[var(--kp-text)] rounded-md transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--kp-accent)] flex items-center gap-1 font-semibold text-orange-600"
+              >
+                <BookOpen size={14} />
+                <span>{item.label}</span>
+              </Link>
+            ) : (
+              <a
+                key={item.href}
+                href={item.href}
+                className="kp-nav-link px-3 py-2 text-sm text-[var(--kp-text-muted)] hover:text-[var(--kp-text)] rounded-md transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--kp-accent)]"
+              >
+                {item.label}
+              </a>
+            )
           ))}
         </nav>
 
@@ -64,6 +76,11 @@ export function LandingHeader({ onSearchFocus }: LandingHeaderProps) {
             <Search className="w-4 h-4" aria-hidden="true" />
             <span className="hidden md:inline">Find a tool</span>
           </button>
+
+          <Link href="/docs" className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold text-orange-600 bg-orange-50 border border-orange-200 rounded-lg hover:bg-orange-100 transition-colors">
+            <BookOpen className="w-4 h-4" />
+            <span>Docs</span>
+          </Link>
 
           <a href="#tools" className="hidden sm:inline-flex kp-btn-primary !py-2 !px-4 text-sm">
             Browse tools
@@ -89,14 +106,26 @@ export function LandingHeader({ onSearchFocus }: LandingHeaderProps) {
       >
         <nav className="flex flex-col p-4 gap-0.5" aria-label="Mobile">
           {NAV_ITEMS.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              onClick={() => setMobileOpen(false)}
-              className="px-3 py-2.5 text-sm text-[var(--kp-text)] hover:bg-[var(--kp-bg)] rounded-md transition-colors"
-            >
-              {item.label}
-            </a>
+            item.href.startsWith("/") ? (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setMobileOpen(false)}
+                className="px-3 py-2.5 text-sm text-orange-600 font-semibold hover:bg-[var(--kp-bg)] rounded-md transition-colors flex items-center gap-1.5"
+              >
+                <BookOpen size={15} />
+                <span>{item.label}</span>
+              </Link>
+            ) : (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={() => setMobileOpen(false)}
+                className="px-3 py-2.5 text-sm text-[var(--kp-text)] hover:bg-[var(--kp-bg)] rounded-md transition-colors"
+              >
+                {item.label}
+              </a>
+            )
           ))}
           <a
             href="#tools"

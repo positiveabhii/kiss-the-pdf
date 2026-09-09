@@ -1,0 +1,62 @@
+name: "❓ Question / Help"
+description: Ask a question about using, deploying, or building with KissThePDF
+title: "[Question]: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have a question about using KissThePDF, contributing to the project, or integrating local WASM PDF engines?
+        
+        > **Check First**: Please review our [Official Documentation System](https://kissthepdf.space/docs) and [FAQ Guide](https://kissthepdf.space/docs/faq) before submitting.
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: What are you trying to accomplish?
+      description: Describe what task or goal you have a question about.
+      placeholder: E.g., I want to run KissThePDF locally for offline use in an isolated internal network.
+    validations:
+      required: true
+
+  - type: textarea
+    id: already-tried
+    attributes:
+      label: What have you already tried?
+      description: Mention documentation pages, commands, or setup steps you have already tested.
+      placeholder: E.g., Followed /docs/development setup instructions and verified build commands.
+    validations:
+      required: true
+
+  - type: input
+    id: relevant-page
+    attributes:
+      label: Relevant tool or page
+      description: Specify any relevant URL or component.
+      placeholder: E.g., /docs/architecture / /merge-pdf
+    validations:
+      required: false
+
+  - type: textarea
+    id: error-message
+    attributes:
+      label: Error message if any
+      description: Paste any error messages or unexpected output.
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any additional environment context.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have checked the documentation (/docs) and FAQ before asking.
+          required: true

@@ -1,6 +1,14 @@
 import Link from "next/link";
 
 const FOOTER_LINKS = {
+  Documentation: [
+    { label: "Docs Hub", href: "/docs" },
+    { label: "Getting Started", href: "/docs/getting-started" },
+    { label: "100 Tools Spec", href: "/docs/tools" },
+    { label: "Architecture", href: "/docs/architecture" },
+    { label: "Contributing", href: "/docs/contributing" },
+    { label: "Privacy Policy", href: "/docs/privacy" },
+  ],
   Product: [
     { label: "All Tools", href: "#tools" },
     { label: "Merge PDF", href: "/merge-pdf" },
@@ -21,18 +29,12 @@ const FOOTER_LINKS = {
     { label: "Annotate PDF", href: "#editing" },
     { label: "Watermark PDF", href: "#enhancement" },
   ],
-  Organize: [
-    { label: "Organize PDF", href: "#organization" },
-    { label: "Rotate PDF", href: "/rotate-pdf" },
-    { label: "Extract Pages", href: "/extract-pdf-pages" },
-    { label: "Delete Pages", href: "/delete-pdf-pages" },
-  ],
   Company: [
-    { label: "About", href: "#how-it-works" },
-    { label: "How It Works", href: "#how-it-works" },
-    { label: "Privacy", href: "#privacy" },
-    { label: "FAQ", href: "#faq" },
-    { label: "Contact", href: "https://github.com/positiveabhii/kiss-the-pdf" },
+    { label: "Documentation", href: "/docs" },
+    { label: "How It Works", href: "/docs/how-it-works" },
+    { label: "Privacy Model", href: "/docs/privacy" },
+    { label: "FAQ", href: "/docs/faq" },
+    { label: "GitHub Source", href: "https://github.com/positiveabhii/kiss-the-pdf" },
   ],
 };
 
@@ -49,7 +51,7 @@ export function LandingFooter() {
               <span className="text-lg font-semibold">KissPDF</span>
             </Link>
             <p className="text-sm text-white/60 leading-relaxed max-w-xs">
-              Simple PDF tools that work in your browser.
+              Simple PDF tools that work in your browser. 100% Client-Side Engine.
             </p>
           </div>
 
@@ -93,8 +95,16 @@ export function LandingFooter() {
         </div>
 
         <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-white/40">© 2026 KissPDF</p>
-          <p className="text-sm text-white/40">Free PDF tools. No account required.</p>
+          <p className="text-sm text-white/40">© 2026 KissPDF • MIT Open Source</p>
+          <div className="flex items-center gap-4 text-sm text-white/60">
+            <Link href="/docs" className="hover:text-white transition-colors">
+              Documentation Hub (/docs)
+            </Link>
+            <span>•</span>
+            <Link href="/docs/architecture" className="hover:text-white transition-colors">
+              Architecture
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

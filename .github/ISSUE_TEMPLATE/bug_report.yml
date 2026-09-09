@@ -1,0 +1,167 @@
+name: "🐛 Bug Report"
+description: Report a bug or unexpected behavior in KissThePDF
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the details below to help us investigate.
+        
+        > **Privacy Note**: **DO NOT** upload sensitive or confidential PDF files to public GitHub issues.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Short Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: E.g., Selecting multiple PDFs in Merge PDF causes page order to invert unexpectedly.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: tool
+    attributes:
+      label: KissThePDF Tool
+      description: Select the specific tool or page where the bug occurred.
+      options:
+        - Merge PDF
+        - Split PDF
+        - Extract Pages
+        - Delete Pages
+        - Reorder Pages
+        - Rotate PDF
+        - Crop PDF
+        - Resize PDF
+        - JPG to PDF
+        - PNG to PDF
+        - PDF to JPG
+        - PDF to PNG
+        - Edit PDF
+        - Protect PDF
+        - Remove PDF Password
+        - Fill PDF Forms
+        - Page Numbers
+        - Watermark PDF
+        - PDF Reader
+        - Compress PDF
+        - Other (specify in description)
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe what actually occurred when the bug happened.
+      placeholder: E.g., The application displayed an empty canvas and failed to download the merged PDF.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+      description: Describe what should have happened instead.
+      placeholder: E.g., The merged PDF should have compiled and triggered a direct download.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Provide clear, numbered steps to reproduce the behavior.
+      placeholder: |
+        1. Open the 'Merge PDF' tool page.
+        2. Drag and drop 2 sample PDF files into the upload area.
+        3. Click 'Merge PDFs'.
+        4. See error in browser console.
+    validations:
+      required: true
+
+  - type: textarea
+    id: file-info
+    attributes:
+      label: Input file characteristics
+      description: Describe relevant characteristics of your file (e.g. 15MB file size, 45 pages, scanned PDF, image-heavy PDF, password protected). DO NOT upload private files.
+      placeholder: E.g., 25MB PDF document, 120 pages, contains scanned text pages.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      description: What web browser were you using?
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Opera
+        - Brave
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      description: What operating system were you using?
+      options:
+        - macOS
+        - Windows
+        - Linux
+        - Android
+        - iOS
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or screen recording
+      description: Drag and drop screenshots or screen recordings showing the issue (redact any sensitive document text).
+    validations:
+      required: false
+
+  - type: textarea
+    id: console-errors
+    attributes:
+      label: Console or runtime errors
+      description: Paste any browser console error logs (Press F12 -> Console).
+      placeholder: "Uncaught TypeError: Cannot read property 'getPage' of undefined..."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: reproducibility
+    attributes:
+      label: Reproducibility
+      description: How consistently does this bug occur?
+      options:
+        - Always
+        - Sometimes
+        - Once
+        - Unable to reproduce
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have searched existing issues and could not find a duplicate.
+          required: true

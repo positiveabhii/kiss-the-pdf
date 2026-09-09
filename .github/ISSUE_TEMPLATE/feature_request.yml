@@ -1,0 +1,85 @@
+name: "✨ Feature Request"
+description: Propose an enhancement or new feature for KissThePDF
+title: "[Feature]: "
+labels: ["feature"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve KissThePDF! Please describe your proposed feature or enhancement.
+
+  - type: input
+    id: feature-title
+    attributes:
+      label: Feature Title
+      description: A short title summarizing the proposed feature.
+      placeholder: E.g., Add drag-and-drop page reordering preview in Split PDF
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem this solves
+      description: Is your feature request related to a problem or frustration?
+      placeholder: E.g., Currently when splitting a PDF, it is difficult to see which page numbers correspond to specific document sections without previewing page thumbnails first.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed solution
+      description: Describe the solution or enhancement you would like to see.
+      placeholder: E.g., Add thumbnail grid previews next to the page selection slider so users can visually inspect page content before splitting.
+    validations:
+      required: true
+
+  - type: textarea
+    id: workaround
+    attributes:
+      label: Current workaround
+      description: Describe any workarounds you currently use to accomplish this.
+      placeholder: E.g., Users must open the PDF in the PDF Reader tool first to note down page numbers before navigating to Split PDF.
+    validations:
+      required: false
+
+  - type: textarea
+    id: beneficiaries
+    attributes:
+      label: Who would benefit from this?
+      description: Explain who would benefit (e.g. students, lawyers, general users processing multi-page documents).
+    validations:
+      required: false
+
+  - type: textarea
+    id: expected-ux
+    attributes:
+      label: Expected user experience
+      description: Describe how a user would interact with this feature.
+    validations:
+      required: false
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Describe any alternative solutions or features you have considered.
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any mockups, screenshots, or additional details.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have searched existing issues and could not find a duplicate.
+          required: true

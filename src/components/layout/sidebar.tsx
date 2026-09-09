@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { PanelLeftClose, PanelLeftOpen, ShieldCheck, Search, X } from "lucide-react";
+import { PanelLeftClose, PanelLeftOpen, ShieldCheck, Search, X, BookOpen } from "lucide-react";
 import { tools } from "@/config/tools";
 import { ToolDefinition } from "@/types";
 import { cn } from "@/lib/utils";
@@ -125,15 +125,21 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
       </div>
 
       {/* Sidebar Footer */}
-      {!isCollapsed && (
-        <div className="p-3 border-t border-slate-100 bg-slate-50/50 text-[11px] text-slate-500 space-y-1.5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1.5 font-medium text-slate-600">
-              <ShieldCheck size={13} className="text-emerald-600" />
-              <span>Client-Side Engine</span>
-            </div>
-            <span className="text-[10px] font-mono text-slate-400">100/100</span>
-          </div>
+      {!isCollapsed ? (
+        <div className="p-3 border-t border-slate-100 bg-slate-50/50 text-[11px] text-slate-500 space-y-2">
+          <Link
+            href="/docs"
+            className="flex items-center justify-between p-2 rounded-md bg-orange-50 hover:bg-orange-100/80 border border-orange-200/80 text-orange-700 font-semibold transition-colors group"
+          >
+            <span className="flex items-center gap-1.5">
+              <BookOpen size={13} className="text-orange-600" />
+              <span>Documentation</span>
+            </span>
+            <span className="text-[10px] bg-orange-200/60 px-1.5 py-0.2 rounded font-mono text-orange-800">
+              /docs
+            </span>
+          </Link>
+
           <div className="flex items-center justify-between text-[10px] font-medium text-slate-400 pt-1 border-t border-slate-200/50">
             <Link href="/open-source" className="hover:text-slate-900 transition-colors">
               Open Source
@@ -147,6 +153,16 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
               GitHub
             </a>
           </div>
+        </div>
+      ) : (
+        <div className="p-2 border-t border-slate-100 flex justify-center">
+          <Link
+            href="/docs"
+            className="p-2 text-orange-600 hover:bg-orange-50 rounded-md transition-colors"
+            title="Documentation (/docs)"
+          >
+            <BookOpen size={18} />
+          </Link>
         </div>
       )}
     </aside>

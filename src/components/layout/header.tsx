@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, Search, ShieldCheck, ChevronRight, Command, X } from "lucide-react";
+import { Menu, Search, ShieldCheck, ChevronRight, Command, X, BookOpen } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { tools } from "@/config/tools";
 
@@ -69,7 +69,7 @@ export function Header({ onOpenMobile }: HeaderProps) {
 
           {/* Breadcrumb Navigation */}
           <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs font-medium text-slate-500 truncate">
-            <Link href="/" className="hover:text-slate-900 transition-colors shrink-0">
+            <Link href="/" className="hover:text-slate-900 transition-colors shrink-0 font-semibold text-slate-700">
               KissThePDF
             </Link>
             {activeTool ? (
@@ -108,6 +108,15 @@ export function Header({ onOpenMobile }: HeaderProps) {
           >
             <Search size={18} />
           </button>
+
+          {/* Docs Link */}
+          <Link
+            href="/docs"
+            className="flex items-center gap-1.5 text-xs font-semibold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1 rounded-md transition-colors"
+          >
+            <BookOpen size={14} />
+            <span>Docs</span>
+          </Link>
 
           {/* Status Indicator */}
           <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200/60 rounded-full">
