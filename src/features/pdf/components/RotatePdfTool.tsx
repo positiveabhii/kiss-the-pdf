@@ -121,16 +121,16 @@ export function RotatePdfTool() {
   };
 
   if (state === "processing") {
-    return <ToolProcessingState message="Rotating PDF…" />;
+    return <ToolProcessingState message="Rotating PDF pages…" />;
   }
 
   if (state === "success" && result) {
     return (
       <ToolSuccessState
-        title="Rotation complete"
-        description={`${processedCount || doc.pageCount} ${(processedCount || doc.pageCount) === 1 ? "page" : "pages"} processed.`}
-        primaryAction={{ label: "Download PDF", onClick: handleDownload }}
-        secondaryAction={{ label: "Rotate another PDF", onClick: handleResetAll }}
+        title="Rotation Complete"
+        description={`${processedCount || doc.pageCount} ${(processedCount || doc.pageCount) === 1 ? "page" : "pages"} rotated successfully.`}
+        primaryAction={{ label: "Download Rotated PDF", onClick: handleDownload }}
+        secondaryAction={{ label: "Rotate Another Document", onClick: handleResetAll }}
       />
     );
   }
@@ -138,7 +138,7 @@ export function RotatePdfTool() {
   return (
     <div className="w-full min-w-0 max-w-3xl mx-auto space-y-6">
       {!doc.file ? (
-        <PdfUploadArea onFileSelect={doc.loadFile} disabled={doc.loading} />
+        <PdfUploadArea onFileSelect={doc.loadFile} label="Select a PDF to rotate" disabled={doc.loading} />
       ) : (
         <>
           <PdfDocumentHeader
@@ -153,8 +153,16 @@ export function RotatePdfTool() {
             }}
           />
 
-          <section className="space-y-4 min-w-0">
-            <h2 className="text-sm font-medium text-slate-700">Page preview</h2>
+          <section className="space-y-3 min-w-0">
+            <div className="flex items-center justify-between">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                Page Preview & Inspection
+              </h3>
+              <span className="text-[11px] text-slate-400">
+                Hover a thumbnail for quick 90° controls
+              </span>
+            </div>
+
             <PdfPageGrid
               pageCount={doc.pageCount}
               thumbnails={doc.thumbnails}
@@ -166,7 +174,7 @@ export function RotatePdfTool() {
             />
           </section>
 
-          <section className="space-y-4 pt-2 border-t border-slate-200">
+          <section className="p-4 bg-slate-50 border border-slate-200 rounded-md space-y-4">
             <PageScopeSelector
               scope={selection.scope}
               onScopeChange={(s) => {
@@ -180,68 +188,68 @@ export function RotatePdfTool() {
             />
 
             <SegmentedControl
-              label="Rotation"
+              label="Batch Rotation Angle"
               value={globalAngle}
               onChange={setGlobalAngle}
               options={[
                 {
                   value: 90 as RotationAngle,
-                  label: "CW",
-                  icon: <RotateCw className="w-4 h-4" aria-hidden="true" />,
+                  label: "90° CW",
+                  icon: <RotateCw className="w-3.5 h-3.5" aria-hidden="true" />,
                 },
                 { value: 180 as RotationAngle, label: "180°" },
                 {
                   value: 270 as RotationAngle,
-                  label: "CCW",
-                  icon: <RotateCcw className="w-4 h-4" aria-hidden="true" />,
+                  label: "90° CCW",
+                  icon: <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" />,
                 },
               ]}
             />
 
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 pt-1">
               <button
                 type="button"
                 onClick={() => applyGlobalRotation(globalAngle)}
-                className="px-4 py-2 text-sm font-medium bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-md transition-colors"
+                className="px-3 py-1.5 text-xs font-medium bg-white border border-slate-200 hover:bg-slate-100 hover:border-slate-300 text-slate-700 rounded transition-colors shadow-2xs"
               >
-                Apply to {selection.scope === "all" ? "all pages" : "selection"}
+                Apply angle to {selection.scope === "all" ? "all pages" : "selected target"}
               </button>
               {hasPendingChanges && (
                 <button
                   type="button"
                   onClick={resetChanges}
-                  className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors"
+                  className="px-3 py-1.5 text-xs font-medium text-slate-500 hover:text-slate-900 hover:bg-slate-200/60 rounded transition-colors"
                 >
-                  Reset changes
+                  Reset preview changes
                 </button>
               )}
             </div>
           </section>
 
           {error && (
-            <p className="text-sm text-red-600" role="alert">
+            <p className="text-xs font-medium text-red-600 bg-red-50 border border-red-200 p-2.5 rounded" role="alert">
               {error.message}
             </p>
           )}
 
-          <div className="pt-2">
+          <div className="pt-2 flex justify-end">
             <button
               type="button"
               onClick={handleApply}
               disabled={doc.pageCount === 0}
-              className="w-full sm:w-auto px-6 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white text-sm font-medium rounded-md transition-colors"
+              className="px-5 py-2 bg-slate-900 hover:bg-slate-800 disabled:bg-slate-200 disabled:text-slate-400 text-white text-xs font-semibold rounded-md transition-all shadow-2xs"
             >
-              Apply rotation
+              Apply Rotation & Export
             </button>
           </div>
         </>
       )}
 
       {doc.loading && (
-        <p className="text-sm text-slate-500 text-center">Loading document…</p>
+        <p className="text-xs font-mono text-slate-500 text-center py-4">Reading document pages…</p>
       )}
       {doc.error && (
-        <p className="text-sm text-red-600 text-center" role="alert">
+        <p className="text-xs font-medium text-red-600 text-center py-4" role="alert">
           {doc.error}
         </p>
       )}

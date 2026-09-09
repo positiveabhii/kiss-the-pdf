@@ -14,6 +14,7 @@ import { PdfDocumentHeader } from "./shared/PdfDocumentHeader";
 import { PageScopeSelector } from "./shared/PageScopeSelector";
 import { ToolProcessingState } from "./shared/ToolProcessingState";
 import { ToolSuccessState } from "./shared/ToolSuccessState";
+import { ImageIcon } from "lucide-react";
 
 const DPI_OPTIONS = [72, 96, 150, 200, 300];
 
@@ -44,7 +45,7 @@ export function PdfToImageTool({ format, formatLabel }: PdfToImageToolProps) {
 
     if (doc.pageCount > 100) {
       const confirmed = window.confirm(
-        `This document has ${doc.pageCount} pages. Converting at ${dpi} DPI may use significant memory. Continue?`
+        `This document has ${doc.pageCount} pages. Converting at ${dpi} DPI may use significant browser memory. Continue?`
       );
       if (!confirmed) return;
     }
@@ -94,7 +95,7 @@ export function PdfToImageTool({ format, formatLabel }: PdfToImageToolProps) {
   if (state === "processing") {
     return (
       <ToolProcessingState
-        message={`Converting to ${formatLabel}…`}
+        message={`Rendering pages to ${formatLabel}…`}
         progress={progress ?? undefined}
       />
     );
@@ -103,13 +104,13 @@ export function PdfToImageTool({ format, formatLabel }: PdfToImageToolProps) {
   if (state === "success" && result) {
     return (
       <ToolSuccessState
-        title="Conversion complete"
-        description={`${result.length} ${result.length === 1 ? "image" : "images"} created.`}
+        title="Conversion Complete"
+        description={`${result.length} ${result.length === 1 ? "page converted" : "pages converted"} to ${formatLabel}.`}
         primaryAction={{
-          label: result.length === 1 ? `Download ${formatLabel}` : "Download all",
+          label: result.length === 1 ? `Download ${formatLabel}` : "Download ZIP Archive",
           onClick: handleDownloadAll,
         }}
-        secondaryAction={{ label: `Convert another PDF`, onClick: handleResetAll }}
+        secondaryAction={{ label: `Convert Another File`, onClick: handleResetAll }}
       />
     );
   }
@@ -117,7 +118,7 @@ export function PdfToImageTool({ format, formatLabel }: PdfToImageToolProps) {
   return (
     <div className="w-full min-w-0 max-w-3xl mx-auto space-y-6">
       {!doc.file ? (
-        <PdfUploadArea onFileSelect={doc.loadFile} disabled={doc.loading} />
+        <PdfUploadArea onFileSelect={doc.loadFile} label={`Select a PDF to convert to ${formatLabel}`} disabled={doc.loading} />
       ) : (
         <>
           <PdfDocumentHeader
@@ -131,81 +132,88 @@ export function PdfToImageTool({ format, formatLabel }: PdfToImageToolProps) {
             }}
           />
 
-          <PageScopeSelector
-            scope={selection.scope}
-            onScopeChange={(s) => {
-              selection.setScope(s);
-              if (s === "all") selection.selectAll();
-            }}
-            rangeInput={selection.rangeInput}
-            onRangeInputChange={selection.setRangeInput}
-            pageCount={doc.pageCount}
-            selectedCount={selection.selectedPages.size}
-            showOddEven={false}
-          />
+          <div className="p-4 bg-slate-50 border border-slate-200 rounded-md space-y-4">
+            <PageScopeSelector
+              scope={selection.scope}
+              onScopeChange={(s) => {
+                selection.setScope(s);
+                if (s === "all") selection.selectAll();
+              }}
+              rangeInput={selection.rangeInput}
+              onRangeInputChange={selection.setRangeInput}
+              pageCount={doc.pageCount}
+              selectedCount={selection.selectedPages.size}
+              showOddEven={false}
+            />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="dpi-select" className="block text-sm font-medium text-slate-700 mb-1">
-                Resolution (DPI)
-              </label>
-              <select
-                id="dpi-select"
-                value={dpi}
-                onChange={(e) => setDpi(parseInt(e.target.value, 10))}
-                className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md bg-white"
-              >
-                {DPI_OPTIONS.map((d) => (
-                  <option key={d} value={d}>
-                    {d} DPI
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {showQuality && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-slate-200/80">
               <div>
-                <label htmlFor="quality-select" className="block text-sm font-medium text-slate-700 mb-1">
-                  Image quality
+                <label htmlFor="dpi-select" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">
+                  Resolution (DPI)
                 </label>
                 <select
-                  id="quality-select"
-                  value={quality}
-                  onChange={(e) => setQuality(e.target.value as "high" | "medium" | "low")}
-                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md bg-white"
+                  id="dpi-select"
+                  value={dpi}
+                  onChange={(e) => setDpi(parseInt(e.target.value, 10))}
+                  className="w-full h-8 px-2.5 text-xs bg-white border border-slate-200 rounded outline-none focus:border-slate-900"
                 >
-                  <option value="high">High</option>
-                  <option value="medium">Medium</option>
-                  <option value="low">Low</option>
+                  {DPI_OPTIONS.map((d) => (
+                    <option key={d} value={d}>
+                      {d} DPI ({d === 150 ? "Standard" : d === 300 ? "Print Quality" : "Draft"})
+                    </option>
+                  ))}
                 </select>
               </div>
+
+              {showQuality && (
+                <div>
+                  <label htmlFor="quality-select" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">
+                    Image Quality
+                  </label>
+                  <select
+                    id="quality-select"
+                    value={quality}
+                    onChange={(e) => setQuality(e.target.value as "high" | "medium" | "low")}
+                    className="w-full h-8 px-2.5 text-xs bg-white border border-slate-200 rounded outline-none focus:border-slate-900"
+                  >
+                    <option value="high">High Quality (92%)</option>
+                    <option value="medium">Medium Quality (75%)</option>
+                    <option value="low">Compact (50%)</option>
+                  </select>
+                </div>
+              )}
+            </div>
+
+            {format === "jpeg" && (
+              <p className="text-[11px] text-slate-400 font-mono">
+                Note: JPEG output automatically applies crisp white background canvas.
+              </p>
             )}
           </div>
 
-          {format === "jpeg" && (
-            <p className="text-xs text-slate-500">Background: white (JPG does not support transparency)</p>
-          )}
-
           {error && (
-            <p className="text-sm text-red-600" role="alert">
+            <p className="text-xs font-medium text-red-600 bg-red-50 border border-red-200 p-2.5 rounded" role="alert">
               {error.message}
             </p>
           )}
 
-          <button
-            type="button"
-            onClick={handleConvert}
-            disabled={selection.resolvedPages.length === 0}
-            className="w-full sm:w-auto px-6 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white text-sm font-medium rounded-md transition-colors"
-          >
-            Convert to {formatLabel}
-          </button>
+          <div className="pt-2 flex justify-end">
+            <button
+              type="button"
+              onClick={handleConvert}
+              disabled={selection.resolvedPages.length === 0}
+              className="inline-flex items-center gap-2 px-5 py-2 bg-slate-900 hover:bg-slate-800 disabled:bg-slate-200 disabled:text-slate-400 text-white text-xs font-semibold rounded-md transition-all shadow-2xs"
+            >
+              <ImageIcon size={14} />
+              <span>Convert to {formatLabel}</span>
+            </button>
+          </div>
         </>
       )}
 
-      {doc.loading && <p className="text-sm text-slate-500 text-center">Loading document…</p>}
+      {doc.loading && <p className="text-xs font-mono text-slate-500 text-center py-4">Reading document pages…</p>}
       {doc.error && (
-        <p className="text-sm text-red-600 text-center" role="alert">
+        <p className="text-xs font-medium text-red-600 text-center py-4" role="alert">
           {doc.error}
         </p>
       )}

@@ -32,41 +32,46 @@ export function PageScopeSelector({
     : SCOPE_OPTIONS;
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2.5">
       <fieldset>
-        <legend className="text-sm font-medium text-slate-700 mb-2">Pages</legend>
-        <div className="flex flex-wrap gap-2">
-          {options.map((opt) => (
-            <label
-              key={opt.value}
-              className={`inline-flex items-center px-3 py-1.5 text-sm rounded-md border cursor-pointer transition-colors ${
-                scope === opt.value
-                  ? "border-blue-600 bg-blue-50 text-blue-800"
-                  : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
-              }`}
-            >
-              <input
-                type="radio"
-                name="page-scope"
-                value={opt.value}
-                checked={scope === opt.value}
-                onChange={() => onScopeChange(opt.value)}
-                className="sr-only"
-              />
-              {opt.label}
-            </label>
-          ))}
+        <legend className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
+          Target Pages
+        </legend>
+        <div className="flex flex-wrap gap-1.5">
+          {options.map((opt) => {
+            const isSelected = scope === opt.value;
+            return (
+              <label
+                key={opt.value}
+                className={`inline-flex items-center px-2.5 py-1 text-xs font-medium rounded border cursor-pointer transition-all ${
+                  isSelected
+                    ? "bg-slate-900 text-white font-semibold border-slate-900 shadow-2xs"
+                    : "bg-white border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="page-scope"
+                  value={opt.value}
+                  checked={isSelected}
+                  onChange={() => onScopeChange(opt.value)}
+                  className="sr-only"
+                />
+                {opt.label}
+              </label>
+            );
+          })}
         </div>
       </fieldset>
 
       {scope === "selected" && (
-        <p className="text-xs text-slate-500">
+        <p className="text-[11px] font-mono text-slate-500 bg-slate-50 border border-slate-200/60 px-2.5 py-1 rounded inline-block">
           {selectedCount} of {pageCount} pages selected. Click thumbnails to select.
         </p>
       )}
 
       {scope === "range" && (
-        <div>
+        <div className="max-w-md">
           <label htmlFor="page-range" className="sr-only">
             Page range
           </label>
@@ -76,7 +81,7 @@ export function PageScopeSelector({
             value={rangeInput}
             onChange={(e) => onRangeInputChange(e.target.value)}
             placeholder={`e.g. 1-3, 5, 8-10 (1-${pageCount})`}
-            className="w-full max-w-md px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500"
+            className="w-full h-8 px-3 text-xs font-mono bg-white border border-slate-200 rounded focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900 placeholder:text-slate-400 placeholder:font-sans"
           />
         </div>
       )}

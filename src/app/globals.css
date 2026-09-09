@@ -1,30 +1,38 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f7f4;
-  --foreground: #141414;
+  --background: #fffaf7;
+  --foreground: #211d1b;
 
-  /* KissPDF design tokens — refined */
-  --kp-bg: #f8f7f4;
-  --kp-bg-alt: #f0efeb;
+  /* KissPDF Desktop App Design Tokens — Restrained & Technical */
+  --kp-bg: #fffaf7;
+  --kp-bg-alt: #fff2ec;
+  --kp-app-bg: #fffaf7;
+  --kp-sidebar-bg: #ffffff;
+  --kp-header-bg: #ffffff;
   --kp-surface: #ffffff;
-  --kp-text: #141414;
-  --kp-text-secondary: #3d3d3d;
-  --kp-text-muted: #6b6b6b;
-  --kp-border: #e4e2dd;
-  --kp-border-hover: #cac8c2;
-  --kp-accent: #c2410c;
-  --kp-accent-hover: #9a3412;
-  --kp-accent-soft: #fff7ed;
-  --kp-accent-glow: rgba(194, 65, 12, 0.08);
-  --kp-shadow-xs: 0 1px 2px rgba(20, 20, 20, 0.04);
-  --kp-shadow-sm: 0 2px 8px rgba(20, 20, 20, 0.06);
-  --kp-shadow-md: 0 8px 24px rgba(20, 20, 20, 0.08);
-  --kp-shadow-lg: 0 16px 48px rgba(20, 20, 20, 0.1);
-  --kp-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --kp-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --kp-duration: 600ms;
-  --kp-duration-fast: 200ms;
+  --kp-text: #211d1b;
+  --kp-text-primary: #211d1b;
+  --kp-text-secondary: #675c56;
+  --kp-text-muted: #897d76;
+  --kp-border: #eadfd8;
+  --kp-border-hover: #d4c1b7;
+  --kp-border-subtle: #f5ede8;
+  --kp-accent: #ef553b;
+  --kp-accent-hover: #ce3f2a;
+  --kp-accent-soft: #fff0ea;
+  --kp-accent-border: #ffcfc2;
+  --kp-accent-glow: #ffe2d8;
+  --kp-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  --kp-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+  --kp-shadow-md: 0 12px 28px rgba(64, 37, 28, 0.08);
+  --kp-shadow-lg: 0 24px 55px rgba(64, 37, 28, 0.14);
+  --kp-duration-fast: 160ms;
+  --kp-duration: 500ms;
+  --kp-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --kp-radius-sm: 6px;
+  --kp-radius-md: 8px;
+  --kp-radius-lg: 12px;
 }
 
 @theme inline {
@@ -51,11 +59,104 @@ html {
   background-size: 24px 24px;
 }
 
+.kp-landing-hero {
+  --hero-x: 50%;
+  --hero-y: 50%;
+  --hero-light-opacity: 0;
+  isolation: isolate;
+  position: relative;
+  background-color: #ef553b;
+}
+
+.kp-landing-hero::before,
+.kp-landing-hero::after {
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.kp-landing-hero::before {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.16) 1px, transparent 1px);
+  background-size: 46px 46px;
+  opacity: 0.55;
+  animation: kp-grid-drift 14s linear infinite;
+}
+
+.kp-landing-hero::after {
+  background: radial-gradient(
+    280px circle at var(--hero-x) var(--hero-y),
+    rgba(255, 255, 255, 0.34),
+    rgba(255, 255, 255, 0.08) 48%,
+    transparent 72%
+  );
+  opacity: var(--hero-light-opacity);
+  transition: opacity 220ms ease-out;
+}
+
+.kp-landing-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.kp-hero-cursor {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .kp-landing-hero {
+    cursor: none;
+  }
+
+  .kp-hero-cursor {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.92);
+    border-radius: 50%;
+    display: flex;
+    height: 28px;
+    justify-content: center;
+    left: var(--hero-x);
+    opacity: var(--hero-light-opacity);
+    pointer-events: none;
+    position: absolute;
+    top: var(--hero-y);
+    transform: translate(-50%, -50%);
+    transition: height 180ms ease-out, width 180ms ease-out, opacity 180ms ease-out, background 180ms ease-out;
+    width: 28px;
+    z-index: 3;
+  }
+
+  .kp-hero-cursor::before,
+  .kp-hero-cursor::after {
+    background: white;
+    content: "";
+    opacity: 0.88;
+    position: absolute;
+  }
+
+  .kp-hero-cursor::before { height: 1px; width: 10px; }
+  .kp-hero-cursor::after { height: 10px; width: 1px; }
+
+  .kp-landing-hero[data-interactive="true"] .kp-hero-cursor {
+    background: rgba(255, 255, 255, 0.52);
+    height: 42px;
+    width: 42px;
+  }
+}
+
+@keyframes kp-grid-drift {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 46px 46px, 46px 46px; }
+}
+
 /* Typography utilities */
 .kp-display {
   font-size: clamp(2.25rem, 5vw, 3.5rem);
   font-weight: 700;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
   line-height: 1.08;
 }
 

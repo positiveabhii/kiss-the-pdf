@@ -9,10 +9,9 @@ import { useScrolled } from "@/hooks/use-scroll-progress";
 const NAV_ITEMS = [
   { label: "PDF Tools", href: "#tools" },
   { label: "Convert", href: "#convert" },
-  { label: "Edit", href: "#editing" },
   { label: "Organize", href: "#organization" },
   { label: "Security", href: "#security" },
-  { label: "How It Works", href: "#how-it-works" },
+  { label: "How it works", href: "#how-it-works" },
 ];
 
 interface LandingHeaderProps {
@@ -32,15 +31,15 @@ export function LandingHeader({ onSearchFocus }: LandingHeaderProps) {
           : "border-b border-transparent bg-[var(--kp-bg)]/80 backdrop-blur-sm"
       )}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
           className="flex items-center gap-2.5 shrink-0 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--kp-accent)] focus-visible:ring-offset-2"
         >
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--kp-accent)] text-white text-sm font-bold shadow-[var(--kp-shadow-xs)]">
-            K
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--kp-text)] text-sm font-bold text-white shadow-[var(--kp-shadow-xs)]">
+            <span className="text-[var(--kp-accent)]">K</span>P
           </span>
-          <span className="text-lg font-semibold tracking-tight text-[var(--kp-text)]">KissPDF</span>
+          <span className="text-[15px] font-bold tracking-[0.02em] text-[var(--kp-text)]">KISS THE PDF</span>
         </Link>
 
         <nav className="hidden lg:flex items-center gap-0.5 ml-8" aria-label="Main">
@@ -67,7 +66,7 @@ export function LandingHeader({ onSearchFocus }: LandingHeaderProps) {
           </button>
 
           <a href="#tools" className="hidden sm:inline-flex kp-btn-primary !py-2 !px-4 text-sm">
-            All Tools
+            Browse tools
           </a>
 
           <button

@@ -7,101 +7,134 @@ import { downloadBlob } from "../utils/download-utils";
 import { createZipFromPdfs } from "../utils/zip-utils";
 import { parsePageRange } from "../utils/page-range-parser";
 import { getPdfInfo } from "../engine/pdf-utils";
+import { PdfUploadArea } from "./shared/PdfUploadArea";
+import { PdfDocumentHeader } from "./shared/PdfDocumentHeader";
+import { ToolProcessingState } from "./shared/ToolProcessingState";
+import { ToolSuccessState } from "./shared/ToolSuccessState";
+import { Scissors } from "lucide-react";
 
 export function SplitPdfTool() {
   const { state, error, startProcessing, setSuccess, setFailed, reset } = usePdfTool();
   const [file, setFile] = useState<File | null>(null);
+  const [fileSize, setFileSize] = useState<number>(0);
   const [pageCount, setPageCount] = useState<number>(0);
   const [rangesInput, setRangesInput] = useState<string>("");
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const f = e.target.files[0];
-      setFile(f);
-      try {
-        const info = await getPdfInfo(f);
-        setPageCount(info.pageCount);
-      } catch (err) {
-        console.error("Failed to read PDF page count", err);
-      }
+  const handleFileSelect = async (f: File) => {
+    setFile(f);
+    setFileSize(f.size);
+    try {
+      const info = await getPdfInfo(f);
+      setPageCount(info.pageCount);
+      // Default initial range hint
+      setRangesInput(`1-${Math.min(2, info.pageCount)}, ${Math.min(3, info.pageCount)}-${info.pageCount}`);
+    } catch (err) {
+      console.error("Failed to read PDF page count", err);
     }
+  };
+
+  const handleRemoveFile = () => {
+    setFile(null);
+    setPageCount(0);
+    setRangesInput("");
+    reset();
   };
 
   const handleSplit = async () => {
     if (!file) return;
 
     try {
-      const ranges = rangesInput.split(",").map(r => r.trim()).filter(Boolean);
+      const ranges = rangesInput.split(",").map((r) => r.trim()).filter(Boolean);
       if (ranges.length === 0) {
-        alert("Please enter at least one valid range.");
+        alert("Please enter at least one valid page range.");
         return;
       }
 
-      // Convert "1-3" strings to arrays of page indices via parser
-      const parsedRanges = ranges.map(r => parsePageRange(r, pageCount));
+      const parsedRanges = ranges.map((r) => parsePageRange(r, pageCount));
 
       startProcessing();
       const buffer = await file.arrayBuffer();
       const splitPdfs = await pdfService.split(new Uint8Array(buffer), parsedRanges);
-      
+
       if (splitPdfs.length === 1) {
         downloadBlob(splitPdfs[0], `split-${file.name}`);
       } else {
         const zipBytes = await createZipFromPdfs(splitPdfs, file.name.replace(".pdf", ""));
         downloadBlob(zipBytes, `split-${file.name}.zip`, "application/zip");
       }
-      
-      setSuccess(splitPdfs[0]); // store the first one just for state success
+
+      setSuccess(splitPdfs[0]);
     } catch (err) {
       setFailed(err);
     }
   };
 
-  if (state === "processing") return <div className="text-center p-8">Processing your PDF...</div>;
+  if (state === "processing") {
+    return <ToolProcessingState message="Splitting PDF document..." />;
+  }
+
   if (state === "success") {
     return (
-      <div className="text-center p-8">
-        <p className="text-green-600 font-medium mb-4">PDF split successfully!</p>
-        <button onClick={reset} className="px-4 py-2 bg-slate-900 text-white rounded-md">Split another file</button>
-      </div>
+      <ToolSuccessState
+        title="PDF Split Successfully"
+        description="Your split pages have been generated and downloaded."
+        primaryAction={{ label: "Split Another File", onClick: handleRemoveFile }}
+      />
     );
   }
 
   return (
-    <div className="flex flex-col items-center justify-center p-12 sm:p-20 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50 w-full">
-      <div className="mb-6 w-full max-w-md">
-        <label className="block text-sm font-medium text-slate-700 mb-2">Select a PDF</label>
-        <input 
-          type="file" 
-          accept="application/pdf" 
-          onChange={handleFileChange}
-          className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200"
-        />
-      </div>
-
-      {file && (
-        <div className="mb-6 w-full max-w-md">
-          <p className="text-sm font-medium text-slate-700 mb-2">Ranges to split</p>
-          <p className="text-xs text-slate-500 mb-2">File has {pageCount} pages. E.g. &quot;1-2, 3-5, 6&quot; will create 3 files.</p>
-          <input
-            type="text"
-            value={rangesInput}
-            onChange={(e) => setRangesInput(e.target.value)}
-            placeholder="e.g. 1-2, 3"
-            className="w-full px-3 py-2 border border-slate-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+    <div className="space-y-6 max-w-3xl mx-auto">
+      {!file ? (
+        <PdfUploadArea onFileSelect={handleFileSelect} label="Select a PDF to split" />
+      ) : (
+        <div className="space-y-5">
+          <PdfDocumentHeader
+            filename={file.name}
+            fileSize={fileSize}
+            pageCount={pageCount}
+            onReplace={handleFileSelect}
+            onRemove={handleRemoveFile}
           />
+
+          <div className="p-4 bg-slate-50 border border-slate-200 rounded-md space-y-3">
+            <div>
+              <label htmlFor="ranges-input" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">
+                Split Ranges / Page Groups
+              </label>
+              <p className="text-xs text-slate-500 mb-2">
+                Document contains {pageCount} {pageCount === 1 ? "page" : "pages"}. Enter ranges separated by commas (e.g. &quot;1-2, 3-5, 6&quot;).
+              </p>
+              <input
+                id="ranges-input"
+                type="text"
+                value={rangesInput}
+                onChange={(e) => setRangesInput(e.target.value)}
+                placeholder="e.g. 1-2, 3-5"
+                className="w-full h-9 px-3 text-xs font-mono bg-white border border-slate-200 rounded focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900"
+              />
+            </div>
+          </div>
+
+          {error && (
+            <p className="text-xs font-medium text-red-600 bg-red-50 border border-red-200 p-2.5 rounded">
+              {error.message}
+            </p>
+          )}
+
+          <div className="pt-2 flex justify-end">
+            <button
+              type="button"
+              onClick={handleSplit}
+              disabled={!rangesInput.trim()}
+              className="inline-flex items-center gap-2 px-5 py-2 bg-slate-900 hover:bg-slate-800 disabled:bg-slate-200 disabled:text-slate-400 text-white text-xs font-semibold rounded-md transition-all shadow-2xs"
+            >
+              <Scissors size={14} />
+              <span>Split PDF Document</span>
+            </button>
+          </div>
         </div>
       )}
-
-      {error && <p className="text-red-500 text-sm mb-4">{error.message}</p>}
-
-      <button 
-        onClick={handleSplit}
-        disabled={!file || !rangesInput.trim()}
-        className="px-6 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white rounded-md transition-colors"
-      >
-        Split PDF
-      </button>
     </div>
   );
 }

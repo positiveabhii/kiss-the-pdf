@@ -1,6 +1,14 @@
-export type ToolCategory = "PDF" | "Images" | "Convert" | "Organize" | "Edit" | "Security" | "Utilities";
+export type ToolCategory =
+  | "Organization"
+  | "Pages"
+  | "Convert"
+  | "Edit"
+  | "Security"
+  | "Forms"
+  | "Enhancement"
+  | "Reading";
 
-export type ToolStatus = "active" | "planned";
+export type ToolStatus = "implemented" | "partially_implemented" | "planned" | "active";
 
 export type ToolDefinition = {
   id: string;
@@ -8,7 +16,7 @@ export type ToolDefinition = {
   description: string;
   category: ToolCategory;
   href: string;
-  icon?: string;
+  icon: string;
   status: ToolStatus;
   
   // SEO Metadata

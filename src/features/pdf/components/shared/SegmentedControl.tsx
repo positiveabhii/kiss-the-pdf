@@ -21,15 +21,17 @@ export function SegmentedControl<T extends string | number>({
   label,
   size = "md",
 }: SegmentedControlProps<T>) {
-  const padding = size === "sm" ? "px-2.5 py-1.5 text-xs" : "px-3 py-2 text-sm";
+  const padding = size === "sm" ? "px-2 py-1 text-xs" : "px-3 py-1.5 text-xs";
 
   return (
     <div>
       {label && (
-        <span className="block text-sm font-medium text-slate-700 mb-2">{label}</span>
+        <span className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
+          {label}
+        </span>
       )}
       <div
-        className="inline-flex flex-wrap gap-1 p-1 bg-slate-100 rounded-lg"
+        className="inline-flex flex-wrap gap-0.5 p-0.5 bg-slate-100 border border-slate-200/80 rounded-md"
         role="group"
         aria-label={label}
       >
@@ -41,14 +43,14 @@ export function SegmentedControl<T extends string | number>({
               type="button"
               onClick={() => onChange(option.value)}
               aria-pressed={selected}
-              className={`inline-flex items-center gap-1.5 ${padding} font-medium rounded-md transition-colors ${
+              className={`inline-flex items-center gap-1.5 ${padding} font-medium rounded transition-all ${
                 selected
-                  ? "bg-white text-slate-900 shadow-sm ring-1 ring-slate-200"
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                  ? "bg-white text-slate-900 font-semibold shadow-2xs border border-slate-200/60"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/50"
               }`}
             >
               {option.icon}
-              {option.label}
+              <span>{option.label}</span>
             </button>
           );
         })}

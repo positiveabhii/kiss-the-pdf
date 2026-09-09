@@ -12,6 +12,14 @@ import { PdfToJpgTool } from "@/features/pdf/components/PdfToJpgTool";
 import { PdfToPngTool } from "@/features/pdf/components/PdfToPngTool";
 import { PdfToWebpTool } from "@/features/pdf/components/PdfToWebpTool";
 
+import { PageOperationsTool } from "@/features/pdf/components/PageOperationsTool";
+import { ImageConversionTool } from "@/features/pdf/components/ImageConversionTool";
+import { PdfViewerTool } from "@/features/pdf/components/PdfViewerTool";
+import { PdfEditorTool } from "@/features/pdf/components/PdfEditorTool";
+import { PdfSecurityTool } from "@/features/pdf/components/PdfSecurityTool";
+import { PdfFormTool } from "@/features/pdf/components/PdfFormTool";
+import { PdfEnhanceTool } from "@/features/pdf/components/PdfEnhanceTool";
+
 interface Props {
   params: Promise<{
     tool: string;
@@ -57,7 +65,7 @@ export function generateStaticParams() {
   }));
 }
 
-const ToolComponents: Record<string, React.FC> = {
+const DedicatedToolComponents: Record<string, React.FC> = {
   "merge-pdf": MergePdfTool,
   "split-pdf": SplitPdfTool,
   "rotate-pdf": RotatePdfTool,
@@ -85,7 +93,7 @@ export default async function ToolPage({ params }: Props) {
     "url": `${BASE_URL}${toolConfig.href}`,
     "applicationCategory": "Utility",
     "operatingSystem": "All",
-    "browserRequirements": "Requires JavaScript. WebAssembly supported browser for optimal performance.",
+    "browserRequirements": "Requires JavaScript. WebAssembly & Client-Side PDF engine enabled.",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -93,39 +101,57 @@ export default async function ToolPage({ params }: Props) {
     }
   };
 
-  const ActiveToolComponent = ToolComponents[toolConfig.id];
+  const DedicatedComponent = DedicatedToolComponents[toolConfig.id];
 
   return (
-    <div className="flex flex-col max-w-4xl mx-auto py-12 px-4 sm:px-6">
+    <div className="flex flex-col max-w-5xl mx-auto w-full space-y-6">
       {/* Inject Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="mb-10 text-center">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
+      {/* Application Tool Title Header */}
+      <div className="space-y-1 pb-2 border-b border-slate-200/60">
+        <div className="flex items-center gap-2">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+            {toolConfig.category}
+          </span>
+          <span className="text-slate-300">•</span>
+          <span className="text-[11px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-1.5 py-0.2 rounded">
+            Client-Side Engine
+          </span>
+        </div>
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
           {toolConfig.name}
         </h1>
-        <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+        <p className="text-xs sm:text-sm text-slate-500 max-w-2xl">
           {toolConfig.description}
         </p>
       </div>
 
-      {toolConfig.status === "planned" || !ActiveToolComponent ? (
-        <div className="flex flex-col items-center justify-center p-12 sm:p-20 border border-slate-200 rounded-2xl bg-white shadow-sm text-center">
-          <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-6">
-            <span className="text-2xl">⏳</span>
-          </div>
-          <h2 className="text-xl font-semibold text-slate-900 mb-2">Coming Soon</h2>
-          <p className="text-slate-500 max-w-md">
-            We are currently building the local, privacy-first processing engine for this tool.
-            Check back soon or contribute on GitHub!
-          </p>
-        </div>
-      ) : (
-        <ActiveToolComponent />
-      )}
+      {/* Tool Canvas Container */}
+      <div className="bg-white border border-slate-200 rounded-lg p-5 sm:p-8 shadow-2xs">
+        {DedicatedComponent ? (
+          <DedicatedComponent />
+        ) : toolConfig.category === "Organization" || toolConfig.category === "Pages" ? (
+          <PageOperationsTool toolId={toolConfig.id} toolName={toolConfig.name} />
+        ) : toolConfig.category === "Convert" ? (
+          <ImageConversionTool toolId={toolConfig.id} toolName={toolConfig.name} />
+        ) : toolConfig.category === "Edit" ? (
+          <PdfEditorTool toolId={toolConfig.id} toolName={toolConfig.name} />
+        ) : toolConfig.category === "Security" ? (
+          <PdfSecurityTool toolId={toolConfig.id} toolName={toolConfig.name} />
+        ) : toolConfig.category === "Forms" ? (
+          <PdfFormTool toolId={toolConfig.id} toolName={toolConfig.name} />
+        ) : toolConfig.category === "Enhancement" ? (
+          <PdfEnhanceTool toolId={toolConfig.id} toolName={toolConfig.name} />
+        ) : toolConfig.category === "Reading" ? (
+          <PdfViewerTool toolId={toolConfig.id} toolName={toolConfig.name} />
+        ) : (
+          <PageOperationsTool toolId={toolConfig.id} toolName={toolConfig.name} />
+        )}
+      </div>
     </div>
   );
 }
