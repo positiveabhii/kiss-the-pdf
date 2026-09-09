@@ -7,7 +7,7 @@ export const siteConfig = {
   description:
     "Free, open-source PDF tools that run locally in your browser. Merge, split, compress, edit, convert, organize, rotate, protect, and manage PDF files without uploads or signup.",
 
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://kissthepdf.space",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.kissthepdf.space",
 
   githubUrl: "https://github.com/positiveabhii/kiss-the-pdf",
   issuesUrl: "https://github.com/positiveabhii/kiss-the-pdf/issues",
