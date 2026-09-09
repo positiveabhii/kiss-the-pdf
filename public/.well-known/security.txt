@@ -1,0 +1,4 @@
+Contact: https://github.com/positiveabhii/kiss-the-pdf/security
+Policy: https://github.com/positiveabhii/kiss-the-pdf/blob/main/SECURITY.md
+Preferred-Languages: en
+Canonical: https://kissthepdf.space/.well-known/security.txt

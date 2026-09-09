@@ -20,20 +20,20 @@ import { PdfSecurityTool } from "@/features/pdf/components/PdfSecurityTool";
 import { PdfFormTool } from "@/features/pdf/components/PdfFormTool";
 import { PdfEnhanceTool } from "@/features/pdf/components/PdfEnhanceTool";
 
+import { siteConfig } from "@/config/site";
+
 interface Props {
   params: Promise<{
     tool: string;
   }>;
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://kissthepdf.space";
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await params;
   const toolConfig = tools.find((t) => t.id === resolvedParams.tool);
   if (!toolConfig) {
     return {
-      title: "Tool Not Found | Kiss the PDF",
+      title: `Tool Not Found | ${siteConfig.name}`,
     };
   }
 
@@ -42,19 +42,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: toolConfig.seoDescription,
     keywords: toolConfig.keywords?.join(", "),
     alternates: {
-      canonical: `${BASE_URL}${toolConfig.href}`,
+      canonical: `${siteConfig.url}${toolConfig.href}`,
     },
     openGraph: {
       title: toolConfig.seoTitle,
       description: toolConfig.seoDescription,
-      url: `${BASE_URL}${toolConfig.href}`,
-      siteName: "Kiss the PDF",
+      url: `${siteConfig.url}${toolConfig.href}`,
+      siteName: siteConfig.name,
+      images: [
+        {
+          url: siteConfig.ogImage,
+          width: 1200,
+          height: 630,
+          alt: toolConfig.seoTitle,
+        },
+      ],
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
       title: toolConfig.seoTitle,
       description: toolConfig.seoDescription,
+      images: [siteConfig.ogImage],
     },
   };
 }
@@ -85,12 +94,12 @@ export default async function ToolPage({ params }: Props) {
     notFound();
   }
 
-  const jsonLd = {
+  const jsonLdApp = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": toolConfig.name,
     "description": toolConfig.seoDescription,
-    "url": `${BASE_URL}${toolConfig.href}`,
+    "url": `${siteConfig.url}${toolConfig.href}`,
     "applicationCategory": "Utility",
     "operatingSystem": "All",
     "browserRequirements": "Requires JavaScript. WebAssembly & Client-Side PDF engine enabled.",
@@ -101,6 +110,31 @@ export default async function ToolPage({ params }: Props) {
     }
   };
 
+  const jsonLdBreadcrumbs = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": siteConfig.url
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Tools",
+        "item": `${siteConfig.url}/tools`
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": toolConfig.name,
+        "item": `${siteConfig.url}${toolConfig.href}`
+      }
+    ]
+  };
+
   const DedicatedComponent = DedicatedToolComponents[toolConfig.id];
 
   return (
@@ -108,7 +142,11 @@ export default async function ToolPage({ params }: Props) {
       {/* Inject Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdApp) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumbs) }}
       />
 
       {/* Application Tool Title Header */}

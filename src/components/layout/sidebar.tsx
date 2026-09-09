@@ -126,12 +126,27 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
 
       {/* Sidebar Footer */}
       {!isCollapsed && (
-        <div className="p-3 border-t border-slate-100 bg-slate-50/50 text-[11px] text-slate-500 flex items-center justify-between">
-          <div className="flex items-center gap-1.5 font-medium text-slate-600">
-            <ShieldCheck size={13} className="text-emerald-600" />
-            <span>Client-Side Engine</span>
+        <div className="p-3 border-t border-slate-100 bg-slate-50/50 text-[11px] text-slate-500 space-y-1.5">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1.5 font-medium text-slate-600">
+              <ShieldCheck size={13} className="text-emerald-600" />
+              <span>Client-Side Engine</span>
+            </div>
+            <span className="text-[10px] font-mono text-slate-400">100/100</span>
           </div>
-          <span className="text-[10px] font-mono text-slate-400">100/100</span>
+          <div className="flex items-center justify-between text-[10px] font-medium text-slate-400 pt-1 border-t border-slate-200/50">
+            <Link href="/open-source" className="hover:text-slate-900 transition-colors">
+              Open Source
+            </Link>
+            <a
+              href="https://github.com/positiveabhii/kiss-the-pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-slate-900 transition-colors"
+            >
+              GitHub
+            </a>
+          </div>
         </div>
       )}
     </aside>

@@ -1,23 +1,36 @@
 import { MetadataRoute } from "next";
 import { tools } from "@/config/tools";
-
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://kissthepdf.space";
+import { siteConfig } from "@/config/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const toolRoutes = tools.map((tool) => ({
-    url: `${BASE_URL}${tool.href}`,
+    url: `${siteConfig.url}${tool.href}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.8,
   }));
 
-  return [
+  const staticRoutes = [
     {
-      url: BASE_URL,
+      url: siteConfig.url,
       lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1,
+      changeFrequency: "daily" as const,
+      priority: 1.0,
     },
-    ...toolRoutes,
+    {
+      url: `${siteConfig.url}/tools`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    },
+    {
+      url: `${siteConfig.url}/open-source`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
   ];
+
+  return [...staticRoutes, ...toolRoutes];
 }
+
