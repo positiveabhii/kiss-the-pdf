@@ -5,8 +5,8 @@ import { DocsToc } from "@/components/docs/docs-toc";
 import { DocsCTA } from "@/components/docs/docs-cta";
 
 export const metadata: Metadata = {
-  title: "Getting Started",
-  description: "Learn how to use KissThePDF tools, upload files, process documents locally in your browser, and download results.",
+  title: "Getting Started with KissThePDF | How to Use Our Free PDF Tools",
+  description: "Your comprehensive guide to using KissThePDF's free, browser-based PDF tools. Learn how to upload files, process documents locally, and download results securely without uploads.",
 };
 
 const headings = [

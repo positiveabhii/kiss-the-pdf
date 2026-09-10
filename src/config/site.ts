@@ -63,6 +63,12 @@ export const siteConfig = {
     "pdf utility",
     "pdf tools online",
     "all in one pdf tools",
+    "pdf solution",
+    "pdf management",
+    "secure pdf processing",
+    "open source pdf software",
+    "browser pdf editor",
+    "web based pdf tools",
 
     // =========================================================
     // MERGE / COMBINE
