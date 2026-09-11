@@ -1,17 +1,7 @@
-
 import { notFound } from "next/navigation";
-
 import { tools } from "@/config/tools";
 import { Metadata } from "next";
-
-
 import { siteConfig } from "@/config/site";
-import Link from "next/link";
-import { PageOperationsTool } from "@/features/pdf/components/PageOperationsTool";
-import { BookOpen, ShieldCheck } from "lucide-react";
-
-
-
 interface Props {
   params: Promise<{
     tool: string;
@@ -66,9 +56,7 @@ export function generateStaticParams() {
   }));
 }
 
-const DedicatedToolComponents: Record<string, React.FC> = {};
-
-export default async function ToolPage({ params }: Props) {
+  export default async function ToolPage({ params }: Props) {
   const resolvedParams = await params;
   const toolConfig = tools.find((t) => t.id === resolvedParams.tool);
 
@@ -119,7 +107,7 @@ export default async function ToolPage({ params }: Props) {
     ]
   };
 
-  const DedicatedComponent = DedicatedToolComponents[toolConfig.id];
+  
 
   return (
     <div className="flex flex-col max-w-5xl mx-auto w-full space-y-8">
@@ -153,29 +141,23 @@ export default async function ToolPage({ params }: Props) {
       </div>
 
       {/* Tool Canvas Container */}
-      <div className="bg-white border border-slate-200 rounded-lg p-5 sm:p-8 shadow-2xs">
-        {DedicatedComponent ? (
-          <DedicatedComponent />
-        ) : toolConfig.category === "Organization" || toolConfig.category === "Pages" ? (
-          <PageOperationsTool />
-        ): <></>}
+            <div className="bg-white border border-slate-200 rounded-lg p-5 sm:p-8 shadow-2xs">
+        <div className="p-4 bg-slate-50 border border-slate-200 rounded-md space-y-4 text-center">
+          <p className="text-sm font-medium text-slate-700">This feature needs to be developed.</p>
+        </div>
       </div>
 
       {/* Server-Rendered Static SEO Content Sections */}
       <article className="space-y-8 pt-4 border-t border-slate-200 text-slate-800">
-
-
-
         {/* Section 5: Link to Technical Docs */}
         <div className="pt-2 mt-auto text-xs text-slate-500 flex items-center justify-between border-t border-slate-100">
           <span>Need technical specifications or developer guides for this tool?</span>
-          <Link
+          <a
             href={`/docs/tools/${toolConfig.id}`}
             className="font-semibold text-orange-600 hover:underline flex items-center gap-1"
           >
-            <BookOpen size={13} />
             <span>View {toolConfig.name} Specs in Docs →</span>
-          </Link>
+          </a>
         </div>
       </article>
     </div>
