@@ -3,26 +3,26 @@ import Link from "next/link";
 import { tools } from "@/config/tools";
 import { Metadata } from "next";
 
-import { MergePdfTool } from "@/features/pdf/components/MergePdfTool";
-import { SplitPdfTool } from "@/features/pdf/components/SplitPdfTool";
-import { RotatePdfTool } from "@/features/pdf/components/RotatePdfTool";
-import { DeletePdfPagesTool } from "@/features/pdf/components/DeletePdfPagesTool";
-import { ExtractPdfPagesTool } from "@/features/pdf/components/ExtractPdfPagesTool";
-import { CompressPdfTool } from "@/features/pdf/components/CompressPdfTool";
-import { PdfToJpgTool } from "@/features/pdf/components/PdfToJpgTool";
-import { PdfToPngTool } from "@/features/pdf/components/PdfToPngTool";
-import { PdfToWebpTool } from "@/features/pdf/components/PdfToWebpTool";
+
+
+
+
+
+
+
+
+
 
 import { PageOperationsTool } from "@/features/pdf/components/PageOperationsTool";
 import { ImageConversionTool } from "@/features/pdf/components/ImageConversionTool";
-import { PdfViewerTool } from "@/features/pdf/components/PdfViewerTool";
-import { PdfEditorTool } from "@/features/pdf/components/PdfEditorTool";
-import { PdfSecurityTool } from "@/features/pdf/components/PdfSecurityTool";
-import { PdfFormTool } from "@/features/pdf/components/PdfFormTool";
-import { PdfEnhanceTool } from "@/features/pdf/components/PdfEnhanceTool";
+
+
+
+
+
 
 import { siteConfig } from "@/config/site";
-import { ShieldCheck, ArrowRight, BookOpen, Layers } from "lucide-react";
+import { ShieldCheck, BookOpen } from "lucide-react";
 
 interface Props {
   params: Promise<{
@@ -78,17 +78,7 @@ export function generateStaticParams() {
   }));
 }
 
-const DedicatedToolComponents: Record<string, React.FC> = {
-  "merge-pdf": MergePdfTool,
-  "split-pdf": SplitPdfTool,
-  "rotate-pdf": RotatePdfTool,
-  "delete-pdf-pages": DeletePdfPagesTool,
-  "extract-pdf-pages": ExtractPdfPagesTool,
-  "compress-pdf": CompressPdfTool,
-  "pdf-to-jpg": PdfToJpgTool,
-  "pdf-to-png": PdfToPngTool,
-  "pdf-to-webp": PdfToWebpTool,
-};
+const DedicatedToolComponents: Record<string, React.FC> = {};
 
 export default async function ToolPage({ params }: Props) {
   const resolvedParams = await params;
@@ -142,11 +132,6 @@ export default async function ToolPage({ params }: Props) {
   };
 
   const DedicatedComponent = DedicatedToolComponents[toolConfig.id];
-
-  // Find related tools in the same category
-  const relatedTools = tools
-    .filter((t) => t.category === toolConfig.category && t.id !== toolConfig.id)
-    .slice(0, 4);
 
   return (
     <div className="flex flex-col max-w-5xl mx-auto w-full space-y-8">

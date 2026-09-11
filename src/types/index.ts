@@ -8,7 +8,7 @@ export type ToolCategory =
   | "Enhancement"
   | "Reading";
 
-export type ToolStatus = "implemented" | "partially_implemented" | "planned" | "active";
+export type ToolStatus = "implemented" | "partially_implemented" | "planned" | "active" | "placeholder";
 
 export type ToolDefinition = {
   id: string;

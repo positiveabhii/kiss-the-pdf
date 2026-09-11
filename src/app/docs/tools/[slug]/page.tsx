@@ -283,12 +283,12 @@ export default async function ToolOrCategoryDocPage({ params }: ToolOrCategoryDo
             <h2 className="text-xl font-bold text-slate-900 tracking-tight">Input & Output Formats</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
               <div className="p-3.5 rounded-lg border border-slate-200 bg-white space-y-1">
-                <span className="font-bold text-slate-900 block uppercase tracking-wider text-[10px] text-slate-400">Supported Input</span>
+                                <span className="font-bold block uppercase tracking-wider text-[10px] text-slate-400">Supported Input</span>
                 <span className="font-semibold text-slate-800 block text-sm">PDF Documents (.pdf)</span>
                 <span className="text-[11px] text-slate-500 block">Loaded directly into browser memory buffers.</span>
               </div>
               <div className="p-3.5 rounded-lg border border-slate-200 bg-white space-y-1">
-                <span className="font-bold text-slate-900 block uppercase tracking-wider text-[10px] text-slate-400">Target Output</span>
+                <span className="font-bold block uppercase tracking-wider text-[10px] text-slate-400">Target Output</span>
                 <span className="font-semibold text-slate-800 block text-sm">Processed PDF or Images</span>
                 <span className="text-[11px] text-slate-500 block">Generated locally and downloaded directly.</span>
               </div>

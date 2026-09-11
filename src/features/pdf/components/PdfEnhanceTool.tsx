@@ -8,7 +8,7 @@ import { PdfUploadArea } from "./shared/PdfUploadArea";
 import { PdfDocumentHeader } from "./shared/PdfDocumentHeader";
 import { ToolProcessingState } from "./shared/ToolProcessingState";
 import { ToolSuccessState } from "./shared/ToolSuccessState";
-import { Sparkles, Droplets, Link as LinkIcon, QrCode } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 interface PdfEnhanceToolProps {
   toolId: string;
@@ -21,7 +21,6 @@ export function PdfEnhanceTool({ toolId, toolName }: PdfEnhanceToolProps) {
   const doc = usePdfDocument();
 
   const [textInput, setTextInput] = useState("CONFIDENTIAL");
-  const [position, setPosition] = useState("bottom-center");
 
   const handleEnhance = async () => {
     if (!doc.pdfBytes || !doc.file) return;
@@ -87,52 +86,9 @@ export function PdfEnhanceTool({ toolId, toolName }: PdfEnhanceToolProps) {
 
   return (
     <div className="w-full min-w-0 max-w-3xl mx-auto space-y-6">
-      {!doc.file ? (
-        <PdfUploadArea onFileSelect={doc.loadFile} label={`Select PDF for ${toolName}`} disabled={doc.loading} />
-      ) : (
-        <>
-          <PdfDocumentHeader
-            filename={doc.file.name}
-            fileSize={doc.file.size}
-            pageCount={doc.pageCount}
-            onReplace={doc.loadFile}
-            onRemove={doc.removeFile}
-          />
-
-          <div className="p-4 bg-slate-50 border border-slate-200 rounded-md space-y-4">
-            <div>
-              <label htmlFor="enhance-text" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">
-                Text / Stamp Value
-              </label>
-              <input
-                id="enhance-text"
-                type="text"
-                value={textInput}
-                onChange={(e) => setTextInput(e.target.value)}
-                placeholder="Enter text value..."
-                className="w-full h-9 px-3 text-xs bg-white border border-slate-200 rounded outline-none focus:border-slate-900"
-              />
-            </div>
-          </div>
-
-          {error && (
-            <p className="text-xs font-medium text-red-600 bg-red-50 border border-red-200 p-2.5 rounded" role="alert">
-              {error.message}
-            </p>
-          )}
-
-          <div className="pt-2 flex justify-end">
-            <button
-              type="button"
-              onClick={handleEnhance}
-              className="inline-flex items-center gap-2 px-5 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-md transition-all shadow-2xs"
-            >
-              <Sparkles size={14} />
-              <span>Apply {toolName}</span>
-            </button>
-          </div>
-        </>
-      )}
+      <div className="p-4 bg-slate-50 border border-slate-200 rounded-md space-y-4 text-center">
+        <p className="text-sm font-medium text-slate-700">This feature needs to be developed.</p>
+      </div>
     </div>
   );
 }

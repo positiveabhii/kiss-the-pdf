@@ -137,67 +137,11 @@ export function RotatePdfTool() {
 
   return (
     <div className="w-full min-w-0 max-w-3xl mx-auto space-y-6">
-      {!doc.file ? (
-        <PdfUploadArea onFileSelect={doc.loadFile} label="Select a PDF to rotate" disabled={doc.loading} />
-      ) : (
-        <>
-          <PdfDocumentHeader
-            filename={doc.file.name}
-            fileSize={doc.file.size}
-            pageCount={doc.pageCount}
-            onReplace={doc.loadFile}
-            onRemove={() => {
-              doc.removeFile();
-              resetChanges();
-              selection.reset();
-            }}
-          />
-
-          <section className="space-y-3 min-w-0">
-            <div className="flex items-center justify-between">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-                Page Preview & Inspection
-              </h3>
-              <span className="text-[11px] text-slate-400">
-                Hover a thumbnail for quick 90° controls
-              </span>
-            </div>
-
-            <PdfPageGrid
-              pageCount={doc.pageCount}
-              thumbnails={doc.thumbnails}
-              selectedPages={selection.selectedPages}
-              pageRotations={previewRotations}
-              onTogglePage={selection.togglePage}
-              onLoadThumbnail={doc.loadThumbnail}
-              onRotatePage={rotatePage}
-            />
-          </section>
-
-          <section className="p-4 bg-slate-50 border border-slate-200 rounded-md space-y-4">
-            <PageScopeSelector
-              scope={selection.scope}
-              onScopeChange={(s) => {
-                selection.setScope(s);
-                if (s === "all") selection.selectAll();
-              }}
-              rangeInput={selection.rangeInput}
-              onRangeInputChange={selection.setRangeInput}
-              pageCount={doc.pageCount}
-              selectedCount={selection.selectedPages.size}
-            />
-
-            <SegmentedControl
-              label="Batch Rotation Angle"
-              value={globalAngle}
-              onChange={setGlobalAngle}
-              options={[
-                {
-                  value: 90 as RotationAngle,
-                  label: "90° CW",
-                  icon: <RotateCw className="w-3.5 h-3.5" aria-hidden="true" />,
-                },
-                { value: 180 as RotationAngle, label: "180°" },
+      <div className="p-4 bg-slate-50 border border-slate-200 rounded-md space-y-4 text-center">
+        <p className="text-sm font-medium text-slate-700">This feature needs to be developed.</p>
+      </div>
+    </div>
+  );
                 {
                   value: 270 as RotationAngle,
                   label: "90° CCW",

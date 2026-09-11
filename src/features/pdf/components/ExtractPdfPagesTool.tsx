@@ -67,80 +67,9 @@ export function ExtractPdfPagesTool() {
 
   return (
     <div className="w-full min-w-0 max-w-3xl mx-auto space-y-6">
-      {!doc.file ? (
-        <PdfUploadArea onFileSelect={doc.loadFile} label="Select a PDF to extract pages from" disabled={doc.loading} />
-      ) : (
-        <>
-          <PdfDocumentHeader
-            filename={doc.file.name}
-            fileSize={doc.file.size}
-            pageCount={doc.pageCount}
-            onReplace={doc.loadFile}
-            onRemove={() => {
-              doc.removeFile();
-              selection.reset();
-            }}
-          />
-
-          <section className="space-y-3 min-w-0">
-            <div className="flex items-center justify-between">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-                Select Pages to Extract
-              </h3>
-              <span className="text-[11px] text-slate-400">
-                Click thumbnails to select pages to include
-              </span>
-            </div>
-
-            <PdfPageGrid
-              pageCount={doc.pageCount}
-              thumbnails={doc.thumbnails}
-              selectedPages={selection.selectedPages}
-              onTogglePage={selection.togglePage}
-              onLoadThumbnail={doc.loadThumbnail}
-            />
-          </section>
-
-          <div className="p-4 bg-slate-50 border border-slate-200 rounded-md space-y-3">
-            <PageScopeSelector
-              scope={selection.scope}
-              onScopeChange={(s) => {
-                selection.setScope(s);
-                if (s === "all") selection.selectAll();
-              }}
-              rangeInput={selection.rangeInput}
-              onRangeInputChange={selection.setRangeInput}
-              pageCount={doc.pageCount}
-              selectedCount={selection.selectedPages.size}
-            />
-          </div>
-
-          {error && (
-            <p className="text-xs font-medium text-red-600 bg-red-50 border border-red-200 p-2.5 rounded" role="alert">
-              {error.message}
-            </p>
-          )}
-
-          <div className="pt-2 flex justify-end">
-            <button
-              type="button"
-              onClick={handleExtract}
-              disabled={selection.resolvedPages.length === 0}
-              className="inline-flex items-center gap-2 px-5 py-2 bg-slate-900 hover:bg-slate-800 disabled:bg-slate-200 disabled:text-slate-400 text-white text-xs font-semibold rounded-md transition-all shadow-2xs"
-            >
-              <FileOutput size={14} />
-              <span>Extract {selection.resolvedPages.length} Pages</span>
-            </button>
-          </div>
-        </>
-      )}
-
-      {doc.loading && <p className="text-xs font-mono text-slate-500 text-center py-4">Reading document pages…</p>}
-      {doc.error && (
-        <p className="text-xs font-medium text-red-600 text-center py-4" role="alert">
-          {doc.error}
-        </p>
-      )}
+      <div className="p-4 bg-slate-50 border border-slate-200 rounded-md space-y-4 text-center">
+        <p className="text-sm font-medium text-slate-700">This feature needs to be developed.</p>
+      </div>
     </div>
   );
 }

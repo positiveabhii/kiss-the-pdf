@@ -22,14 +22,14 @@ const STEPS = [
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-20 sm:py-24 bg-[var(--kp-surface)] relative">
-      <div className="absolute inset-x-0 top-0 h-px bg-[var(--kp-border)]" aria-hidden="true" />
+    <section id="how-it-works" className="py-20 sm:py-24 bg-(--kp-surface) relative">
+      <div className="absolute inset-x-0 top-0 h-px bg-(--kp-border)" aria-hidden="true" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <div className="text-center max-w-2xl mx-auto mb-14">
-            <h2 className="kp-heading text-[var(--kp-text)] mb-3">How it works</h2>
-            <p className="text-[var(--kp-text-muted)]">
+            <h2 className="kp-heading text-(--kp-text) mb-3">How it works</h2>
+            <p className="text-(--kp-text-muted)">
               Three steps. No account. No upload to our servers.
             </p>
           </div>
@@ -40,17 +40,17 @@ export function HowItWorks() {
             <div key={step.number} className="relative text-center md:text-left px-2">
               {i < STEPS.length - 1 && (
                 <div
-                  className="hidden md:block absolute top-6 left-[calc(50%+2.5rem)] w-[calc(100%-5rem)] h-px bg-gradient-to-r from-[var(--kp-border)] to-transparent"
+                  className="hidden md:block absolute top-6 left-[calc(50%+2.5rem)] w-[calc(100%-5rem)] h-px bg-linear-to-r from-(--kp-border) to-transparent"
                   aria-hidden="true"
                 />
               )}
-              <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[var(--kp-accent-soft)] text-[var(--kp-accent)] text-sm font-bold mb-5 ring-4 ring-[var(--kp-surface)]">
+              <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-(--kp-accent-soft) text-(--kp-accent) text-sm font-bold mb-5 ring-4 ring-(--kp-surface)">
                 {step.number}
               </span>
-              <h3 className="text-base font-semibold text-[var(--kp-text)] mb-2 tracking-[-0.01em]">
+              <h3 className="text-base font-semibold text-(--kp-text) mb-2 tracking-[-0.01em]">
                 {step.title}
               </h3>
-              <p className="text-sm text-[var(--kp-text-muted)] leading-relaxed max-w-xs mx-auto md:mx-0">
+              <p className="text-sm text-(--kp-text-muted) leading-relaxed max-w-xs mx-auto md:mx-0">
                 {step.description}
               </p>
             </div>

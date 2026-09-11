@@ -35,7 +35,7 @@ export function LandingPage() {
   }, [focusSearch]);
 
   return (
-    <div className="min-h-screen bg-[var(--kp-bg)] text-[var(--kp-text)] overflow-x-hidden">
+    <div className="min-h-screen bg-(--kp-bg) text-(--kp-text) overflow-x-hidden">
       <ScrollProgress />
       <LandingHeader onSearchFocus={focusSearch} />
       <main>
