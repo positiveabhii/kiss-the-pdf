@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { tools } from "@/config/tools";
 import { Metadata } from "next";
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/config/site";import { ShieldCheck } from "lucide-react";
 interface Props {
   params: Promise<{
     tool: string;

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { PdfEngineAdapter } from "../engine/pdf-engine-adapter";
 
 import type { CompressOptions } from "../engine/operations/compress";
 
@@ -18,34 +17,5 @@ export type WorkerResponse =
 self.addEventListener("message", async (e: MessageEvent<{ jobId: string, message: WorkerMessage }>) => {
   const { jobId, message } = e.data;
   
-  try {
-    let result: any;
-    
-    switch (message.type) {
-      case "MERGE":
-        result = await PdfEngineAdapter.merge(message.payload.pdfs);
-        break;
-      case "SPLIT":
-        result = await PdfEngineAdapter.split(message.payload.pdf, message.payload.ranges);
-        break;
-      case "ROTATE":
-        result = await PdfEngineAdapter.rotate(message.payload.pdf, message.payload.rotations);
-        break;
-      case "DELETE":
-        result = await PdfEngineAdapter.deletePages(message.payload.pdf, message.payload.pages);
-        break;
-      case "EXTRACT":
-        result = await PdfEngineAdapter.extractPages(message.payload.pdf, message.payload.pages);
-        break;
-      case "COMPRESS":
-        result = await PdfEngineAdapter.compress(message.payload.pdf, message.payload.options);
-        break;
-      default:
-        throw new Error(`Unknown message type: ${(message as any).type}`);
-    }
-    
-    self.postMessage({ type: "SUCCESS", jobId, payload: result });
-  } catch (error: any) {
-    self.postMessage({ type: "ERROR", jobId, error: error.message || "An unknown error occurred in the PDF worker." });
-  }
+  self.postMessage({ type: "ERROR", jobId, error: `Feature \'${message.type}\' needs to be developed.` });
 });
