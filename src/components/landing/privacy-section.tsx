@@ -32,7 +32,7 @@ function FlowDiagram() {
                 <div className="absolute inset-0 bg-white/15 w-px" />
                 {!reducedMotion && (
                   <span
-                    className="kp-flow-travel absolute left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-(--kp-accent) shadow-[0_0_8px_rgb(194_65_12_/_0.6)]"
+                    className="kp-flow-travel absolute left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-(--kp-accent) shadow-[0_0_8px_rgb(194_65_12/0.6)]"
                     style={{ animationDelay: `${i * 600}ms` }}
                   />
                 )}
@@ -57,12 +57,12 @@ export function PrivacySection() {
         className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-(--kp-accent)/10 blur-3xl pointer-events-none"
         aria-hidden="true"
       />
-      <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/10 to-transparent" aria-hidden="true" />
+            <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/10 to-transparent" aria-hidden="true" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <Reveal slideX blur>
-            <p className="kp-label text-(--kp-accent) mb-4 opacity-80">Privacy first</p>
+                        <p className="kp-label text-(--kp-accent) mb-4 opacity-80">Privacy first</p>
             <h2 className="kp-heading text-white mb-5">Your files. Your device.</h2>
             <p className="text-white/65 text-lg leading-relaxed mb-6 max-w-lg">
               KissPDF is designed around browser-based processing. For supported tools, your files

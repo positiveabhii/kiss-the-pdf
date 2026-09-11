@@ -16,8 +16,8 @@ const PRINCIPLES = [
 
 export function WhyKissPdf() {
   return (
-    <section className="py-20 sm:py-24 bg-(--kp-bg) relative">
-      <div className="absolute inset-x-0 top-0 h-px bg-(--kp-border)" aria-hidden="true" />
+        <section className="py-20 sm:py-24 bg-(--kp-bg) relative">
+            <div className="absolute inset-x-0 top-0 h-px bg-(--kp-border)" aria-hidden="true" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
@@ -36,7 +36,7 @@ export function WhyKissPdf() {
           {PRINCIPLES.map((item) => (
             <div
               key={item.number}
-              className="group p-5 rounded-xl border border-(--kp-border) bg-(--kp-surface) hover:border-(--kp-border-hover) hover:shadow-(--kp-shadow-xs) transition-all duration-200"
+                            className="group p-5 rounded-xl border border-(--kp-border) bg-(--kp-surface) hover:border-(--kp-border-hover) hover:shadow-(--kp-shadow-xs) transition-all duration-200"
             >
               <span className="text-[11px] font-mono font-semibold text-(--kp-accent) mb-4 block">
                 {item.number}

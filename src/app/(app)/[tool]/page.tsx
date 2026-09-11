@@ -1,29 +1,16 @@
-import React from "react";
+
 import { notFound } from "next/navigation";
-import Link from "next/link";
+
 import { tools } from "@/config/tools";
 import { Metadata } from "next";
 
 
-
-
-
-
-
-
-
-
-
-import { PageOperationsTool } from "@/features/pdf/components/PageOperationsTool";
-import { ImageConversionTool } from "@/features/pdf/components/ImageConversionTool";
-
-
-
-
-
-
 import { siteConfig } from "@/config/site";
-import { ShieldCheck, BookOpen } from "lucide-react";
+import Link from "next/link";
+import { PageOperationsTool } from "@/features/pdf/components/PageOperationsTool";
+import { BookOpen, ShieldCheck } from "lucide-react";
+
+
 
 interface Props {
   params: Promise<{
@@ -170,22 +157,8 @@ export default async function ToolPage({ params }: Props) {
         {DedicatedComponent ? (
           <DedicatedComponent />
         ) : toolConfig.category === "Organization" || toolConfig.category === "Pages" ? (
-          <PageOperationsTool toolId={toolConfig.id} toolName={toolConfig.name} />
-        ) : toolConfig.category === "Convert" ? (
-          <ImageConversionTool toolId={toolConfig.id} toolName={toolConfig.name} />
-        ) : toolConfig.category === "Edit" ? (
-          <PdfEditorTool toolId={toolConfig.id} toolName={toolConfig.name} />
-        ) : toolConfig.category === "Security" ? (
-          <PdfSecurityTool toolId={toolConfig.id} toolName={toolConfig.name} />
-        ) : toolConfig.category === "Forms" ? (
-          <PdfFormTool toolId={toolConfig.id} toolName={toolConfig.name} />
-        ) : toolConfig.category === "Enhancement" ? (
-          <PdfEnhanceTool toolId={toolConfig.id} toolName={toolConfig.name} />
-        ) : toolConfig.category === "Reading" ? (
-          <PdfViewerTool toolId={toolConfig.id} toolName={toolConfig.name} />
-        ) : (
-          <PageOperationsTool toolId={toolConfig.id} toolName={toolConfig.name} />
-        )}
+          <PageOperationsTool />
+        ): <></>}
       </div>
 
       {/* Server-Rendered Static SEO Content Sections */}
