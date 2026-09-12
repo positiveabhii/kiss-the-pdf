@@ -352,6 +352,11 @@ export function JpgToPdfTool() {
             />
           </div>
 
+          <p className="text-[11px] text-slate-500">
+            Up to {UPLOAD_LIMITS.maxImages} images · {formatFileSize(UPLOAD_LIMITS.maxImageSizeBytes)} each ·{" "}
+            {formatFileSize(UPLOAD_LIMITS.maxTotalImagesBytes)} total
+          </p>
+
           {skippedCount > 0 && (
             <div className="flex items-start gap-2 p-3 bg-amber-50 border border-amber-200 rounded-md text-xs text-amber-800">
               <AlertCircle size={14} className="shrink-0 mt-0.5" />
