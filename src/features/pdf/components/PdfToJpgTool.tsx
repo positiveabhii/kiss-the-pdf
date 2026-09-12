@@ -11,6 +11,7 @@ import { createZipFromFiles } from "../utils/zip-utils";
 import { downloadBlob } from "../utils/download-utils";
 import { sanitizeFilename } from "../utils/sanitize-filename";
 import { formatFileSize } from "../utils/format-file-size";
+import { UPLOAD_LIMITS } from "../utils/upload-limits";
 import { getMimeType } from "../render/image-encoder";
 
 import { PdfUploadArea } from "./shared/PdfUploadArea";
@@ -96,6 +97,13 @@ export function PdfToJpgTool() {
     if (!isPdf) {
       setInvalidFileError(
         `"${file.name}" is not a PDF file. Only PDF files can be processed.`
+      );
+      return;
+    }
+
+    if (file.size > UPLOAD_LIMITS.maxPdfSizeBytes) {
+      setInvalidFileError(
+        `"${file.name}" exceeds the ${formatFileSize(UPLOAD_LIMITS.maxPdfSizeBytes)} PDF size limit.`
       );
       return;
     }
