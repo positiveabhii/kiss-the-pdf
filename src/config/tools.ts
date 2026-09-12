@@ -475,7 +475,7 @@ export const tools: ToolDefinition[] = [
     category: "Convert",
     href: "/pdf-to-jpg",
     icon: "ImageDown",
-    status: "placeholder",
+    status: "implemented",
     seoTitle: "Convert PDF to JPG Online | Kiss the PDF",
     seoDescription: "Convert PDF pages into high quality JPG images in your browser.",
     keywords: ["pdf to jpg", "pdf to jpeg", "convert pdf to image"],

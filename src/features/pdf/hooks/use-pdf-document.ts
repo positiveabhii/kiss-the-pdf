@@ -19,7 +19,7 @@ export function usePdfDocument() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const rendererRef = useRef<PdfRenderer | null>(null);
-  const loadingRef = useRef(false);
+  const loadSeqRef = useRef(0);
 
   const cleanup = useCallback(() => {
     rendererRef.current?.cleanup();
@@ -34,8 +34,7 @@ export function usePdfDocument() {
 
   const loadFile = useCallback(
     async (newFile: File) => {
-      if (loadingRef.current) return;
-      loadingRef.current = true;
+      const seq = ++loadSeqRef.current;
       setLoading(true);
       setError(null);
       cleanup();
@@ -44,29 +43,35 @@ export function usePdfDocument() {
         const buffer = await newFile.arrayBuffer();
         const bytes = new Uint8Array(buffer);
         const info = await getPdfInfo(newFile);
+        if (seq !== loadSeqRef.current) return;
 
         const renderer = new PdfRenderer();
         rendererRef.current = renderer;
         await renderer.load(bytes);
+        if (seq !== loadSeqRef.current) {
+          renderer.cleanup();
+          return;
+        }
 
         setFile(newFile);
         setPdfBytes(bytes);
         setPageCount(info.pageCount);
         setThumbnails(new Map());
       } catch (err) {
+        if (seq !== loadSeqRef.current) return;
         setError(err instanceof Error ? err.message : "Failed to load PDF.");
         setFile(null);
         setPdfBytes(null);
         setPageCount(0);
       } finally {
-        setLoading(false);
-        loadingRef.current = false;
+        if (seq === loadSeqRef.current) setLoading(false);
       }
     },
     [cleanup]
   );
 
   const removeFile = useCallback(() => {
+    loadSeqRef.current++;
     cleanup();
     setFile(null);
     setPdfBytes(null);
