@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { ImageDown, CheckSquare, Square, AlertCircle } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
+import { ImageDown, CheckSquare, Square, AlertCircle, AlertTriangle } from "lucide-react";
 
 import { usePdfDocument } from "../hooks/use-pdf-document";
 import { usePageSelection } from "../hooks/use-page-selection";
@@ -13,6 +13,7 @@ import { sanitizeFilename } from "../utils/sanitize-filename";
 import { formatFileSize } from "../utils/format-file-size";
 import { UPLOAD_LIMITS } from "../utils/upload-limits";
 import { getMimeType } from "../render/image-encoder";
+import { isAbortError } from "../utils/is-abort-error";
 
 import { PdfUploadArea } from "./shared/PdfUploadArea";
 import { PdfDocumentHeader } from "./shared/PdfDocumentHeader";
@@ -36,6 +37,8 @@ const DPI_OPTIONS: { value: number; label: string }[] = [
   { value: 300, label: "300" },
   { value: 600, label: "600" },
 ];
+
+const PAGE_WARNING_THRESHOLD = 40;
 
 interface ConversionResult {
   files: RenderedPage[];
@@ -84,6 +87,7 @@ export function PdfToJpgTool() {
   const [dpi, setDpi] = useState<number>(300);
   const [progress, setProgress] = useState<{ current: number; total: number } | undefined>(undefined);
   const [invalidFileError, setInvalidFileError] = useState<string | null>(null);
+  const abortRef = useRef<AbortController | null>(null);
 
   const baseFilename = useMemo(
     () => (file ? sanitizeFilename(file.name) : "document"),
@@ -124,6 +128,9 @@ export function PdfToJpgTool() {
   const handleConvert = () => {
     if (!pdfBytes || resolvedPages.length === 0) return;
 
+    const controller = new AbortController();
+    abortRef.current = controller;
+
     startProcessing();
     setProgress({ current: 0, total: resolvedPages.length });
 
@@ -135,14 +142,24 @@ export function PdfToJpgTool() {
         quality,
         background: "white",
         onProgress: (current, total) => setProgress({ current, total }),
+        signal: controller.signal,
       })
       .then((files) => {
+        abortRef.current = null;
         const totalBytes = files.reduce((sum, file) => sum + file.data.byteLength, 0);
         setSuccess({ files, totalBytes });
       })
       .catch((err: unknown) => {
+        abortRef.current = null;
+        if (isAbortError(err)) return;
         setFailed(err);
       });
+  };
+
+  const handleCancel = () => {
+    abortRef.current?.abort();
+    abortRef.current = null;
+    cancelProcessing();
   };
 
   const handleDownload = () => {
@@ -176,7 +193,11 @@ export function PdfToJpgTool() {
   return (
     <div className="w-full min-w-0 max-w-3xl mx-auto space-y-6">
       {isProcessing ? (
-        <ToolProcessingState message="Converting pages to JPG..." progress={progress} />
+        <ToolProcessingState
+          message="Converting pages to JPG..."
+          progress={progress}
+          onCancel={handleCancel}
+        />
       ) : state === "success" && result ? (
         <ToolSuccessState
           title="Conversion complete!"
@@ -207,6 +228,9 @@ export function PdfToJpgTool() {
                 onFileSelect={handleFileSelect}
                 label="Select PDF to convert to JPG"
               />
+              <p className="text-[11px] text-slate-500">
+                Up to {formatFileSize(UPLOAD_LIMITS.maxPdfSizeBytes)} per file
+              </p>
             </>
           ) : (
             <>
@@ -307,6 +331,17 @@ export function PdfToJpgTool() {
                   ? `Convert to JPG (${resolvedPages.length} page${resolvedPages.length === 1 ? "" : "s"})`
                   : "Select at least one page"}
               </button>
+
+              {resolvedPages.length > PAGE_WARNING_THRESHOLD && (
+                <div className="flex items-start gap-2 p-3 bg-amber-50 border border-amber-200 rounded-md text-xs text-amber-800">
+                  <AlertTriangle size={14} className="shrink-0 mt-0.5" />
+                  <span>
+                    {resolvedPages.length} pages selected — converting many pages at high resolution
+                    can be slow and memory-hungry. Consider lowering the DPI or selecting fewer
+                    pages.
+                  </span>
+                </div>
+              )}
 
               {state === "error" && error && (
                 <div className="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-md text-xs text-red-700">
