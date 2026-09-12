@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import { tools } from "@/config/tools";
 import { Metadata } from "next";
-import { siteConfig } from "@/config/site";import { ShieldCheck } from "lucide-react";
+import { siteConfig } from "@/config/site";
+import { ShieldCheck } from "lucide-react";
+import { PdfToJpgTool } from "@/features/pdf/components/PdfToJpgTool";
 interface Props {
   params: Promise<{
     tool: string;
@@ -141,10 +143,14 @@ export function generateStaticParams() {
       </div>
 
       {/* Tool Canvas Container */}
-            <div className="bg-white border border-slate-200 rounded-lg p-5 sm:p-8 shadow-2xs">
-        <div className="p-4 bg-slate-50 border border-slate-200 rounded-md space-y-4 text-center">
-          <p className="text-sm font-medium text-slate-700">This feature needs to be developed.</p>
-        </div>
+      <div className="bg-white border border-slate-200 rounded-lg p-5 sm:p-8 shadow-2xs">
+        {toolConfig.id === "pdf-to-jpg" ? (
+          <PdfToJpgTool />
+        ) : (
+          <div className="p-4 bg-slate-50 border border-slate-200 rounded-md space-y-4 text-center">
+            <p className="text-sm font-medium text-slate-700">This feature needs to be developed.</p>
+          </div>
+        )}
       </div>
 
       {/* Server-Rendered Static SEO Content Sections */}

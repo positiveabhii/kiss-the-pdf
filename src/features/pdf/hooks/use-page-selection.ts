@@ -55,6 +55,8 @@ export function usePageSelection(pageCount: number) {
     }
   }, [scope, selectedPages, rangeInput, pageCount]);
 
+  const highlightedPages = useMemo(() => new Set(resolvedPages), [resolvedPages]);
+
   const reset = useCallback(() => {
     setScope("all");
     setSelectedPages(new Set());
@@ -71,6 +73,7 @@ export function usePageSelection(pageCount: number) {
     rangeInput,
     setRangeInput,
     resolvedPages,
+    highlightedPages,
     reset,
   };
 }

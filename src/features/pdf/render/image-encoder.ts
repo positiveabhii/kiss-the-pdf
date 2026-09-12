@@ -55,7 +55,7 @@ export async function encodeCanvas(
 
 export function qualityLabelToValue(label: "high" | "medium" | "low", format: ImageFormat): number {
   if (format === "png") return 1;
-  const map = { high: 0.92, medium: 0.8, low: 0.65 };
+  const map = { high: 1, medium: 0.82, low: 0.65 };
   return map[label];
 }
 
