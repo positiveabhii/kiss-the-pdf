@@ -379,7 +379,7 @@ export const tools: ToolDefinition[] = [
     category: "Convert",
     href: "/jpg-to-pdf",
     icon: "FileImage",
-    status: "placeholder",
+    status: "implemented",
     seoTitle: "Convert JPG to PDF Free Online | Kiss the PDF",
     seoDescription: "Convert JPG and JPEG images into a single PDF document in your browser.",
     keywords: ["jpg to pdf", "image to pdf", "convert jpg to pdf"],
