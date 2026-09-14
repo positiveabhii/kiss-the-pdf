@@ -13,6 +13,7 @@ export interface RenderPagesOptions {
   quality?: "high" | "medium" | "low";
   background?: "white" | "transparent";
   onProgress?: (current: number, total: number) => void;
+  signal?: AbortSignal;
 }
 
 export interface RenderedPage {
@@ -32,6 +33,7 @@ class PdfRenderService {
       const ext = options.format === "jpeg" ? "jpg" : options.format;
 
       for (let i = 0; i < options.pages.length; i++) {
+        if (options.signal?.aborted) throw new DOMException("Aborted", "AbortError");
         const pageNumber = options.pages[i];
         options.onProgress?.(i + 1, options.pages.length);
 
@@ -42,6 +44,8 @@ class PdfRenderService {
             options.background ?? (options.format === "jpeg" ? "white" : "transparent"),
         });
 
+        if (options.signal?.aborted) throw new DOMException("Aborted", "AbortError");
+
         const qualityValue = options.quality
           ? qualityLabelToValue(options.quality, options.format)
           : undefined;
@@ -51,6 +55,8 @@ class PdfRenderService {
           quality: qualityValue,
           background: options.background,
         });
+
+        if (options.signal?.aborted) throw new DOMException("Aborted", "AbortError");
 
         results.push({
           pageNumber,
