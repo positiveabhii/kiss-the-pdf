@@ -43,6 +43,11 @@ export const siteConfig = {
    * - internal links
    * - structured content
    * - relevant landing pages
+   *
+   * Each tool/category below should ideally have ITS OWN dedicated page
+   * (e.g. /compress-pdf, /merge-pdf, /pdf-to-word) rather than relying on
+   * the homepage to rank for all of these — that is the single biggest
+   * lever for organic reach in this niche (see note at bottom of file).
    */
   keywords: [
     // =========================================================
@@ -69,6 +74,9 @@ export const siteConfig = {
     "open source pdf software",
     "browser pdf editor",
     "web based pdf tools",
+    "pdf tools app",
+    "pdf editor app free",
+    "best free pdf tools 2026",
 
     // =========================================================
     // MERGE / COMBINE
@@ -81,6 +89,7 @@ export const siteConfig = {
     "merge pdf online free",
     "merge pdf free",
     "merge pdf files free",
+    "merge pdf without uploading",
     "combine pdf",
     "combine pdf files",
     "combine pdf online",
@@ -92,6 +101,7 @@ export const siteConfig = {
     "join pdfs",
     "join pdf online",
     "merge multiple pdfs",
+    "merge pdf and image into one file",
 
     // =========================================================
     // SPLIT / EXTRACT
@@ -113,9 +123,10 @@ export const siteConfig = {
     "remove pages from pdf",
     "reorder pdf pages",
     "organize pdf pages",
+    "split large pdf into smaller files",
 
     // =========================================================
-    // COMPRESS
+    // COMPRESS (incl. exact-target-size — very high intent, India-heavy)
     // =========================================================
 
     "compress pdf",
@@ -132,6 +143,20 @@ export const siteConfig = {
     "make pdf smaller",
     "shrink pdf",
     "shrink pdf file size",
+    "compress pdf without losing quality",
+    "compress pdf to 100kb",
+    "compress pdf to 200kb",
+    "compress pdf to 500kb",
+    "compress pdf to 1mb",
+    "compress pdf under 100kb",
+    "compress pdf under 200kb",
+    "reduce pdf size to 100kb online free",
+    "reduce pdf size to 200kb online free",
+    "pdf compressor for government job application",
+    "compress pdf for SSC form",
+    "compress pdf for UPSC application",
+    "compress scanned document to 100kb",
+    "compress pdf for exam form upload",
 
     // =========================================================
     // PDF TO IMAGE
@@ -169,6 +194,50 @@ export const siteConfig = {
     "webp to pdf",
     "multiple images to pdf",
     "photos to pdf",
+    "photo to pdf converter free",
+
+    // =========================================================
+    // PDF <-> OFFICE (Word / Excel / PowerPoint) — highest-volume gap
+    // =========================================================
+
+    "pdf to word",
+    "pdf to word converter",
+    "pdf to word online free",
+    "convert pdf to word without losing formatting",
+    "pdf to docx",
+    "word to pdf",
+    "word to pdf converter",
+    "word to pdf online free",
+    "docx to pdf",
+    "pdf to excel",
+    "pdf to excel converter free",
+    "convert pdf table to excel",
+    "excel to pdf",
+    "excel to pdf online",
+    "pdf to ppt",
+    "pdf to powerpoint",
+    "ppt to pdf",
+    "powerpoint to pdf",
+    "pdf to text",
+    "pdf to txt",
+    "text to pdf",
+    "html to pdf",
+    "pdf to html",
+
+    // =========================================================
+    // OCR / SCAN
+    // =========================================================
+
+    "ocr pdf",
+    "ocr pdf online free",
+    "scanned pdf to text",
+    "extract text from pdf",
+    "extract text from scanned pdf",
+    "make scanned pdf searchable",
+    "image to text converter",
+    "scan to pdf",
+    "scan document to pdf free",
+    "handwriting to text pdf",
 
     // =========================================================
     // EDIT PDF
@@ -193,6 +262,7 @@ export const siteConfig = {
     "strikethrough pdf",
     "add shapes to pdf",
     "pdf annotation tool",
+    "edit pdf without watermark",
 
     // =========================================================
     // ORGANIZE
@@ -209,7 +279,6 @@ export const siteConfig = {
     "remove pdf pages",
     "duplicate pdf pages",
     "insert pdf pages",
-    "extract pdf pages",
 
     // =========================================================
     // PDF SECURITY
@@ -226,6 +295,7 @@ export const siteConfig = {
     "pdf permissions",
     "secure pdf",
     "secure pdf online",
+    "remove password from pdf online free",
 
     // =========================================================
     // PDF WATERMARK / METADATA
@@ -254,6 +324,7 @@ export const siteConfig = {
     "electronic signature pdf",
     "add text field to pdf",
     "pdf form editor",
+    "esign pdf free",
 
     // =========================================================
     // PAGE / DOCUMENT OPERATIONS
@@ -296,6 +367,17 @@ export const siteConfig = {
     "pdf presentation",
 
     // =========================================================
+    // AI / 2026 TREND TERMS
+    // =========================================================
+
+    "ai pdf tools",
+    "chat with pdf",
+    "pdf summarizer free",
+    "ai pdf summarizer",
+    "ask questions about pdf ai",
+    "pdf ai assistant free",
+
+    // =========================================================
     // PRIVACY / LOCAL PROCESSING
     // =========================================================
 
@@ -316,6 +398,7 @@ export const siteConfig = {
     "local pdf editor",
     "private pdf editor",
     "private pdf converter",
+    "pdf tools that don't upload your files",
 
     // =========================================================
     // FREE / NO SIGNUP
@@ -331,6 +414,7 @@ export const siteConfig = {
     "free pdf editor no watermark",
     "unlimited pdf tools",
     "free pdf tools online no limits",
+    "free pdf tools no ads",
 
     // =========================================================
     // OPEN SOURCE
@@ -344,6 +428,7 @@ export const siteConfig = {
     "open source pdf tools online",
     "privacy focused open source pdf tools",
     "browser based open source pdf tools",
+    "self hosted pdf tools",
 
     // =========================================================
     // USE-CASE SEARCHES
@@ -364,6 +449,8 @@ export const siteConfig = {
     "edit pdf without downloading software",
     "convert pdf online free",
     "manage pdf files online",
+    "shrink pdf for job application",
+    "resize pdf for college admission form",
 
     // =========================================================
     // BRAND
@@ -528,7 +615,7 @@ export const siteConfig = {
     "KissThePDF vs PDFsam",
 
     // =========================================================
-    // Stirling PDF
+    // Stirling PDF (fast-growing open-source competitor)
     // =========================================================
 
     "Stirling PDF",
@@ -540,6 +627,7 @@ export const siteConfig = {
     "Stirling PDF online alternative",
     "Stirling PDF vs KissThePDF",
     "KissThePDF vs Stirling PDF",
+    "Stirling PDF self hosted alternative",
 
     // =========================================================
     // DocHub
@@ -567,6 +655,40 @@ export const siteConfig = {
     "KissThePDF vs PDFelement",
 
     // =========================================================
+    // TinyWow, pdfFiller, Nitro, DeftPDF, CleverPDF, PDF Candy — newer
+    // high-traffic competitors surfaced in 2026 alternative roundups
+    // =========================================================
+
+    "TinyWow",
+    "TinyWow alternative",
+    "TinyWow PDF alternative",
+    "free TinyWow alternative",
+    "TinyWow vs KissThePDF",
+
+    "pdfFiller",
+    "pdfFiller alternative",
+    "pdfFiller alternatives",
+    "free pdfFiller alternative",
+    "pdfFiller vs KissThePDF",
+
+    "Nitro PDF",
+    "Nitro PDF alternative",
+    "Nitro PDF alternatives",
+    "free Nitro PDF alternative",
+    "Nitro PDF vs KissThePDF",
+
+    "DeftPDF",
+    "DeftPDF alternative",
+    "DeftPDF vs KissThePDF",
+
+    "CleverPDF",
+    "CleverPDF alternative",
+    "CleverPDF vs KissThePDF",
+
+    "pdf.net",
+    "pdf.net alternative",
+
+    // =========================================================
     // GENERAL COMPETITOR / ALTERNATIVE INTENT
     // =========================================================
 
@@ -589,6 +711,7 @@ export const siteConfig = {
     "PDF tools similar to Smallpdf",
     "PDF editor like Adobe Acrobat",
     "free alternative to Adobe Acrobat",
+    "best free pdf tools no watermark 2026",
   ],
 };
 
