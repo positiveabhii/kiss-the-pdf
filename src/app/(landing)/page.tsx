@@ -32,5 +32,41 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return <LandingPage />;
+  const jsonLdOrg = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": siteConfig.name,
+    "url": siteConfig.url,
+    "logo": `${siteConfig.url}${siteConfig.logo}`,
+    "sameAs": [
+      siteConfig.githubUrl,
+      siteConfig.author.url
+    ]
+  };
+
+  const jsonLdWebSite = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": siteConfig.name,
+    "url": siteConfig.url,
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": `${siteConfig.url}/tools?q={search_term_string}`,
+      "query-input": "required name=search_term_string"
+    }
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrg) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebSite) }}
+      />
+      <LandingPage />
+    </>
+  );
 }

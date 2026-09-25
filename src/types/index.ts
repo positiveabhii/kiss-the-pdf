@@ -23,6 +23,18 @@ export type ToolDefinition = {
   seoTitle: string;
   seoDescription: string;
   keywords?: string[];
+  
+  // Extended SEO Content
+  seoH1?: string;
+  seoH2s?: string[];
+  introParagraph?: string;
+  howTo?: {
+    name: string;
+    description: string;
+    steps: { name: string; text: string }[];
+  };
+  faqs?: { question: string; answer: string }[];
+  relatedTools?: string[]; // Array of tool IDs
 };
 
 export type CategoryGroup = {

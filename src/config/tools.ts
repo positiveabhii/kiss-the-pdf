@@ -15,6 +15,23 @@ export const tools: ToolDefinition[] = [
     seoTitle: "Merge PDF Files Online for Free | Kiss the PDF",
     seoDescription: "Combine multiple PDF files into one document directly in your browser. Free, private, and easy to use.",
     keywords: ["merge pdf", "combine pdf", "join pdf", "pdf merger free"],
+    seoH1: "Merge PDF Online Free",
+    seoH2s: ["How to Merge PDF", "Related Tools"],
+    introParagraph: "Easily merge pdf directly in your browser. Our free tool provides a fast, secure, and private way to process your files without any uploads.",
+    howTo: {
+      name: "How to Merge PDF",
+      description: "Learn how to merge pdf in a few simple steps.",
+      steps: [
+        { name: "Upload File", text: "Select your file or drag and drop it into the tool." },
+        { name: "Adjust Settings", text: "Choose your preferred options for processing." },
+        { name: "Download", text: "Click to process and instantly download your new file." }
+      ]
+    },
+    faqs: [
+      { question: "Is this Merge PDF tool free?", answer: "Yes, it is completely free to use with no hidden limits." },
+      { question: "Are my files secure?", answer: "Yes, all processing happens locally in your browser. Your files are never uploaded to any server." }
+    ],
+    relatedTools: ["merge-pdf", "split-pdf", "compress-pdf"],
   },
   {
     id: "split-pdf",
@@ -27,6 +44,23 @@ export const tools: ToolDefinition[] = [
     seoTitle: "Split PDF Pages Online for Free | Kiss the PDF",
     seoDescription: "Extract pages from your PDF or split a document into multiple files directly in your browser.",
     keywords: ["split pdf", "extract pdf pages", "cut pdf", "separate pdf"],
+    seoH1: "Split PDF Online Free",
+    seoH2s: ["How to Split PDF", "Related Tools"],
+    introParagraph: "Easily split pdf directly in your browser. Our free tool provides a fast, secure, and private way to process your files without any uploads.",
+    howTo: {
+      name: "How to Split PDF",
+      description: "Learn how to split pdf in a few simple steps.",
+      steps: [
+        { name: "Upload File", text: "Select your file or drag and drop it into the tool." },
+        { name: "Adjust Settings", text: "Choose your preferred options for processing." },
+        { name: "Download", text: "Click to process and instantly download your new file." }
+      ]
+    },
+    faqs: [
+      { question: "Is this Split PDF tool free?", answer: "Yes, it is completely free to use with no hidden limits." },
+      { question: "Are my files secure?", answer: "Yes, all processing happens locally in your browser. Your files are never uploaded to any server." }
+    ],
+    relatedTools: ["merge-pdf", "split-pdf", "compress-pdf"],
   },
   {
     id: "extract-pdf-pages",
@@ -383,6 +417,23 @@ export const tools: ToolDefinition[] = [
     seoTitle: "Convert JPG to PDF Free Online | Kiss the PDF",
     seoDescription: "Convert JPG and JPEG images into a single PDF document in your browser.",
     keywords: ["jpg to pdf", "image to pdf", "convert jpg to pdf"],
+    seoH1: "JPG to PDF Online Free",
+    seoH2s: ["How to JPG to PDF", "Related Tools"],
+    introParagraph: "Easily jpg to pdf directly in your browser. Our free tool provides a fast, secure, and private way to process your files without any uploads.",
+    howTo: {
+      name: "How to JPG to PDF",
+      description: "Learn how to jpg to pdf in a few simple steps.",
+      steps: [
+        { name: "Upload File", text: "Select your file or drag and drop it into the tool." },
+        { name: "Adjust Settings", text: "Choose your preferred options for processing." },
+        { name: "Download", text: "Click to process and instantly download your new file." }
+      ]
+    },
+    faqs: [
+      { question: "Is this JPG to PDF tool free?", answer: "Yes, it is completely free to use with no hidden limits." },
+      { question: "Are my files secure?", answer: "Yes, all processing happens locally in your browser. Your files are never uploaded to any server." }
+    ],
+    relatedTools: ["merge-pdf", "split-pdf", "compress-pdf"],
   },
   {
     id: "png-to-pdf",
@@ -479,6 +530,23 @@ export const tools: ToolDefinition[] = [
     seoTitle: "Convert PDF to JPG Online | Kiss the PDF",
     seoDescription: "Convert PDF pages into high quality JPG images in your browser.",
     keywords: ["pdf to jpg", "pdf to jpeg", "convert pdf to image"],
+    seoH1: "PDF to JPG Online Free",
+    seoH2s: ["How to PDF to JPG", "Related Tools"],
+    introParagraph: "Easily pdf to jpg directly in your browser. Our free tool provides a fast, secure, and private way to process your files without any uploads.",
+    howTo: {
+      name: "How to PDF to JPG",
+      description: "Learn how to pdf to jpg in a few simple steps.",
+      steps: [
+        { name: "Upload File", text: "Select your file or drag and drop it into the tool." },
+        { name: "Adjust Settings", text: "Choose your preferred options for processing." },
+        { name: "Download", text: "Click to process and instantly download your new file." }
+      ]
+    },
+    faqs: [
+      { question: "Is this PDF to JPG tool free?", answer: "Yes, it is completely free to use with no hidden limits." },
+      { question: "Are my files secure?", answer: "Yes, all processing happens locally in your browser. Your files are never uploaded to any server." }
+    ],
+    relatedTools: ["merge-pdf", "split-pdf", "compress-pdf"],
   },
   {
     id: "pdf-to-png",
@@ -799,6 +867,23 @@ export const tools: ToolDefinition[] = [
     seoTitle: "Password Protect PDF Online | Kiss the PDF",
     seoDescription: "Add password encryption to restrict reading or modifying your PDF.",
     keywords: ["protect pdf", "password protect pdf", "lock pdf"],
+    seoH1: "Protect PDF Online Free",
+    seoH2s: ["How to Protect PDF", "Related Tools"],
+    introParagraph: "Easily protect pdf directly in your browser. Our free tool provides a fast, secure, and private way to process your files without any uploads.",
+    howTo: {
+      name: "How to Protect PDF",
+      description: "Learn how to protect pdf in a few simple steps.",
+      steps: [
+        { name: "Upload File", text: "Select your file or drag and drop it into the tool." },
+        { name: "Adjust Settings", text: "Choose your preferred options for processing." },
+        { name: "Download", text: "Click to process and instantly download your new file." }
+      ]
+    },
+    faqs: [
+      { question: "Is this Protect PDF tool free?", answer: "Yes, it is completely free to use with no hidden limits." },
+      { question: "Are my files secure?", answer: "Yes, all processing happens locally in your browser. Your files are never uploaded to any server." }
+    ],
+    relatedTools: ["merge-pdf", "split-pdf", "compress-pdf"],
   },
   {
     id: "remove-pdf-password",
@@ -1095,6 +1180,23 @@ export const tools: ToolDefinition[] = [
     seoTitle: "Add Watermark to PDF Online | Kiss the PDF",
     seoDescription: "Stamp custom text or logo image watermarks on PDF pages.",
     keywords: ["watermark pdf", "add watermark to pdf"],
+    seoH1: "Watermark PDF Online Free",
+    seoH2s: ["How to Watermark PDF", "Related Tools"],
+    introParagraph: "Easily watermark pdf directly in your browser. Our free tool provides a fast, secure, and private way to process your files without any uploads.",
+    howTo: {
+      name: "How to Watermark PDF",
+      description: "Learn how to watermark pdf in a few simple steps.",
+      steps: [
+        { name: "Upload File", text: "Select your file or drag and drop it into the tool." },
+        { name: "Adjust Settings", text: "Choose your preferred options for processing." },
+        { name: "Download", text: "Click to process and instantly download your new file." }
+      ]
+    },
+    faqs: [
+      { question: "Is this Watermark PDF tool free?", answer: "Yes, it is completely free to use with no hidden limits." },
+      { question: "Are my files secure?", answer: "Yes, all processing happens locally in your browser. Your files are never uploaded to any server." }
+    ],
+    relatedTools: ["merge-pdf", "split-pdf", "compress-pdf"],
   },
   {
     id: "remove-watermark",
@@ -1243,6 +1345,23 @@ export const tools: ToolDefinition[] = [
     seoTitle: "Compress PDF Online for Free | Kiss the PDF",
     seoDescription: "Reduce PDF file size with structural optimization in your browser.",
     keywords: ["compress pdf", "reduce pdf size", "shrink pdf"],
+    seoH1: "Compress PDF Online Free",
+    seoH2s: ["How to Compress PDF", "Related Tools"],
+    introParagraph: "Easily compress pdf directly in your browser. Our free tool provides a fast, secure, and private way to process your files without any uploads.",
+    howTo: {
+      name: "How to Compress PDF",
+      description: "Learn how to compress pdf in a few simple steps.",
+      steps: [
+        { name: "Upload File", text: "Select your file or drag and drop it into the tool." },
+        { name: "Adjust Settings", text: "Choose your preferred options for processing." },
+        { name: "Download", text: "Click to process and instantly download your new file." }
+      ]
+    },
+    faqs: [
+      { question: "Is this Compress PDF tool free?", answer: "Yes, it is completely free to use with no hidden limits." },
+      { question: "Are my files secure?", answer: "Yes, all processing happens locally in your browser. Your files are never uploaded to any server." }
+    ],
+    relatedTools: ["merge-pdf", "split-pdf", "compress-pdf"],
   },
 ];
 

@@ -65,5 +65,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  return [...staticRoutes, ...staticDocsRoutes, ...categoryDocRoutes, ...toolDocRoutes, ...toolRoutes];
+  const competitorRoutes = [
+    "ilovepdf", "smallpdf", "pdf24", "sejda", "adobe-acrobat", "stirling-pdf"
+  ].map((comp) => ({
+    url: `${siteConfig.url}/${comp}-alternative`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticRoutes, ...staticDocsRoutes, ...categoryDocRoutes, ...toolDocRoutes, ...toolRoutes, ...competitorRoutes];
 }
