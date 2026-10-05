@@ -151,7 +151,8 @@ export type ArtifactSubtype = "Watermark" | "Header" | "Footer";
 export function asArtifact(doc: PDFDocument, subtype: ArtifactSubtype, ops: PDFOperator[]): PDFOperator[] {
   const props = doc.context.obj({ Type: "Pagination", Subtype: subtype });
   return [
-    PDFOperator.of("BDC" as PDFOperatorNames, [PDFName.of("Artifact"), props]),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    PDFOperator.of("BDC" as PDFOperatorNames, [PDFName.of("Artifact"), props as any]),
     ...ops,
     PDFOperator.of("EMC" as PDFOperatorNames),
   ];

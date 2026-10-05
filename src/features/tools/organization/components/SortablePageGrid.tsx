@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { Check, ChevronLeft, ChevronRight, GripVertical } from "lucide-react";
 
 import { fitInTile, type Thumb } from "./usePageThumbnails";
@@ -204,18 +204,18 @@ function Tile({
   onDragOverTile: (e: React.DragEvent<HTMLDivElement>) => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const { onVisible } = tile;
-  const asked = useRef(false);
+  const wantsThumb = !!tile.onVisible && !tile.thumb && !tile.blank;
+  const askForThumb = useEffectEvent(() => tile.onVisible?.());
 
+  // Observe only until the tile first nears the viewport.
   useEffect(() => {
-    if (asked.current || !onVisible) return;
+    if (!wantsThumb) return;
     const el = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          asked.current = true;
-          onVisible();
+          askForThumb();
           observer.disconnect();
         }
       },
@@ -223,7 +223,7 @@ function Tile({
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, [onVisible]);
+  }, [wantsThumb]);
 
   const rotation = tile.rotation ?? 0;
   const ring =

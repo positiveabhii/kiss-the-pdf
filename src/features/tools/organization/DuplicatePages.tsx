@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import { SegmentedControl } from "@/features/pdf/components/shared/SegmentedControl";
 
 import { SimplePdfTool } from "../core/SimplePdfTool";
@@ -9,7 +11,6 @@ import { PageSelectGrid } from "./components/PageSelectGrid";
 import { usePerFileState } from "./components/usePerFileState";
 import { duplicatePages, type DuplicatePlacement } from "./ops/pages";
 import { formatPageList } from "./ops/ranges";
-import { useState } from "react";
 
 const NONE = new Set<number>();
 
