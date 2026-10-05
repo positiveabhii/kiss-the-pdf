@@ -18,7 +18,7 @@ export const MIN_CROPPED_SIZE = 10;
 export async function cropPages(
   bytes: Uint8Array,
   pageIndices: number[],
-  margins: Margins | ((index: number) => Margins | null),
+  margins: Margins | ((index: number, visual: { width: number; height: number }) => Margins | null),
   { onProgress, signal }: ProgressOptions = {}
 ): Promise<{ bytes: Uint8Array; cropped: number }> {
   const doc = await loadPdf(bytes);
@@ -28,9 +28,12 @@ export async function cropPages(
     checkAborted(signal);
     const page = pages[index];
     if (!page) return;
-    const m = typeof margins === "function" ? margins(index) : margins;
-    if (!m) return;
     const info = getPageInfo(page);
+    const m =
+      typeof margins === "function"
+        ? margins(index, { width: info.visualWidth, height: info.visualHeight })
+        : margins;
+    if (!m) return;
     const b = visualMarginsToBox(m, info.rotation);
     const vb = info.visibleBox;
     const x = vb.x + Math.max(0, b.left);

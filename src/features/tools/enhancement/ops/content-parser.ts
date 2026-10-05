@@ -166,7 +166,7 @@ export function parseContent(data: Uint8Array): COp[] {
           const key = readValue();
           if (key === null || key === "close" || key.t !== "name") {
             // Malformed: skip a token to make progress.
-            if (key === null) readWord() || i++;
+            if (key === null && !readWord()) i++;
             continue;
           }
           const val = readValue();

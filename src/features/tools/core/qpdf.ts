@@ -24,14 +24,12 @@ interface QpdfInstance {
 type QpdfFactory = (opts: {
   locateFile: (path: string) => string;
   noInitialRun: boolean;
-  print?: (text: string) => void;
-  printErr?: (text: string) => void;
 }) => Promise<QpdfInstance>;
 
 const BASE = "/vendor/qpdf/";
 
 let instancePromise: Promise<QpdfInstance> | null = null;
-// qpdf writes diagnostics through these; captured per run to explain failures.
+// qpdf's diagnostics, captured per run (e.g. "invalid password").
 let stdout: string[] = [];
 let stderr: string[] = [];
 let runCounter = 0;
@@ -64,12 +62,24 @@ async function getQpdf(): Promise<QpdfInstance> {
       await loadScript(`${BASE}qpdf.js`);
       const factory = (window as unknown as { Module?: QpdfFactory }).Module;
       if (typeof factory !== "function") throw new Error("PDF security engine did not initialise.");
-      return factory({
-        locateFile: (path) => `${BASE}${path}`,
-        noInitialRun: true,
-        print: (t) => stdout.push(t),
-        printErr: (t) => stderr.push(t),
-      });
+      // This Emscripten build ignores the `print`/`printErr` options: it binds
+      // `console.log` / `console.error` while the factory runs and writes to
+      // those forever after. Swap in capturing wrappers for exactly that
+      // window, so the references it keeps are ours; restore immediately.
+      const origLog = console.log;
+      const origErr = console.error;
+      console.log = (...a: unknown[]) => {
+        stdout.push(a.join(" "));
+      };
+      console.error = (...a: unknown[]) => {
+        stderr.push(a.join(" "));
+      };
+      try {
+        return await factory({ locateFile: (path) => `${BASE}${path}`, noInitialRun: true });
+      } finally {
+        console.log = origLog;
+        console.error = origErr;
+      }
     })();
     // A failed load must not poison every later attempt.
     instancePromise.catch(() => {
@@ -109,7 +119,8 @@ export async function runQpdf(
   stderr = [];
   try {
     q.FS.writeFile(inPath, input);
-    const code = q.callMain(args.map((a) => a.replace("{in}", inPath).replace("{out}", outPath)));
+    // Whole-argument substitution only, so a password can never be altered.
+    const code = q.callMain(args.map((a) => (a === "{in}" ? inPath : a === "{out}" ? outPath : a)));
     let output: Uint8Array | null = null;
     // Exit code 3 = success with warnings (common for slightly broken files).
     if (readOutput && (code === 0 || code === 3)) {

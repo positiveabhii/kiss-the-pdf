@@ -35,8 +35,10 @@ interface Base {
   opacity: number;
 }
 
-export interface TextObj extends Base, Box {
+export interface TextObj extends Base {
   type: "text";
+  /** Visual top-left of the text block. Size comes from layoutText(). */
+  at: Pt;
   text: string;
   font: FontFamily;
   bold: boolean;
@@ -127,10 +129,10 @@ export type EditObject =
   | MarkupLineObj
   | NoteObj;
 
-export type BoxObject = TextObj | ImageObj | ShapeObj | WhiteoutObj;
+export type BoxObject = ImageObj | ShapeObj | WhiteoutObj;
 
 export function isBoxObject(o: EditObject): o is BoxObject {
-  return o.type === "text" || o.type === "image" || o.type === "rect" || o.type === "ellipse" || o.type === "whiteout";
+  return o.type === "image" || o.type === "rect" || o.type === "ellipse" || o.type === "whiteout";
 }
 
 /** Raster images referenced by ImageObj.imageId. */
@@ -189,8 +191,12 @@ export function boxToPdfRect(b: Box, rotation: number): { x: number; y: number; 
 // ---------------------------------------------------------------- text layout
 
 export const LINE_HEIGHT = 1.2;
-/** Baseline below the top of a line box, as a fraction of the font size. */
-export const ASCENT = 0.9;
+/**
+ * Baseline below the top of a line box, as a fraction of the font size.
+ * ~Where a browser puts the baseline in a 1.2 line-height box for Arial /
+ * Times New Roman, so inline editing and the rendered text line up.
+ */
+export const ASCENT = 0.93;
 
 export type MeasureFn = (text: string, font: FontFamily, bold: boolean, italic: boolean, size: number) => number;
 

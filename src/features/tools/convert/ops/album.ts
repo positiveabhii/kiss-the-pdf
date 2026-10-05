@@ -14,6 +14,7 @@ import {
 import {
   PAGE_TEMPLATES,
   albumLayout,
+  albumPlacement,
   contactSheetLayout,
   orient,
   type AlbumLayout,
@@ -84,10 +85,11 @@ export async function buildAlbumPdf(opts: AlbumOptions & Common): Promise<{ byte
     }
     const cell = layout.cells[slot];
     const image = await embedPrepared(doc, await opts.getImage(i));
-    drawImageInBox(page!, image, cell.image, opts.fit);
+    const place = albumPlacement(cell, image.width, image.height, opts.fit);
+    drawImageInBox(page!, image, place.clip, opts.fit);
     const caption = opts.captions?.[i]?.trim();
-    if (font && cell.caption && caption) {
-      drawCenteredText(page!, font, caption, cell.caption, size, captionColor(opts.background));
+    if (font && place.caption && caption) {
+      drawCenteredText(page!, font, caption, place.caption, size, captionColor(opts.background));
     }
   }
   return { bytes: await saveImageDoc(doc), pageCount: doc.getPageCount() };

@@ -32,6 +32,20 @@ export async function openPdfJs(bytes: Uint8Array, password?: string): Promise<P
   return pdfjs.getDocument({ data: bytes.slice(), password }).promise;
 }
 
+/**
+ * The pdf.js rendering intent to use right now.
+ *
+ * pdf.js paces "display" renders with requestAnimationFrame, which browsers
+ * suspend in background tabs — a 200-page conversion or a blank-page scan
+ * would freeze the moment the user switches tabs. "print" renders run on
+ * plain timers. Its only visual difference is which annotations / layers
+ * count as visible (their print flags instead of view flags), so it is used
+ * only while the page is hidden.
+ */
+export function renderIntent(): "display" | "print" {
+  return typeof document !== "undefined" && document.hidden ? "print" : "display";
+}
+
 /** Render one page (1-based) to a fresh canvas at `scale` (1 = 72 dpi). */
 export async function renderPageToCanvas(
   page: PDFPageProxy,
@@ -48,7 +62,13 @@ export async function renderPageToCanvas(
     ctx.fillStyle = background;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
-  await page.render({ canvasContext: ctx, viewport, canvas, background: background ?? undefined })
+  await page.render({
+    canvasContext: ctx,
+    viewport,
+    canvas,
+    background: background ?? undefined,
+    intent: renderIntent(),
+  })
     .promise;
   return canvas;
 }
@@ -64,32 +84,42 @@ export function releaseCanvas(canvas: HTMLCanvasElement) {
  * the component unmounts.
  */
 export function usePdfJsDocument(bytes: Uint8Array | null, password?: string) {
-  const [doc, setDoc] = useState<PDFDocumentProxy | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  // The result remembers which input it belongs to; anything for other bytes
+  // reads as "not ready", so no state has to be reset synchronously when the
+  // input changes.
+  const [state, setState] = useState<{
+    bytes: Uint8Array | null;
+    password?: string;
+    doc: PDFDocumentProxy | null;
+    error: string | null;
+  }>({ bytes: null, doc: null, error: null });
 
   useEffect(() => {
-    if (!bytes) {
-      setDoc(null);
-      return;
-    }
+    if (!bytes) return;
     let cancelled = false;
     let opened: PDFDocumentProxy | null = null;
-    setError(null);
     openPdfJs(bytes, password)
       .then((d) => {
         opened = d;
         if (cancelled) void d.loadingTask.destroy();
-        else setDoc(d);
+        else setState({ bytes, password, doc: d, error: null });
       })
       .catch((e: unknown) => {
-        if (!cancelled) setError(e instanceof Error ? e.message : "Could not open PDF.");
+        if (!cancelled) {
+          setState({
+            bytes,
+            password,
+            doc: null,
+            error: e instanceof Error ? e.message : "Could not open PDF.",
+          });
+        }
       });
     return () => {
       cancelled = true;
-      setDoc(null);
       if (opened) void opened.loadingTask.destroy();
     };
   }, [bytes, password]);
 
-  return { doc, error };
+  const current = bytes !== null && state.bytes === bytes && state.password === password;
+  return { doc: current ? state.doc : null, error: current ? state.error : null };
 }

@@ -45,6 +45,9 @@ export function boundsToMargins(b: FractionBounds, w: number, h: number): Margin
 /** Per-page content bounds (null = blank / skip), keyed by 0-based page index. */
 export type BoundsByPage = Map<number, FractionBounds | null>;
 
+/** Fit never enlarges more than this: a page holding only a speck shouldn't become one giant speck. */
+export const MAX_FIT_SCALE = 10;
+
 export type PlaceMode = { kind: "center" } | { kind: "fit"; margin: number };
 
 /**
@@ -81,7 +84,7 @@ export async function placeContent(
     if (mode.kind === "fit") {
       const availW = Math.max(1, w - 2 * mode.margin);
       const availH = Math.max(1, h - 2 * mode.margin);
-      k = Math.min(availW / c.width, availH / c.height);
+      k = Math.min(availW / c.width, availH / c.height, MAX_FIT_SCALE);
     }
     const tx = w / 2 - k * (c.x + c.width / 2);
     const ty = h / 2 - k * (c.y + c.height / 2);

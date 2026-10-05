@@ -187,3 +187,28 @@ export function contactSheetLayout(opts: {
     footer: footerHeightPt > 0 ? { x: marginPt, y: marginPt, width: innerW, height: footerHeightPt } : null,
   };
 }
+
+/**
+ * Where a w×h photo and its caption go inside an album cell. With "fit" the
+ * photo and caption are kept together and centered as a group (so the
+ * caption sits right under the photo, not at the bottom of a tall cell);
+ * with "fill" the photo covers the image area and is clipped to it.
+ */
+export function albumPlacement(
+  c: AlbumCell,
+  w: number,
+  h: number,
+  mode: FitMode
+): { draw: Rect; clip: Rect; caption: Rect | null } {
+  if (mode === "fill") return { draw: placeImage(w, h, c.image, "fill"), clip: c.image, caption: c.caption };
+  const r = placeImage(w, h, c.image, "fit");
+  const capH = c.caption?.height ?? 0;
+  const groupH = r.height + capH;
+  const imageY = c.cell.y + (c.cell.height - groupH) / 2 + capH;
+  const draw = { ...r, y: imageY };
+  return {
+    draw,
+    clip: draw,
+    caption: c.caption ? { x: c.cell.x, y: imageY - capH, width: c.cell.width, height: capH } : null,
+  };
+}

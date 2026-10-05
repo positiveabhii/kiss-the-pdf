@@ -1,6 +1,14 @@
 "use client";
 
-import { Component, lazy, Suspense, useEffect, useState, type ComponentType, type ReactNode } from "react";
+import {
+  Component,
+  createElement,
+  Suspense,
+  use,
+  useSyncExternalStore,
+  type ComponentType,
+  type ReactNode,
+} from "react";
 import { Loader2 } from "lucide-react";
 
 import { getToolLoader } from "./registry";
@@ -11,17 +19,32 @@ import { getToolLoader } from "./registry";
  * the tool page's SEO content stays server-rendered around this.
  */
 
-const lazyCache = new Map<string, ComponentType>();
+// One load per tool per page session; `use()` suspends on it.
+const loads = new Map<string, Promise<{ default: ComponentType }>>();
 
-function getLazyTool(id: string): ComponentType | null {
-  const loader = getToolLoader(id);
-  if (!loader) return null;
-  let C = lazyCache.get(id);
-  if (!C) {
-    C = lazy(loader);
-    lazyCache.set(id, C);
+function loadTool(id: string): Promise<{ default: ComponentType }> {
+  let p = loads.get(id);
+  if (!p) {
+    p = getToolLoader(id)!();
+    loads.set(id, p);
   }
-  return C;
+  return p;
+}
+
+function LoadedTool({ id }: { id: string }) {
+  const mod = use(loadTool(id));
+  return createElement(mod.default);
+}
+
+const noopSubscribe = () => () => {};
+
+/** False during server render and hydration, true once running in the browser. */
+function useIsClient(): boolean {
+  return useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false
+  );
 }
 
 function Loading() {
@@ -58,22 +81,20 @@ class ToolErrorBoundary extends Component<{ children: ReactNode }, { error: Erro
 }
 
 export function ToolRenderer({ toolId }: { toolId: string }) {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const isClient = useIsClient();
 
-  const Tool = getLazyTool(toolId);
-  if (!Tool) {
+  if (!getToolLoader(toolId)) {
     return (
       <div className="p-4 bg-slate-50 border border-slate-200 rounded-md text-center">
         <p className="text-sm font-medium text-slate-700">This feature needs to be developed.</p>
       </div>
     );
   }
-  if (!mounted) return <Loading />;
+  if (!isClient) return <Loading />;
   return (
     <ToolErrorBoundary>
       <Suspense fallback={<Loading />}>
-        <Tool />
+        <LoadedTool id={toolId} />
       </Suspense>
     </ToolErrorBoundary>
   );

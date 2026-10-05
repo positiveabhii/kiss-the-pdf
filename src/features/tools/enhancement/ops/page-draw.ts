@@ -1,11 +1,9 @@
 import {
   PDFArray,
   PDFContentStream,
-  PDFDict,
   PDFDocument,
   PDFFont,
   PDFName,
-  PDFNumber,
   PDFOperator,
   PDFPage,
   StandardFonts,
@@ -230,13 +228,4 @@ export function lineOps(
   const p = box.toUser(a.u, a.v);
   const q = box.toUser(b.u, b.v);
   return drawLine({ start: p, end: q, thickness, color });
-}
-
-/** Read a number from a PDF object if it is one. */
-export function num(obj: unknown): number | undefined {
-  return obj instanceof PDFNumber ? obj.asNumber() : undefined;
-}
-
-export function isDict(obj: unknown): obj is PDFDict {
-  return obj instanceof PDFDict;
 }

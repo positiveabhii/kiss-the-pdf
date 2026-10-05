@@ -296,7 +296,7 @@ function Tile({
         aria-pressed={selectable ? selected : undefined}
         aria-label={name}
         aria-keyshortcuts="Alt+ArrowLeft Alt+ArrowRight"
-        title={selectable ? "Click to select · drag to move · Alt+← / Alt+→ to move" : "Drag to move · Alt+← / Alt+→ to move"}
+        title={selectable ? "Click to select or deselect · drag to move · Alt+← / Alt+→ to move" : "Drag to move · Alt+← / Alt+→ to move"}
         className={`relative w-full aspect-[3/4] bg-slate-50 rounded-md border overflow-hidden transition-all cursor-grab active:cursor-grabbing focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 ${
           selected ? ring : "border-slate-200 hover:border-slate-400"
         }`}

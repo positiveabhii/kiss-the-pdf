@@ -129,6 +129,9 @@ export function SimplePdfTool({
           });
           pageCount = doc.getPageCount();
         }
+        // A replaced file must not inherit the previous file's options
+        // (selected pages, crop rect, field names…).
+        onReset?.();
         setLoaded({ file, bytes, pageCount, encrypted });
       } catch (err) {
         setLoaded(null);
@@ -137,7 +140,7 @@ export function SimplePdfTool({
         setLoading(false);
       }
     },
-    [acceptEncrypted]
+    [acceptEncrypted, onReset]
   );
 
   const startOver = () => {

@@ -19,7 +19,7 @@ interface Item {
 
 const identity = (n: number): Item[] => Array.from({ length: n }, (_, index) => ({ id: `p${index}`, index }));
 
-function ReorderEditor({
+export function ReorderEditor({
   pdfjs,
   items,
   onChange,

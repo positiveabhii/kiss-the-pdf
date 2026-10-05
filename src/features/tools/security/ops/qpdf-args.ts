@@ -39,8 +39,8 @@ export function buildEncryptArgs(o: EncryptOptions): string[] {
     `--modify-other=${yn(p.modifyOther)}`,
     `--annotate=${yn(p.annotate)}`,
     `--form=${yn(p.fillForms)}`,
-    `--assemble=${yn(p.assemble)}`,
-    `--accessibility=${yn(p.accessibility)}`
+    `--assemble=${yn(p.assemble)}`
+    // No --accessibility: qpdf ignores "n" for AES (PDF 2.0 always allows it).
   );
   if (!o.encryptMetadata) args.push("--cleartext-metadata");
   args.push("--", "{out}");
@@ -57,12 +57,8 @@ export function buildShowEncryptionArgs(password: string): string[] {
   return ["{in}", "--show-encryption", `--password=${password}`];
 }
 
-/**
- * runQpdf substitutes `{in}` / `{out}` in every argument, so a password
- * containing those literal strings would be corrupted. Returns a reason, or null.
- */
+/** A reason this password can't be used with the chosen key length, or null. */
 export function passwordProblem(pw: string, bits: KeyBits): string | null {
-  if (/\{in\}|\{out\}/.test(pw)) return "Passwords can't contain the text {in} or {out}.";
   if (bits === 128 && /[^\u0000-ÿ]/.test(pw)) {
     return "AES-128 passwords can only use Latin characters (most readers can't open the file otherwise). Use AES-256 for other scripts.";
   }

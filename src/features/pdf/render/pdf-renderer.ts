@@ -1,5 +1,7 @@
 import { getDocument, GlobalWorkerOptions, type PDFDocumentProxy } from "pdfjs-dist";
 
+import { renderIntent } from "@/features/tools/core/pdfjs";
+
 let workerConfigured = false;
 
 function ensureWorker() {
@@ -53,6 +55,7 @@ export class PdfRenderer {
       viewport,
       canvas,
       background: options.background === "white" ? "#ffffff" : undefined,
+      intent: renderIntent(),
     }).promise;
 
     return canvas;
@@ -75,7 +78,8 @@ export class PdfRenderer {
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    await page.render({ canvasContext: ctx, viewport, canvas, background: "#ffffff" }).promise;
+    await page.render({ canvasContext: ctx, viewport, canvas, background: "#ffffff", intent: renderIntent() })
+      .promise;
 
     const dataUrl = canvas.toDataURL("image/jpeg", 0.75);
     canvas.width = 0;

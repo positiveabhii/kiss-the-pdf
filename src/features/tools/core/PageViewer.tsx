@@ -100,7 +100,6 @@ export function PageViewer({ doc, pageNumber, maxWidth, className, children }: P
     if (!containerWidth) return;
     let cancelled = false;
     let canvas: HTMLCanvasElement | null = null;
-    setError(null);
 
     (async () => {
       const page = await doc.getPage(pageNumber);
@@ -124,6 +123,7 @@ export function PageViewer({ doc, pageNumber, maxWidth, className, children }: P
         holder.replaceChildren(canvas);
       }
       setGeom(g);
+      setError(null);
     })().catch((e: unknown) => {
       if (!cancelled) setError(e instanceof Error ? e.message : "Could not render page.");
     });

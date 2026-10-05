@@ -98,7 +98,7 @@ function ToolbarButton({
   );
 }
 
-function OrganizeEditor({
+export function OrganizeEditor({
   pdfjs,
   pageCount,
   state,
@@ -113,7 +113,8 @@ function OrganizeEditor({
   const [error, setError] = useState<string | null>(null);
   const [status, setStatus] = useState("");
   const { items, selected, history } = state;
-  const sel = new Set(Array.from(selected).filter((id) => items.some((it) => it.id === id)));
+  const present = new Set(items.map((it) => it.id));
+  const sel = new Set(Array.from(selected).filter((id) => present.has(id)));
   const count = sel.size;
 
   /** Apply an edit, remembering the previous arrangement for undo. */
@@ -245,7 +246,7 @@ function OrganizeEditor({
           <button type="button" onClick={selectNone} disabled={!count} className="font-medium text-slate-700 hover:underline disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 rounded">
             Select none
           </button>
-          <span className="hidden sm:inline">Click to select, Shift+click for a run, drag to move.</span>
+          <span className="hidden sm:inline">Click pages to add or remove them from the selection, Shift+click for a run, drag to move.</span>
         </div>
         <p className="sr-only" aria-live="polite">
           {status}

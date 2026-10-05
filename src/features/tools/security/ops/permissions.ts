@@ -21,7 +21,11 @@ export interface Permissions {
   fillForms: boolean;
   /** Bit 11: assemble — insert, rotate, delete pages, bookmarks, thumbnails. */
   assemble: boolean;
-  /** Bit 10: extract text for accessibility (screen readers). */
+  /**
+   * Bit 10: extract text for accessibility (screen readers). PDF 2.0 deprecates
+   * clearing it and qpdf ignores --accessibility=n for AES, so for everything
+   * this toolkit writes it is always allowed. Kept for reading older files.
+   */
   accessibility: boolean;
 }
 
@@ -65,9 +69,12 @@ export function permissionsFromP(p: number, revision: number): Permissions {
   };
 }
 
-/** Annotate permission implies form filling (spec: bit 6 covers both). */
+/**
+ * What a reader will actually enforce for a file we write: annotate implies
+ * form filling (spec: bit 6 covers both), and accessibility is always on.
+ */
 export function effectivePermissions(p: Permissions): Permissions {
-  return p.annotate ? { ...p, fillForms: true } : p;
+  return { ...p, fillForms: p.fillForms || p.annotate, accessibility: true };
 }
 
 export function isAllAllowed(p: Permissions): boolean {
@@ -92,7 +99,8 @@ export interface PermissionLine {
 
 /** Human-readable list, in the order the UI shows them. */
 export function describePermissions(p: Permissions): PermissionLine[] {
-  const e = effectivePermissions(p);
+  // Annotate always implies form filling; accessibility is shown as stored.
+  const e = { ...p, fillForms: p.fillForms || p.annotate };
   const yn = (b: boolean) => (b ? "Allowed" : "Not allowed");
   return [
     {

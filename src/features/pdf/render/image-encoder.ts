@@ -50,6 +50,14 @@ export async function encodeCanvas(
     );
   });
 
+  // Browsers that can't encode a type silently fall back to PNG (Safari
+  // before 17 does this for WebP) — never hand out a PNG named .webp.
+  if (blob.type && blob.type !== mimeType) {
+    throw new Error(
+      `Your browser can't create ${options.format.toUpperCase()} images. Try a current Chrome, Edge, Firefox or Safari, or pick another format.`
+    );
+  }
+
   return new Uint8Array(await blob.arrayBuffer());
 }
 
