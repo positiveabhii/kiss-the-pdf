@@ -10,6 +10,7 @@ import { outputName } from "../core/pdf-io";
 import { ColorInput, Field, Notice, NumberInput, OptionsPanel, Select, TextArea } from "../core/ui";
 import { PageNav, PageRangeField, parsePageList } from "../enhancement/components/shared";
 import { addQrCode, contrastOk, placeSquare, qrColor, type QrLevel, type QrPlacement } from "./ops/qr";
+import { capturePointer } from "../core/pointer";
 
 type Scope = "this" | "all" | "range";
 
@@ -73,7 +74,7 @@ function Placer({
       className="absolute inset-0 touch-none"
       onPointerDown={(e) => {
         // Click on empty page area: centre the code there and start dragging.
-        e.currentTarget.setPointerCapture(e.pointerId);
+        capturePointer(e.currentTarget, e.pointerId);
         drag.current = { dx: side / 2, dy: side / 2 };
         moveTo(e.clientX, e.clientY, side / 2, side / 2);
       }}
@@ -86,7 +87,7 @@ function Placer({
         style={{ left, top, width: side, height: side }}
         onPointerDown={(e) => {
           e.stopPropagation();
-          ref.current!.setPointerCapture(e.pointerId);
+          capturePointer(ref.current, e.pointerId);
           const r = e.currentTarget.getBoundingClientRect();
           drag.current = { dx: e.clientX - r.left, dy: e.clientY - r.top };
         }}

@@ -35,12 +35,54 @@ export interface TextWatermark {
   kind: "text";
   text: string;
   font: FontChoice;
-  size: number;
+  /** Point size, or "auto" to fit each page (see `fitTextSize`). */
+  size: number | "auto";
   color: string;
   opacity: number;
   /** Visible rotation, degrees counter-clockwise. */
   angle: number;
   layout: "center" | "tiled";
+}
+
+/** Anything that can measure text: a pdf-lib font, or the UI's metrics. */
+interface TextMeasurer {
+  widthOfTextAtSize(text: string, size: number): number;
+  heightAtSize(size: number, options?: { descender?: boolean }): number;
+}
+
+/**
+ * The font size at which `text`, rotated by `angle`, fits inside a W×H page
+ * with margin — so one setting works on a business card and on a poster.
+ * A single centered mark fills ~85% of the page; a tiled mark is sized for
+ * roughly a third of it so several copies repeat across the page.
+ */
+export function fitTextSize(
+  m: TextMeasurer,
+  text: string,
+  angle: number,
+  W: number,
+  H: number,
+  tiled: boolean
+): number {
+  const w1 = m.widthOfTextAtSize(text, 1);
+  const h1 = m.heightAtSize(1, { descender: false });
+  if (!(w1 > 0)) return 12;
+  const rad = (angle * Math.PI) / 180;
+  const c = Math.abs(Math.cos(rad));
+  const sn = Math.abs(Math.sin(rad));
+  const fill = tiled ? 0.33 : 0.85;
+  const size = Math.min((fill * W) / (w1 * c + h1 * sn), (fill * H) / (w1 * sn + h1 * c));
+  return Math.max(6, Math.min(400, size));
+}
+
+export function resolveTextSize(
+  m: TextMeasurer,
+  mark: Pick<TextWatermark, "text" | "size" | "angle" | "layout">,
+  text: string,
+  W: number,
+  H: number
+): number {
+  return mark.size === "auto" ? fitTextSize(m, text, mark.angle, W, H, mark.layout === "tiled") : mark.size;
 }
 
 export interface ImageWatermark {
@@ -184,13 +226,14 @@ export async function addWatermark(
     const gs = opacityState(page, mark.opacity);
     const ops: PDFOperator[] = [];
     if (mark.kind === "text" && font) {
-      const w = font.widthOfTextAtSize(text, mark.size);
-      const h = font.heightAtSize(mark.size, { descender: false });
+      const size = resolveTextSize(font, mark, text, box.width, box.height);
+      const w = font.widthOfTextAtSize(text, size);
+      const h = font.heightAtSize(size, { descender: false });
       const fName = fontKey(page, font);
       const color = toRgb(hexToRgb01(mark.color));
       for (const p of centeredPlacements(box.width, box.height, w, h, mark.angle, mark.layout === "tiled")) {
         ops.push(
-          ...textOps(box, { text, u: p.u, v: p.v, font, fontName: fName, size: mark.size, color, visAngle: mark.angle, graphicsState: gs })
+          ...textOps(box, { text, u: p.u, v: p.v, font, fontName: fName, size, color, visAngle: mark.angle, graphicsState: gs })
         );
       }
     } else if (image) {

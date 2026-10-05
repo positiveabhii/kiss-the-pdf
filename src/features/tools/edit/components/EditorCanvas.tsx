@@ -21,6 +21,7 @@ import type { ToolId } from "../modes";
 import { snapToText, strikeY, underlineY, type TextBox } from "../text-snap";
 import { NOTE_PX, ObjectView, screenBounds, type ScreenRect } from "./ObjectView";
 import { protoFor, type Protos } from "./protos";
+import { capturePointer } from "../../core/pointer";
 
 export interface HistoryApi {
   commit: (next: EditObject[], key?: string) => void;
@@ -293,7 +294,7 @@ export function EditorCanvas(props: Props) {
     // Handles work with any tool.
     if (handleEl && selected) {
       e.preventDefault();
-      overlayRef.current?.setPointerCapture(e.pointerId);
+      capturePointer(overlayRef.current, e.pointerId);
       const handle = handleEl.getAttribute("data-handle") as HandleId;
       const rect =
         selected.type === "polygon" || selected.type === "ink"
@@ -313,7 +314,7 @@ export function EditorCanvas(props: Props) {
       const orig = objects.find((o) => o.id === id);
       if (!orig) return;
       e.preventDefault();
-      overlayRef.current?.setPointerCapture(e.pointerId);
+      capturePointer(overlayRef.current, e.pointerId);
       onSelect(id);
       history.begin();
       gesture.current = { kind: "move", id, start: p, orig, base: objects, moved: false };
@@ -322,7 +323,7 @@ export function EditorCanvas(props: Props) {
 
     if (tool === "eraser") {
       e.preventDefault();
-      overlayRef.current?.setPointerCapture(e.pointerId);
+      capturePointer(overlayRef.current, e.pointerId);
       const id = hitObjectId(e);
       const gs: Extract<Gesture, { kind: "erase" }> = { kind: "erase", path: [p], base: objects, removed: new Set() };
       history.begin();
@@ -394,7 +395,7 @@ export function EditorCanvas(props: Props) {
 
     if (INK_TOOLS.includes(tool)) {
       e.preventDefault();
-      overlayRef.current?.setPointerCapture(e.pointerId);
+      capturePointer(overlayRef.current, e.pointerId);
       gesture.current = { kind: "ink", pts: [p] };
       onSelect(null);
       setDraft({
@@ -410,7 +411,7 @@ export function EditorCanvas(props: Props) {
 
     if (BOX_TOOLS.includes(tool)) {
       e.preventDefault();
-      overlayRef.current?.setPointerCapture(e.pointerId);
+      capturePointer(overlayRef.current, e.pointerId);
       gesture.current = { kind: "box", start: p, cur: p };
       onSelect(null);
     }

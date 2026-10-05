@@ -5,6 +5,7 @@ import { Eraser, Undo2 } from "lucide-react";
 
 import { SecondaryButton } from "../../core/ui";
 import { trimToPng, type SignatureImage } from "./signature-image";
+import { capturePointer } from "../../core/pointer";
 
 /**
  * Draw-with-finger/pen/mouse pad (Pointer Events). Strokes are kept as point
@@ -150,7 +151,7 @@ export function SignaturePad({
           style={{ touchAction: "none", height: cssWidth ? (cssWidth * height) / width : height }}
           onPointerDown={(e) => {
             if (e.button !== 0) return;
-            e.currentTarget.setPointerCapture(e.pointerId);
+            capturePointer(e.currentTarget, e.pointerId);
             current.current = [toLogical(e)];
             redraw(current.current);
           }}

@@ -9,7 +9,7 @@ import { FileDropZone } from "../core/FileDropZone";
 import { SimplePdfTool } from "../core/SimplePdfTool";
 import { PageViewer } from "../core/PageViewer";
 import { outputName, readFileBytes } from "../core/pdf-io";
-import { ColorInput, Field, Notice, NumberInput, OptionsPanel, RangeInput, Select, TextInput } from "../core/ui";
+import { Checkbox, ColorInput, Field, Notice, NumberInput, OptionsPanel, RangeInput, Select, TextInput } from "../core/ui";
 import { encodableText, FONT_CHOICES, type FontChoice } from "./ops/page-draw";
 import {
   addWatermark,
@@ -17,6 +17,7 @@ import {
   imagePlacements,
   type ImagePosition,
   type WatermarkLayer,
+  fitTextSize,
 } from "./ops/watermark";
 import { PageNav, PageRangeField, TextPreviewOverlay, parsePageList } from "./components/shared";
 import { useFontMetrics } from "./components/useFontMetrics";
@@ -46,6 +47,9 @@ export default function WatermarkPdf() {
   const [text, setText] = useState("CONFIDENTIAL");
   const [font, setFont] = useState<FontChoice>("Helvetica-Bold");
   const [size, setSize] = useState(64);
+  // Fit to each page by default: a fixed size runs off small pages and looks
+  // lost on large ones.
+  const [autoSize, setAutoSize] = useState(true);
   const [color, setColor] = useState("#dc2626");
   const [opacity, setOpacity] = useState(0.25);
   const [angle, setAngle] = useState(45);
@@ -119,7 +123,10 @@ export default function WatermarkPdf() {
                       <Select id="wm-font" value={font} onChange={setFont} options={FONT_CHOICES} />
                     </Field>
                     <Field label="Size" htmlFor="wm-size">
-                      <NumberInput id="wm-size" value={size} onChange={(v) => setSize(Math.min(400, Math.max(6, v)))} min={6} max={400} suffix="pt" />
+                      <div className="space-y-2">
+                        <Checkbox id="wm-size-auto" checked={autoSize} onChange={setAutoSize} label="Fit to each page" />
+                        <NumberInput id="wm-size" value={size} onChange={(v) => setSize(Math.min(400, Math.max(6, v)))} min={6} max={400} suffix="pt" disabled={autoSize} />
+                      </div>
                     </Field>
                     <Field label="Color" htmlFor="wm-color">
                       <ColorInput id="wm-color" value={color} onChange={setColor} />
@@ -211,8 +218,11 @@ export default function WatermarkPdf() {
                     const H = g.height / g.scale;
                     if (kind === "text") {
                       if (!metrics || !shownText) return null;
-                      const w = metrics.widthOfTextAtSize(shownText, size);
-                      const h = metrics.heightAtSize(size, { descender: false });
+                      const shownSize = autoSize
+                        ? fitTextSize(metrics, shownText, angle, W, H, layout === "tiled")
+                        : size;
+                      const w = metrics.widthOfTextAtSize(shownText, shownSize);
+                      const h = metrics.heightAtSize(shownSize, { descender: false });
                       const items = centeredPlacements(W, H, w, h, angle, layout === "tiled").map((p) => ({
                         text: shownText,
                         u: p.u,
@@ -227,7 +237,7 @@ export default function WatermarkPdf() {
                             height={g.height}
                             scale={g.scale}
                             font={font}
-                            size={size}
+                            size={shownSize}
                             color={color}
                             opacity={opacity}
                             items={items}
@@ -279,7 +289,7 @@ export default function WatermarkPdf() {
             pages,
             mark:
               kind === "text"
-                ? { kind: "text", text, font, size, color, opacity, angle, layout }
+                ? { kind: "text", text, font, size: autoSize ? "auto" : size, color, opacity, angle, layout }
                 : { kind: "image", bytes: image!.bytes, mime: image!.mime, scale, opacity, position },
           },
           onProgress,

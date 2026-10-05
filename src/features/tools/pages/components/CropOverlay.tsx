@@ -4,6 +4,7 @@ import { useRef } from "react";
 
 import type { PageGeometry } from "../../core/PageViewer";
 import type { Margins } from "../ops/units";
+import { capturePointer, releasePointer } from "../../core/pointer";
 
 type Handle = "move" | "n" | "s" | "e" | "w" | "ne" | "nw" | "se" | "sw" | "new";
 
@@ -73,7 +74,7 @@ export function CropOverlay({
     e.preventDefault();
     e.stopPropagation();
     const p = pointAt(e);
-    rootRef.current?.setPointerCapture(e.pointerId);
+    capturePointer(rootRef.current, e.pointerId);
     drag.current = { handle, x: p.x, y: p.y, ...rect };
   };
 
@@ -108,7 +109,7 @@ export function CropOverlay({
 
   const end = (e: React.PointerEvent) => {
     drag.current = null;
-    if (rootRef.current?.hasPointerCapture(e.pointerId)) rootRef.current.releasePointerCapture(e.pointerId);
+    releasePointer(rootRef.current, e.pointerId);
   };
 
   const px = { l: rect.l * s, t: rect.t * s, r: rect.r * s, b: rect.b * s };

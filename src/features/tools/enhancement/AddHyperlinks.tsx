@@ -11,6 +11,7 @@ import { outputName } from "../core/pdf-io";
 import { Notice, OptionsPanel } from "../core/ui";
 import { addLinks, normalizeUrl, type LinkStyle, type PdfRect } from "./ops/links";
 import { PageNav } from "./components/shared";
+import { capturePointer } from "../core/pointer";
 
 interface DraftLink {
   id: string;
@@ -73,7 +74,7 @@ function DrawLayer({
       onPointerDown={(e) => {
         if (e.button !== 0) return;
         const p = pos(e);
-        e.currentTarget.setPointerCapture(e.pointerId);
+        capturePointer(e.currentTarget, e.pointerId);
         setDrag({ x0: p.x, y0: p.y, x1: p.x, y1: p.y });
       }}
       onPointerMove={(e) => {

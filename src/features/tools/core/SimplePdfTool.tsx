@@ -175,7 +175,8 @@ export function SimplePdfTool({
       setPhase("done");
     } catch (err) {
       if (controller.signal.aborted) return;
-      console.error(err);
+      // Expected, user-fixable failures aren't bugs; only log the rest.
+      if (!(err instanceof UserFacingError)) console.error(err);
       setRunError(
         err instanceof UserFacingError
           ? err.message

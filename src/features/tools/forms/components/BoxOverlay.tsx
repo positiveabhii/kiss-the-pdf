@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 
 import type { PageGeometry } from "../../core/PageViewer";
 import type { VisualRect } from "../ops/geometry";
+import { capturePointer } from "../../core/pointer";
 
 /**
  * Interactive rectangles over a PageViewer page: drag to move, corner
@@ -85,7 +86,7 @@ export function BoxOverlay({
     const handle = target.closest<HTMLElement>("[data-handle]");
     const boxEl = target.closest<HTMLElement>("[data-box]");
     const p = toPt(e);
-    rootRef.current?.setPointerCapture(e.pointerId);
+    capturePointer(rootRef.current, e.pointerId);
     rootRef.current?.focus({ preventScroll: true });
     if (handle && boxEl) {
       const box = boxes.find((b) => b.id === boxEl.dataset.box);
