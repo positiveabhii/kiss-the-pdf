@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -102,7 +103,8 @@ export default function RootLayout({
     },
     url: siteConfig.url,
     description: siteConfig.description,
-    softwareRequirements: "Modern web browser with WebAssembly and Web Worker support.",
+    softwareRequirements:
+      "Modern web browser with WebAssembly and Web Worker support.",
     downloadUrl: siteConfig.githubUrl,
   };
 
@@ -116,14 +118,33 @@ export default function RootLayout({
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrganization) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLdOrganization),
+          }}
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSoftwareApp) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLdSoftwareApp),
+          }}
         />
       </head>
-      <body className={`${inter.className} antialiased`}>{children}</body>
+      <body className={`${inter.className} antialiased`}>
+        {children}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-JXBXKMH0VN"
+          strategy="afterInteractive"
+        />
+
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){window.dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-JXBXKMH0VN');
+  `}
+        </Script>
+      </body>
     </html>
   );
 }
