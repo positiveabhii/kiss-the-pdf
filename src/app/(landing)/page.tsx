@@ -3,7 +3,9 @@ import { LandingPage } from "@/components/landing/landing-page";
 import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: `${siteConfig.name} — ${siteConfig.tagline}`,
+  title: {
+    absolute: `${siteConfig.name} — ${siteConfig.tagline}`,
+  },
   description: siteConfig.description,
   alternates: {
     canonical: siteConfig.url,

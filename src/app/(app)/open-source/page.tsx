@@ -5,14 +5,14 @@ import { FaGithub } from "react-icons/fa";
 import { ShieldCheck, Code2, Lock, Cpu, Star, Bug, GitPullRequest, ArrowRight, Heart } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: `Open Source Philosophy & GitHub Repository | ${siteConfig.name}`,
+  title: "Open Source Architecture & GitHub Repository",
   description:
     "KissThePDF is a 100% free, open-source, browser-local PDF toolkit. Discover our privacy architecture, MIT license, and GitHub repository.",
   alternates: {
     canonical: `${siteConfig.url}/open-source`,
   },
   openGraph: {
-    title: `Open Source Philosophy & GitHub Repository | ${siteConfig.name}`,
+    title: `Open Source Architecture & GitHub Repository | ${siteConfig.name}`,
     description:
       "KissThePDF is a 100% free, open-source, browser-local PDF toolkit. Discover our privacy architecture, MIT license, and GitHub repository.",
     url: `${siteConfig.url}/open-source`,
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `Open Source Philosophy & GitHub Repository | ${siteConfig.name}`,
+    title: `Open Source Architecture & GitHub Repository | ${siteConfig.name}`,
     description:
       "KissThePDF is a 100% free, open-source, browser-local PDF toolkit. Discover our privacy architecture, MIT license, and GitHub repository.",
   },
