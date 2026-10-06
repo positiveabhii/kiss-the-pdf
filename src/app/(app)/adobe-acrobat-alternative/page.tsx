@@ -1,22 +1,66 @@
 import { Metadata } from "next";
 import { siteConfig } from "@/config/site";
-import { ShieldCheck, Check, X } from "lucide-react";
+import { Check, X } from "lucide-react";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: `Best Free ${siteConfig.name} Alternative to Adobe Acrobat (No Upload) | ${siteConfig.name}`,
-  description: `Looking for a free alternative to Adobe Acrobat? ${siteConfig.name} processes PDFs locally in your browser with no file size limits and no account required.`,
+  title: "Free Adobe Acrobat Alternative (Browser-Local)",
+  description: "Looking for a free Adobe Acrobat alternative? KissThePDF gives you 100+ browser-local PDF editing and conversion tools with no sign-in or cloud upload.",
   alternates: {
     canonical: `${siteConfig.url}/adobe-acrobat-alternative`,
-  }
+  },
+  openGraph: {
+    title: "Free Adobe Acrobat Alternative (Browser-Local) | ${siteConfig.name}",
+    description: "Looking for a free Adobe Acrobat alternative? KissThePDF gives you 100+ browser-local PDF editing and conversion tools with no sign-in or cloud upload.",
+    url: `${siteConfig.url}/adobe-acrobat-alternative`,
+    siteName: siteConfig.name,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Free Adobe Acrobat Alternative (Browser-Local) | ${siteConfig.name}",
+    description: "Looking for a free Adobe Acrobat alternative? KissThePDF gives you 100+ browser-local PDF editing and conversion tools with no sign-in or cloud upload.",
+  },
 };
 
 export default function CompetitorAlternativePage() {
   const jsonLdArticle = {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": `Best ${siteConfig.name} Alternative to Adobe Acrobat`,
-    "description": `Compare ${siteConfig.name} vs Adobe Acrobat. Find out why our free, open-source PDF tools are the best alternative.`,
+    "headline": "Free Adobe Acrobat Alternative (Browser-Local)",
+    "description": "Looking for a free Adobe Acrobat alternative? KissThePDF gives you 100+ browser-local PDF editing and conversion tools with no sign-in or cloud upload.",
   };
+
+  const jsonLdFaq = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How does KissThePDF compare to Adobe Acrobat Online?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Adobe Acrobat Online requires Adobe ID logins, cloud uploads, and costly Creative Cloud subscriptions for full tool access. KissThePDF provides 100+ free PDF tools running instantly in your browser without sign-in."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I edit text and add annotations without Adobe Acrobat?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. KissThePDF provides browser-based text editing, shape drawing, strikethrough, sticky notes, checkboxes, and signature tools for free."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are my confidential documents uploaded to the cloud?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Unlike Adobe Document Cloud, KissThePDF executes all rendering and processing locally on your device."
+      }
+    }
+  ]
+};
 
   return (
     <div className="flex flex-col max-w-5xl mx-auto w-full space-y-12 py-8 px-4">
@@ -24,15 +68,19 @@ export default function CompetitorAlternativePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdArticle) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFaq) }}
+      />
       
       {/* Header */}
       <div className="space-y-4 pb-4 border-b border-slate-200/60 text-center">
         <h1 className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight">
-          The Best Free Alternative to <span className="text-blue-600">Adobe Acrobat</span>
+          The Best Free Alternative to <span className="text-blue-600">Adobe Acrobat Online</span>
         </h1>
         <p className="text-lg text-slate-600 max-w-3xl mx-auto">
           Tired of file size limits, daily usage caps, and uploading sensitive documents to third-party servers? 
-          <strong>{siteConfig.name}</strong> is a free, open-source alternative that processes everything securely on your device.
+          <strong> {siteConfig.name}</strong> is a free, open-source alternative that processes everything securely on your device.
         </p>
       </div>
 
@@ -40,46 +88,69 @@ export default function CompetitorAlternativePage() {
       <section className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
         <div className="grid grid-cols-3 bg-slate-50 border-b border-slate-200 p-4 font-bold text-slate-800">
           <div>Feature</div>
-          <div className="text-center">Adobe Acrobat</div>
+          <div className="text-center">Adobe Acrobat Online</div>
           <div className="text-center text-blue-600">{siteConfig.name}</div>
         </div>
         
         <div className="grid grid-cols-3 border-b border-slate-100 p-4 items-center">
           <div className="font-medium text-slate-700">Privacy & Security</div>
-          <div className="text-center text-slate-500 flex justify-center"><X className="text-red-500 mr-2"/> Uploads to server</div>
-          <div className="text-center font-semibold text-emerald-600 flex justify-center"><Check className="mr-2"/> 100% Local (Browser)</div>
+          <div className="text-center text-slate-500 flex justify-center items-center"><X className="text-red-500 mr-1.5 w-4 h-4 shrink-0"/> Uploads to Adobe Document Cloud</div>
+          <div className="text-center font-semibold text-emerald-600 flex justify-center items-center"><Check className="mr-1.5 w-4 h-4 shrink-0"/> 100% Local (Browser)</div>
         </div>
         
         <div className="grid grid-cols-3 border-b border-slate-100 p-4 items-center">
           <div className="font-medium text-slate-700">Pricing</div>
-          <div className="text-center text-slate-500 flex justify-center"><X className="text-red-500 mr-2"/> Freemium / Paid Plans</div>
-          <div className="text-center font-semibold text-emerald-600 flex justify-center"><Check className="mr-2"/> 100% Free</div>
+          <div className="text-center text-slate-500 flex justify-center items-center"><X className="text-red-500 mr-1.5 w-4 h-4 shrink-0"/> $19.99/mo subscription</div>
+          <div className="text-center font-semibold text-emerald-600 flex justify-center items-center"><Check className="mr-1.5 w-4 h-4 shrink-0"/> 100% Free (MIT)</div>
         </div>
 
         <div className="grid grid-cols-3 border-b border-slate-100 p-4 items-center">
           <div className="font-medium text-slate-700">Usage Limits</div>
-          <div className="text-center text-slate-500 flex justify-center"><X className="text-red-500 mr-2"/> Daily task limits</div>
-          <div className="text-center font-semibold text-emerald-600 flex justify-center"><Check className="mr-2"/> Unlimited usage</div>
+          <div className="text-center text-slate-500 flex justify-center items-center"><X className="text-red-500 mr-1.5 w-4 h-4 shrink-0"/> Sign-in required / Task caps</div>
+          <div className="text-center font-semibold text-emerald-600 flex justify-center items-center"><Check className="mr-1.5 w-4 h-4 shrink-0"/> Unlimited Usage</div>
         </div>
 
         <div className="grid grid-cols-3 p-4 items-center">
-          <div className="font-medium text-slate-700">Open Source</div>
-          <div className="text-center text-slate-500 flex justify-center"><X className="text-red-500 mr-2"/> Closed source</div>
-          <div className="text-center font-semibold text-emerald-600 flex justify-center"><Check className="mr-2"/> Open Source (MIT)</div>
+          <div className="font-medium text-slate-700">Architecture</div>
+          <div className="text-center text-slate-500 flex justify-center items-center"><X className="text-red-500 mr-1.5 w-4 h-4 shrink-0"/> Closed source proprietary</div>
+          <div className="text-center font-semibold text-emerald-600 flex justify-center items-center"><Check className="mr-1.5 w-4 h-4 shrink-0"/> Client-Side WebAssembly</div>
         </div>
       </section>
 
       {/* Why Choose Us */}
       <section className="space-y-6">
-        <h2 className="text-2xl font-bold text-slate-900">Why choose {siteConfig.name} over Adobe Acrobat?</h2>
+        <h2 className="text-2xl font-bold text-slate-900">Why choose {siteConfig.name} over Adobe Acrobat Online?</h2>
         <div className="grid md:grid-cols-2 gap-6">
           <div className="p-6 bg-blue-50 rounded-lg border border-blue-100">
             <h3 className="font-bold text-blue-900 mb-2">1. Your Files Never Leave Your Device</h3>
-            <p className="text-blue-800 text-sm">Unlike Adobe Acrobat, which requires you to upload documents to their servers, {siteConfig.name} uses advanced WebAssembly to process PDFs directly in your web browser. This means maximum privacy for sensitive data.</p>
+            <p className="text-blue-800 text-sm leading-relaxed">
+              Unlike cloud services that require uploading documents to remote web servers, {siteConfig.name} uses advanced client-side WebAssembly to process PDFs directly in your web browser. This ensures maximum privacy for sensitive legal, financial, and personal records.
+            </p>
           </div>
           <div className="p-6 bg-emerald-50 rounded-lg border border-emerald-100">
-            <h3 className="font-bold text-emerald-900 mb-2">2. No Annoying Limits or Paywalls</h3>
-            <p className="text-emerald-800 text-sm">We don't limit how many files you can merge, compress, or edit per day. There are no premium subscriptions and no watermarks added to your exported files.</p>
+            <h3 className="font-bold text-emerald-900 mb-2">2. No Usage Quotas or Paywalls</h3>
+            <p className="text-emerald-800 text-sm leading-relaxed">
+              We do not limit how many files you can merge, compress, or edit per day. There are no hourly task quotas, premium subscriptions, or watermarks added to your exported files.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQs */}
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">Frequently Asked Questions</h2>
+        <div className="grid gap-4 md:grid-cols-3">
+          <div className="bg-slate-50 p-5 rounded-lg border border-slate-100">
+            <h3 className="font-semibold text-slate-900 mb-2">How does KissThePDF compare to Adobe Acrobat Online?</h3>
+            <p className="text-sm text-slate-600 leading-relaxed">Adobe Acrobat Online requires Adobe ID logins, cloud uploads, and costly Creative Cloud subscriptions for full tool access. KissThePDF provides 100+ free PDF tools running instantly in your browser without sign-in.</p>
+          </div>
+          <div className="bg-slate-50 p-5 rounded-lg border border-slate-100">
+            <h3 className="font-semibold text-slate-900 mb-2">Can I edit text and add annotations without Adobe Acrobat?</h3>
+            <p className="text-sm text-slate-600 leading-relaxed">Yes. KissThePDF provides browser-based text editing, shape drawing, strikethrough, sticky notes, checkboxes, and signature tools for free.</p>
+          </div>
+          <div className="bg-slate-50 p-5 rounded-lg border border-slate-100">
+            <h3 className="font-semibold text-slate-900 mb-2">Are my confidential documents uploaded to the cloud?</h3>
+            <p className="text-sm text-slate-600 leading-relaxed">No. Unlike Adobe Document Cloud, KissThePDF executes all rendering and processing locally on your device.</p>
           </div>
         </div>
       </section>
@@ -87,10 +158,10 @@ export default function CompetitorAlternativePage() {
       {/* CTA */}
       <section className="text-center space-y-6 bg-slate-900 text-white rounded-xl p-8 sm:p-12">
         <h2 className="text-2xl sm:text-3xl font-bold">Ready to make the switch?</h2>
-        <p className="text-slate-300 max-w-2xl mx-auto">Try our suite of 20+ free PDF tools. No sign-up required, no installation, and completely free forever.</p>
-        <a href="/tools" className="inline-block bg-white text-slate-900 px-6 py-3 rounded-md font-bold hover:bg-slate-100 transition-colors">
-          Explore All Free PDF Tools
-        </a>
+        <p className="text-slate-300 max-w-2xl mx-auto">Try our suite of 100+ free PDF tools. No sign-up required, no installation, and completely free forever.</p>
+        <Link href="/tools" className="inline-block bg-white text-slate-900 px-6 py-3 rounded-md font-bold hover:bg-slate-100 transition-colors">
+          Explore All 100+ Free PDF Tools
+        </Link>
       </section>
     </div>
   );

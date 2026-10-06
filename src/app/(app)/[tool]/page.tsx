@@ -24,12 +24,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: toolConfig.seoTitle,
     description: toolConfig.seoDescription,
-    keywords: toolConfig.keywords?.join(", "),
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
-      title: toolConfig.seoTitle,
+      title: `${toolConfig.seoTitle} | ${siteConfig.name}`,
       description: toolConfig.seoDescription,
       url: canonicalUrl,
       siteName: siteConfig.name,
@@ -38,14 +37,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           url: siteConfig.ogImage.startsWith("http") ? siteConfig.ogImage : `${siteConfig.url}${siteConfig.ogImage}`,
           width: 1200,
           height: 630,
-          alt: toolConfig.seoTitle,
+          alt: `${toolConfig.seoTitle} | ${siteConfig.name}`,
         },
       ],
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: toolConfig.seoTitle,
+      title: `${toolConfig.seoTitle} | ${siteConfig.name}`,
       description: toolConfig.seoDescription,
       images: [siteConfig.ogImage.startsWith("http") ? siteConfig.ogImage : `${siteConfig.url}${siteConfig.ogImage}`],
     },
@@ -70,13 +69,13 @@ export function generateStaticParams() {
 
   const jsonLdApp = {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": toolConfig.name,
+    "@type": ["SoftwareApplication", "WebApplication"],
+    "name": `${toolConfig.name} - ${siteConfig.name}`,
     "description": toolConfig.seoDescription,
     "url": canonicalUrl,
     "applicationCategory": "UtilityApplication",
-    "operatingSystem": "All (Browser-Based)",
-    "browserRequirements": "Requires JavaScript. WebAssembly & Client-Side PDF engine enabled.",
+    "operatingSystem": "All (Modern Web Browsers)",
+    "browserRequirements": "Requires JavaScript and WebAssembly enabled.",
     "offers": {
       "@type": "Offer",
       "price": "0",
