@@ -101,21 +101,57 @@ export function LandingHero() {
               <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
               Free PDF tools that stay out of your way
             </div>
-            <h1 className="kp-display mb-6 max-w-lg text-white">Make every PDF feel easy.</h1>
-            <p className="max-w-md text-base leading-relaxed text-white/85 sm:text-lg">Merge, convert, organize and improve your documents with quick, focused tools that run right in your browser.</p>
-            <a href="https://www.producthunt.com/products/kissthepdf?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-kissthepdf" target="_blank" rel="noopener noreferrer">
-              <img alt="KissThePDF - Open Source Privacy First PDF Tool | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1246996&amp;theme=light&amp;t=1789722615023" />
+            <h1 className="kp-display mb-6 max-w-lg text-white">
+              Make every PDF feel easy.
+            </h1>
+            <p className="max-w-md text-base leading-relaxed text-white/85 sm:text-lg">
+              Merge, convert, organize and improve your documents with quick,
+              focused tools that run right in your browser.
+            </p>
+            <a
+              href="https://www.producthunt.com/products/kissthepdf?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-kissthepdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                alt="KissThePDF - Open Source Privacy First PDF Tool | Product Hunt"
+                width="250"
+                height="54"
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1246996&amp;theme=light&amp;t=1789722615023"
+              />
+            </a>
+            <a
+              href="https://peerlist.io/positiveabhii/project/kissthepdf--free-opensource-pdf-toolkit"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img
+                src="https://peerlist.io/api/v1/projects/embed/PRJHP6LB9PMA6ARMK1QG6MEAJAA6AK?showUpvote=false&theme=light"
+                alt="KissThePDF — Free, Open-Source PDF Toolkit"
+                style={{width: "auto", height: "72px"}}
+              />
             </a>
             <div className="mt-8 flex flex-wrap gap-3">
-              <a href="#tools" className="inline-flex items-center gap-2 rounded-md bg-white px-4 py-3 text-sm font-semibold text-[var(--kp-text)] transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
-                Explore all tools <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              <a
+                href="#tools"
+                className="inline-flex items-center gap-2 rounded-md bg-white px-4 py-3 text-sm font-semibold text-[var(--kp-text)] transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              >
+                Explore all tools{" "}
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </a>
-              <Link href="/docs" className="inline-flex items-center gap-2 rounded-md bg-orange-500 hover:bg-orange-600 px-4 py-3 text-sm font-semibold text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+              <Link
+                href="/docs"
+                className="inline-flex items-center gap-2 rounded-md bg-orange-500 hover:bg-orange-600 px-4 py-3 text-sm font-semibold text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              >
                 <BookOpen className="h-4 w-4" /> View Docs
               </Link>
             </div>
             <div className="mt-9 flex items-center gap-5 text-xs font-medium text-white/80">
-              <span>Free to use</span><span className="h-1 w-1 rounded-full bg-white/70" /><span>No sign-up</span><span className="h-1 w-1 rounded-full bg-white/70" /><span>Privacy-minded</span>
+              <span>Free to use</span>
+              <span className="h-1 w-1 rounded-full bg-white/70" />
+              <span>No sign-up</span>
+              <span className="h-1 w-1 rounded-full bg-white/70" />
+              <span>Privacy-minded</span>
             </div>
           </div>
           <HeroToolPreview />
