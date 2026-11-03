@@ -140,6 +140,14 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
             </span>
           </Link>
 
+          <Link
+            href="/guides"
+            className="flex items-center gap-1.5 p-2 rounded-md text-slate-600 hover:bg-slate-100 hover:text-slate-900 font-semibold transition-colors"
+          >
+            <GraduationCap size={13} className="text-slate-500" />
+            <span>How-To Guides</span>
+          </Link>
+
           <div className="flex items-center justify-between text-[10px] font-medium text-slate-400 pt-1 border-t border-slate-200/50">
             <Link href="/open-source" className="hover:text-slate-900 transition-colors">
               Open Source

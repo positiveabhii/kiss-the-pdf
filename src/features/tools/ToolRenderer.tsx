@@ -31,9 +31,11 @@ function loadTool(id: string): Promise<{ default: ComponentType }> {
   return p;
 }
 
-function LoadedTool({ id }: { id: string }) {
+type ToolProps = Record<string, string | number | boolean>;
+
+function LoadedTool({ id, props }: { id: string; props?: ToolProps }) {
   const mod = use(loadTool(id));
-  return createElement(mod.default);
+  return createElement(mod.default as ComponentType<ToolProps>, props);
 }
 
 const noopSubscribe = () => () => {};
@@ -80,7 +82,7 @@ class ToolErrorBoundary extends Component<{ children: ReactNode }, { error: Erro
   }
 }
 
-export function ToolRenderer({ toolId }: { toolId: string }) {
+export function ToolRenderer({ toolId, toolProps }: { toolId: string; toolProps?: ToolProps }) {
   const isClient = useIsClient();
 
   if (!getToolLoader(toolId)) {
@@ -94,7 +96,7 @@ export function ToolRenderer({ toolId }: { toolId: string }) {
   return (
     <ToolErrorBoundary>
       <Suspense fallback={<Loading />}>
-        <LoadedTool id={toolId} />
+        <LoadedTool id={toolId} props={toolProps} />
       </Suspense>
     </ToolErrorBoundary>
   );

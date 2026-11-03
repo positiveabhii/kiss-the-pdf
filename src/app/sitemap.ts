@@ -2,6 +2,8 @@ import { MetadataRoute } from "next";
 import { tools } from "@/config/tools";
 import { siteConfig } from "@/config/site";
 import { CATEGORY_DETAILS } from "@/config/docs";
+import { toolVariants } from "@/config/tool-variants";
+import { guides } from "@/content/guides";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const toolRoutes = tools.map((tool) => ({
@@ -10,6 +12,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "weekly" as const,
     priority: 0.8,
   }));
+
+  const variantRoutes = toolVariants.map((v) => ({
+    url: `${siteConfig.url}/${v.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
+  const guideRoutes = [
+    {
+      url: `${siteConfig.url}/guides`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.85,
+    },
+    ...guides.map((g) => ({
+      url: `${siteConfig.url}/guides/${g.slug}`,
+      lastModified: new Date(g.updated ?? g.published),
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    })),
+  ];
 
   const toolDocRoutes = tools.map((tool) => ({
     url: `${siteConfig.url}/docs/tools/${tool.id}`,
@@ -74,5 +98,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...staticDocsRoutes, ...categoryDocRoutes, ...toolDocRoutes, ...toolRoutes, ...competitorRoutes];
+  return [...staticRoutes, ...staticDocsRoutes, ...categoryDocRoutes, ...toolDocRoutes, ...toolRoutes, ...variantRoutes, ...guideRoutes, ...competitorRoutes];
 }

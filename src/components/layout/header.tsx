@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Menu, Search, ShieldCheck, ChevronRight, Command, X, BookOpen } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { tools } from "@/config/tools";
+import { toolVariants } from "@/config/tool-variants";
 
 interface HeaderProps {
   onOpenMobile: () => void;
@@ -18,7 +19,9 @@ export function Header({ onOpenMobile }: HeaderProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const activeTool = tools.find((t) => t.href === pathname);
+  const variant = toolVariants.find((v) => `/${v.slug}` === pathname);
+  const activeTool = tools.find((t) => t.href === pathname || t.id === variant?.baseToolId);
+  const inGuides = pathname === "/guides" || pathname.startsWith("/guides/");
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -77,7 +80,12 @@ export function Header({ onOpenMobile }: HeaderProps) {
                 <ChevronRight size={12} className="text-slate-400 shrink-0" />
                 <span className="text-slate-400 shrink-0">{activeTool.category}</span>
                 <ChevronRight size={12} className="text-slate-400 shrink-0" />
-                <span className="text-slate-900 font-semibold truncate">{activeTool.name}</span>
+                <span className="text-slate-900 font-semibold truncate">{variant ? variant.definition.name : activeTool.name}</span>
+              </>
+            ) : inGuides ? (
+              <>
+                <ChevronRight size={12} className="text-slate-400 shrink-0" />
+                <Link href="/guides" className="text-slate-900 font-semibold truncate hover:underline">Guides</Link>
               </>
             ) : (
               <>

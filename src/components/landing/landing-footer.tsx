@@ -11,6 +11,8 @@ const FOOTER_LINKS = {
   ],
   Product: [
     { label: "All Tools", href: "/tools" },
+    { label: "How-To Guides", href: "/guides" },
+    { label: "Compress PDF to 100KB", href: "/compress-pdf-to-100kb" },
     { label: "Merge PDF", href: "/merge-pdf" },
     { label: "Split PDF", href: "/split-pdf" },
     { label: "Compress PDF", href: "/compress-pdf" },
@@ -26,7 +28,7 @@ const FOOTER_LINKS = {
   ],
   Edit: [
     { label: "Edit PDF", href: "/edit-pdf" },
-    { label: "Sign PDF", href: "/sign-pdf" },
+    { label: "Sign PDF", href: "/draw-signature" },
     { label: "Draw on PDF", href: "/draw-on-pdf" },
     { label: "Strikethrough PDF", href: "/strikethrough-pdf" },
     { label: "Sticky Notes", href: "/sticky-notes" },

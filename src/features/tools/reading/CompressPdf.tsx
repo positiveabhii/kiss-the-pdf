@@ -34,9 +34,15 @@ const MODES: { value: CompressionMode; label: string; hint: string }[] = [
   },
 ];
 
-export default function CompressPdf() {
-  const [mode, setMode] = useState<CompressionMode>("balanced");
-  const [targetKb, setTargetKb] = useState(500);
+type Props = {
+  /** Preset from a landing page such as /compress-pdf-to-100kb. */
+  initialMode?: CompressionMode;
+  initialTargetKb?: number;
+};
+
+export default function CompressPdf({ initialMode = "balanced", initialTargetKb = 500 }: Props = {}) {
+  const [mode, setMode] = useState<CompressionMode>(initialMode);
+  const [targetKb, setTargetKb] = useState(initialTargetKb);
 
   return (
     <SimplePdfTool
@@ -45,7 +51,8 @@ export default function CompressPdf() {
       validate={(doc) => {
         if (mode === "target-size") {
           if (!(targetKb > 0)) return "Enter a target size.";
-          if (targetKb * 1024 >= doc.file.size) return `The file is already ${formatFileSize(doc.file.size)} — pick a smaller target.`;
+          if (targetKb * 1024 >= doc.file.size)
+            return `The file is already ${formatFileSize(doc.file.size)}, which is under ${targetKb} KB, so it doesn't need compressing. Enter a smaller target to shrink it further.`;
         }
         return null;
       }}

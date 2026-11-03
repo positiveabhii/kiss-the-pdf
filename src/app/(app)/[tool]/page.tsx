@@ -3,15 +3,41 @@ import { tools } from "@/config/tools";
 import { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { ToolRenderer } from "@/features/tools/ToolRenderer";
+import { getToolVariant, toolVariants, type ToolVariant } from "@/config/tool-variants";
+import { getGuideForTool } from "@/content/guides";
+import { GuideText, guidePlainText } from "@/components/guides/guide-text";
+import type { ToolDefinition } from "@/types";
+import Link from "next/link";
+import { BookOpen } from "lucide-react";
+
 interface Props {
   params: Promise<{
     tool: string;
   }>;
 }
 
+/**
+ * A route is either a tool (/merge-pdf) or a preset variant of one
+ * (/compress-pdf-to-100kb), which renders the base tool with preset props.
+ */
+function resolve(slug: string):
+  | { toolConfig: ToolDefinition; baseId: string; variant?: ToolVariant }
+  | undefined {
+  const tool = tools.find((t) => t.id === slug);
+  if (tool) return { toolConfig: tool, baseId: tool.id };
+  const variant = getToolVariant(slug);
+  const base = variant && tools.find((t) => t.id === variant.baseToolId);
+  if (!variant || !base) return undefined;
+  return {
+    toolConfig: { ...base, ...variant.definition, id: variant.slug, href: `/${variant.slug}`, seoH2s: undefined },
+    baseId: base.id,
+    variant,
+  };
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await params;
-  const toolConfig = tools.find((t) => t.id === resolvedParams.tool);
+  const toolConfig = resolve(resolvedParams.tool)?.toolConfig;
   if (!toolConfig) {
     return {
       title: `Tool Not Found | ${siteConfig.name}`,
@@ -51,18 +77,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export function generateStaticParams() {
-  return tools.map((tool) => ({
-    tool: tool.id,
-  }));
+  return [...tools.map((tool) => ({ tool: tool.id })), ...toolVariants.map((v) => ({ tool: v.slug }))];
 }
 
 export default async function ToolPage({ params }: Props) {
   const resolvedParams = await params;
-  const toolConfig = tools.find((t) => t.id === resolvedParams.tool);
+  const resolved = resolve(resolvedParams.tool);
 
-  if (!toolConfig) {
+  if (!resolved) {
     notFound();
   }
+  const { toolConfig, baseId, variant } = resolved;
+  const guide = getGuideForTool(baseId);
+  const siblingVariants = variant ? toolVariants.filter((v) => v.baseToolId === variant.baseToolId) : [];
 
   const canonicalUrl = `${siteConfig.url}${toolConfig.href}`;
 
@@ -128,7 +155,7 @@ export default async function ToolPage({ params }: Props) {
       "name": faq.question,
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": faq.answer
+        "text": guidePlainText(faq.answer)
       }
     }))
   } : null;
@@ -164,8 +191,36 @@ export default async function ToolPage({ params }: Props) {
 
       {/* Tool Canvas Container */}
       <div className="bg-white border border-slate-200 rounded-lg p-5 sm:p-8 shadow-2xs">
-        <ToolRenderer toolId={toolConfig.id} />
+        <ToolRenderer toolId={baseId} toolProps={variant?.toolProps} />
       </div>
+
+      {guide && (
+        <Link
+          href={`/guides/${guide.slug}`}
+          className="flex items-center gap-2 self-start text-sm font-medium text-blue-700 hover:text-blue-900 hover:underline"
+        >
+          <BookOpen size={15} />
+          Step-by-step guide: {guide.title}
+        </Link>
+      )}
+
+      {siblingVariants.length > 0 && (
+        <nav aria-label="Other target sizes" className="flex flex-wrap items-center gap-2 text-sm">
+          <span className="text-slate-500">Other sizes:</span>
+          {siblingVariants.map((v) =>
+            v.slug === variant?.slug ? (
+              <span key={v.slug} className="rounded-full bg-slate-900 px-3 py-1 font-medium text-white">{v.label}</span>
+            ) : (
+              <Link key={v.slug} href={`/${v.slug}`} className="rounded-full bg-slate-100 px-3 py-1 font-medium hover:bg-slate-200">
+                {v.label}
+              </Link>
+            )
+          )}
+          <Link href={`/${baseId}`} className="rounded-full bg-slate-100 px-3 py-1 font-medium hover:bg-slate-200">
+            Any size
+          </Link>
+        </nav>
+      )}
 
       {/* Server-Rendered Static SEO Content Sections */}
       <article className="space-y-8 mt-6 pt-8 border-t border-slate-200 text-slate-800">
@@ -206,7 +261,7 @@ export default async function ToolPage({ params }: Props) {
               {toolConfig.faqs.map((faq, i) => (
                 <div key={i} className="bg-slate-50 p-4 rounded-lg border border-slate-100">
                   <h3 className="font-semibold mb-2">{faq.question}</h3>
-                  <p className="text-sm text-slate-600">{faq.answer}</p>
+                  <p className="text-sm text-slate-600"><GuideText text={faq.answer} /></p>
                 </div>
               ))}
             </div>
@@ -239,7 +294,7 @@ export default async function ToolPage({ params }: Props) {
         <div className="pt-2 mt-auto text-xs text-slate-500 flex items-center justify-between border-t border-slate-100">
           <span>Need technical specifications or developer guides for this tool?</span>
           <a
-            href={`/docs/tools/${toolConfig.id}`}
+            href={`/docs/tools/${baseId}`}
             className="font-semibold text-orange-600 hover:underline flex items-center gap-1"
           >
             <span>View {toolConfig.name} Specs in Docs →</span>
