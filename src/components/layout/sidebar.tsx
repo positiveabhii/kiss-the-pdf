@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { PanelLeftClose, PanelLeftOpen, ShieldCheck, Search, X, BookOpen } from "lucide-react";
+import { PanelLeftClose, PanelLeftOpen, ShieldCheck, Search, X, BookOpen, GraduationCap } from "lucide-react";
 import { tools } from "@/config/tools";
 import { ToolDefinition } from "@/types";
 import { cn } from "@/lib/utils";
