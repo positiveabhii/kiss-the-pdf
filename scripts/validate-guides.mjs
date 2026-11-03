@@ -1,6 +1,6 @@
 // Checks every guide for broken links, bad lengths and missing tools.
 // Usage: node --experimental-strip-types scripts/validate-guides.mjs
-import { readFileSync, readdirSync, existsSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -9,10 +9,8 @@ const read = (p) => readFileSync(join(root, p), "utf8");
 
 const toolIds = [...read("src/config/tools.ts").matchAll(/^    id: "([^"]+)"/gm)].map((m) => m[1]);
 const toolHrefs = new Set([...read("src/config/tools.ts").matchAll(/^    href: "([^"]+)"/gm)].map((m) => m[1]));
-const variantFile = "src/config/tool-variants.ts";
-const variantSlugs = existsSync(join(root, variantFile))
-  ? [...read(variantFile).matchAll(/^    slug: "([^"]+)"/gm)].map((m) => m[1])
-  : [];
+const { toolVariants } = await import(pathToFileURL(join(root, "src/config/tool-variants.ts")).href);
+const variantSlugs = toolVariants.map((v) => v.slug);
 
 const guideDir = join(root, "src/content/guides");
 const guides = [];

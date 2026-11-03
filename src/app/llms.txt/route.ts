@@ -1,4 +1,6 @@
 import { siteConfig } from "@/config/site";
+import { toolVariants } from "@/config/tool-variants";
+import { guides } from "@/content/guides";
 
 export async function GET() {
   const content = `# KissThePDF
@@ -40,6 +42,12 @@ KissThePDF provides 100 free online PDF tools categorized across 8 primary domai
   - PDF to JPG: ${siteConfig.url}/pdf-to-jpg
   - PDF to PNG: ${siteConfig.url}/pdf-to-png
   - PDF to WebP: ${siteConfig.url}/pdf-to-webp
+- **Compress to a target size**:
+${toolVariants.map((v) => `  - ${v.definition.name}: ${siteConfig.url}/${v.slug}`).join("\n")}
+
+## How-To Guides
+- **Guide Index**: ${siteConfig.url}/guides
+${guides.map((g) => `- ${g.title}: ${siteConfig.url}/guides/${g.slug}`).join("\n")}
 
 ## Open Source
 - **Repository**: ${siteConfig.githubUrl}

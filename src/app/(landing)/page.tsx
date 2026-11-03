@@ -4,7 +4,8 @@ import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
   title: {
-    absolute: `${siteConfig.name} — ${siteConfig.tagline}`,
+    // Includes the short brand name: people search "kisspdf" (GSC, Oct 2026).
+    absolute: `${siteConfig.name} (${siteConfig.shortName}) – Free PDF Tools, No Upload or Sign-Up`,
   },
   description: siteConfig.description,
   alternates: {
@@ -38,6 +39,7 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": siteConfig.name,
+    "alternateName": [siteConfig.shortName, "Kiss PDF", "Kiss The PDF"],
     "url": siteConfig.url,
     "logo": `${siteConfig.url}${siteConfig.logo}`,
     "sameAs": [
@@ -50,6 +52,7 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": siteConfig.name,
+    "alternateName": [siteConfig.shortName, "Kiss PDF"],
     "url": siteConfig.url,
     "potentialAction": {
       "@type": "SearchAction",
