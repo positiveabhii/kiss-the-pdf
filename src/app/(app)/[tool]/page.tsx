@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { tools } from "@/config/tools";
 import { Metadata } from "next";
 import { siteConfig } from "@/config/site";
-import { ShieldCheck } from "lucide-react";
 import { ToolRenderer } from "@/features/tools/ToolRenderer";
 interface Props {
   params: Promise<{
@@ -57,7 +56,7 @@ export function generateStaticParams() {
   }));
 }
 
-  export default async function ToolPage({ params }: Props) {
+export default async function ToolPage({ params }: Props) {
   const resolvedParams = await params;
   const toolConfig = tools.find((t) => t.id === resolvedParams.tool);
 
@@ -135,7 +134,7 @@ export function generateStaticParams() {
   } : null;
 
   return (
-    <div className="flex flex-col max-w-5xl mx-auto w-full space-y-8">
+    <div className="flex flex-col max-w-5xl mx-auto w-full space-y-4">
       {/* Inject Structured Data */}
       <script
         type="application/ld+json"
@@ -158,31 +157,10 @@ export function generateStaticParams() {
         />
       )}
 
-      {/* Application Tool Title Header */}
-      <div className="space-y-1 pb-2 border-b border-slate-200/60">
-        <div className="flex items-center gap-2">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
-            {toolConfig.category}
-          </span>
-          <span className="text-slate-300">•</span>
-          <span className="text-[11px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-1.5 py-0.2 rounded flex items-center gap-1">
-            <ShieldCheck size={11} /> 100% Client-Side Engine
-          </span>
-        </div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
-          {toolConfig.seoH1 || toolConfig.name}
-        </h1>
-        <p className="text-xs sm:text-sm text-slate-500 max-w-2xl">
-          {toolConfig.description}
-        </p>
-      </div>
-
-      {/* Intro Paragraph */}
-      {toolConfig.introParagraph && (
-        <div className="prose prose-sm prose-slate max-w-none">
-          <p>{toolConfig.introParagraph}</p>
-        </div>
-      )}
+      {/* Compact title (kept as the single H1 for SEO), editor directly below */}
+      <h1 className="text-lg sm:text-xl font-semibold text-slate-900 tracking-tight">
+        {toolConfig.seoH1 || toolConfig.name}
+      </h1>
 
       {/* Tool Canvas Container */}
       <div className="bg-white border border-slate-200 rounded-lg p-5 sm:p-8 shadow-2xs">
@@ -190,12 +168,20 @@ export function generateStaticParams() {
       </div>
 
       {/* Server-Rendered Static SEO Content Sections */}
-      <article className="space-y-8 pt-4 border-t border-slate-200 text-slate-800">
+      <article className="space-y-8 mt-6 pt-8 border-t border-slate-200 text-slate-800">
         
+        {/* About Section (intro copy lives below the editor) */}
+        {toolConfig.introParagraph && (
+          <section className="space-y-3">
+            <h2 className="text-xl font-bold">About {toolConfig.name}</h2>
+            <p className="text-sm leading-relaxed text-slate-600">{toolConfig.introParagraph}</p>
+          </section>
+        )}
+
         {/* How-To Section */}
         {toolConfig.howTo && (
           <section className="space-y-4">
-            <h2 className="text-xl font-bold">{toolConfig.howTo.name}</h2>
+            <h2 className="text-xl font-bold">{toolConfig.seoH2s?.[0] || toolConfig.howTo.name}</h2>
             <div className="space-y-3">
               {toolConfig.howTo.steps.map((step, i) => (
                 <div key={i} className="flex gap-4">
@@ -215,7 +201,7 @@ export function generateStaticParams() {
         {/* FAQs Section */}
         {toolConfig.faqs && toolConfig.faqs.length > 0 && (
           <section className="space-y-4">
-            <h2 className="text-xl font-bold">{toolConfig.seoH2s?.[0] || `Frequently Asked Questions about ${toolConfig.name}`}</h2>
+            <h2 className="text-xl font-bold">{toolConfig.seoH2s?.[1] || `Frequently Asked Questions about ${toolConfig.name}`}</h2>
             <div className="grid gap-4 md:grid-cols-2">
               {toolConfig.faqs.map((faq, i) => (
                 <div key={i} className="bg-slate-50 p-4 rounded-lg border border-slate-100">
@@ -230,7 +216,7 @@ export function generateStaticParams() {
         {/* Internal Links Section */}
         {toolConfig.relatedTools && toolConfig.relatedTools.length > 0 && (
           <section className="space-y-4">
-            <h2 className="text-xl font-bold">{toolConfig.seoH2s?.[1] || "Related Tools"}</h2>
+            <h2 className="text-xl font-bold">{toolConfig.seoH2s?.[2] || "Related Tools"}</h2>
             <div className="flex flex-wrap gap-2">
               {toolConfig.relatedTools.map(relatedId => {
                 const related = tools.find(t => t.id === relatedId);
