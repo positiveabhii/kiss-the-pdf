@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Instrument_Serif } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const serif = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], variable: "--font-display" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -137,7 +138,7 @@ export default function RootLayout({
        `}
         </Script>
       </head>
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${inter.className} ${inter.variable} ${serif.variable} antialiased`}>
         {children}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-JXBXKMH0VN"

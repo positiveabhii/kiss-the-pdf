@@ -4,6 +4,7 @@ import { siteConfig } from "@/config/site";
 import { CATEGORY_DETAILS } from "@/config/docs";
 import { toolVariants } from "@/config/tool-variants";
 import { guides } from "@/content/guides";
+import { allTags, posts } from "@/content/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const toolRoutes = tools.map((tool) => ({
@@ -33,6 +34,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.75,
     })),
+  ];
+
+  const blogRoutes = [
+    { url: `${siteConfig.url}/blog`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.85 },
+    ...posts.map((p) => ({
+      url: `${siteConfig.url}/blog/${p.slug}`,
+      lastModified: new Date(p.updated ?? p.published),
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+      images: [`${siteConfig.url}/blog/${p.slug}/cover.png`],
+    })),
+    // Only tag pages with enough posts to be indexable (see blog/tag/[tag]/page.tsx).
+    ...allTags()
+      .filter((t) => t.count >= 3)
+      .map(({ tag }) => ({ url: `${siteConfig.url}/blog/tag/${tag}`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.5 })),
   ];
 
   const toolDocRoutes = tools.map((tool) => ({
@@ -98,5 +114,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...staticDocsRoutes, ...categoryDocRoutes, ...toolDocRoutes, ...toolRoutes, ...variantRoutes, ...guideRoutes, ...competitorRoutes];
+  return [...staticRoutes, ...staticDocsRoutes, ...categoryDocRoutes, ...toolDocRoutes, ...toolRoutes, ...variantRoutes, ...guideRoutes, ...blogRoutes, ...competitorRoutes];
 }

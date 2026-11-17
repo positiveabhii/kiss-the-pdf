@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { PanelLeftClose, PanelLeftOpen, ShieldCheck, Search, X, BookOpen, GraduationCap } from "lucide-react";
+import { PanelLeftClose, PanelLeftOpen, ShieldCheck, Search, X, BookOpen, GraduationCap, Newspaper } from "lucide-react";
 import { tools } from "@/config/tools";
 import { ToolDefinition } from "@/types";
 import { cn } from "@/lib/utils";
@@ -146,6 +146,14 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
           >
             <GraduationCap size={13} className="text-slate-500" />
             <span>How-To Guides</span>
+          </Link>
+
+          <Link
+            href="/blog"
+            className="flex items-center gap-1.5 p-2 rounded-md text-slate-600 hover:bg-slate-100 hover:text-slate-900 font-semibold transition-colors"
+          >
+            <Newspaper size={13} className="text-slate-500" />
+            <span>Blog</span>
           </Link>
 
           <div className="flex items-center justify-between text-[10px] font-medium text-slate-400 pt-1 border-t border-slate-200/50">

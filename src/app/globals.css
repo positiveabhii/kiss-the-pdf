@@ -40,6 +40,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-display), Georgia, "Times New Roman", serif;
 }
 
 body {
@@ -59,112 +60,60 @@ html {
   background-size: 24px 24px;
 }
 
-.kp-landing-hero {
-  --hero-x: 50%;
-  --hero-y: 50%;
-  --hero-light-opacity: 0;
-  isolation: isolate;
-  position: relative;
-  background-color: #ef553b;
+/* Landing hero: warm paper with a faint ruled grid that fades out */
+.kp-paper {
+  background:
+    radial-gradient(70% 60% at 85% 10%, var(--kp-accent-glow) 0%, transparent 60%),
+    radial-gradient(50% 50% at 0% 100%, #f6e9df 0%, transparent 70%),
+    var(--kp-bg);
 }
 
-.kp-landing-hero::before,
-.kp-landing-hero::after {
+.kp-paper::after {
   content: "";
-  inset: 0;
-  pointer-events: none;
   position: absolute;
-}
-
-.kp-landing-hero::before {
+  inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.16) 1px, transparent 1px);
-  background-size: 46px 46px;
-  opacity: 0.55;
-  animation: kp-grid-drift 14s linear infinite;
+    linear-gradient(rgba(33, 29, 27, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(33, 29, 27, 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(80% 70% at 50% 30%, black 20%, transparent 80%);
+  pointer-events: none;
 }
 
-.kp-landing-hero::after {
-  background: radial-gradient(
-    280px circle at var(--hero-x) var(--hero-y),
-    rgba(255, 255, 255, 0.34),
-    rgba(255, 255, 255, 0.08) 48%,
-    transparent 72%
-  );
-  opacity: var(--hero-light-opacity);
-  transition: opacity 220ms ease-out;
+@keyframes kp-hero-bar-fill {
+  from { width: 8%; }
+  to { width: 100%; }
 }
 
-.kp-landing-hero > * {
-  position: relative;
-  z-index: 1;
+.kp-hero-bar {
+  width: 100%;
+  animation: kp-hero-bar-fill 1.6s var(--kp-ease-out) both;
 }
 
-.kp-hero-cursor {
-  display: none;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .kp-landing-hero {
-    cursor: none;
-  }
-
-  .kp-hero-cursor {
-    align-items: center;
-    background: rgba(255, 255, 255, 0.22);
-    border: 1px solid rgba(255, 255, 255, 0.92);
-    border-radius: 50%;
-    display: flex;
-    height: 28px;
-    justify-content: center;
-    left: var(--hero-x);
-    opacity: var(--hero-light-opacity);
-    pointer-events: none;
-    position: absolute;
-    top: var(--hero-y);
-    transform: translate(-50%, -50%);
-    transition: height 180ms ease-out, width 180ms ease-out, opacity 180ms ease-out, background 180ms ease-out;
-    width: 28px;
-    z-index: 3;
-  }
-
-  .kp-hero-cursor::before,
-  .kp-hero-cursor::after {
-    background: white;
-    content: "";
-    opacity: 0.88;
-    position: absolute;
-  }
-
-  .kp-hero-cursor::before { height: 1px; width: 10px; }
-  .kp-hero-cursor::after { height: 10px; width: 1px; }
-
-  .kp-landing-hero[data-interactive="true"] .kp-hero-cursor {
-    background: rgba(255, 255, 255, 0.52);
-    height: 42px;
-    width: 42px;
-  }
-}
-
-@keyframes kp-grid-drift {
-  from { background-position: 0 0, 0 0; }
-  to { background-position: 46px 46px, 46px 46px; }
+@media (prefers-reduced-motion: reduce) {
+  .kp-hero-bar { animation: none; }
 }
 
 /* Typography utilities */
 .kp-display {
-  font-size: clamp(2.25rem, 5vw, 3.5rem);
-  font-weight: 700;
-  letter-spacing: 0;
-  line-height: 1.08;
+  font-family: var(--font-display), Georgia, "Times New Roman", serif;
+  font-size: clamp(2.75rem, 6.2vw, 4.75rem);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.02;
 }
 
 .kp-heading {
-  font-size: clamp(1.75rem, 3vw, 2.25rem);
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  line-height: 1.15;
+  font-family: var(--font-display), Georgia, "Times New Roman", serif;
+  font-size: clamp(2.1rem, 4vw, 3.1rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+}
+
+.kp-display em,
+.kp-heading em {
+  font-style: italic;
 }
 
 .kp-label {
@@ -209,6 +158,31 @@ html {
 
 .kp-btn-primary:active {
   transform: translateY(0);
+}
+
+/* Dark "ink" button: the primary call to action on the landing page */
+.kp-btn-ink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.35rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  background: var(--kp-text);
+  border-radius: 0.6rem;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.12) inset, 0 8px 20px -8px rgba(33, 29, 27, 0.5);
+  transition: transform var(--kp-duration-fast) var(--kp-ease-out), background var(--kp-duration-fast) var(--kp-ease-out);
+}
+
+.kp-btn-ink:hover {
+  background: #000;
+  transform: translateY(-1px);
+}
+
+.kp-btn-ink:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--kp-bg), 0 0 0 4px var(--kp-accent);
 }
 
 .kp-btn-secondary {

@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import Link from "next/link";
+import { Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Reveal } from "./reveal";
 
@@ -34,7 +35,7 @@ const FAQ_ITEMS = [
   {
     question: "What PDF tools are available?",
     answer:
-      "KissPDF offers 100 PDF tools covering organization, page manipulation, conversion, editing, security, forms, enhancement, and reading. Several tools are available now, with more being added over time.",
+      "KissPDF offers 100+ PDF tools covering organization, page manipulation, conversion, editing, security, forms, enhancement, and reading. OCR and Word/Excel conversion are not available yet.",
   },
   {
     question: "Are my files stored?",
@@ -60,63 +61,63 @@ const FAQ_ITEMS = [
 
 export function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ_ITEMS.map((f) => ({ "@type": "Question", name: f.question, acceptedAnswer: { "@type": "Answer", text: f.answer } })),
+  };
 
   return (
-    <section id="faq" className="py-20 sm:py-24 bg-[var(--kp-bg)] relative">
-      <div className="absolute inset-x-0 top-0 h-px bg-[var(--kp-border)]" aria-hidden="true" />
-
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+    <section id="faq" className="relative scroll-mt-16 bg-[var(--kp-bg)] py-24 sm:py-28">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:px-8">
         <Reveal>
-          <div className="text-center mb-12">
-            <h2 className="kp-heading text-[var(--kp-text)] mb-3">Common questions</h2>
-            <p className="text-[var(--kp-text-muted)]">Straight answers about how KissPDF works.</p>
+          <div className="lg:sticky lg:top-28">
+            <p className="kp-label mb-3 text-[var(--kp-accent)]">Questions</p>
+            <h2 className="kp-heading text-[var(--kp-text)]">
+              Straight <em>answers</em>.
+            </h2>
+            <p className="mt-4 max-w-sm leading-relaxed text-[var(--kp-text-secondary)]">
+              Still curious? The docs explain the architecture, and the blog compares us honestly with the alternatives.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-4 text-sm font-semibold">
+              <Link href="/docs/faq" className="text-[var(--kp-text)] hover:text-[var(--kp-accent-hover)]">Full FAQ →</Link>
+              <Link href="/blog" className="text-[var(--kp-text)] hover:text-[var(--kp-accent-hover)]">Read the blog →</Link>
+            </div>
           </div>
         </Reveal>
 
-        <div className="space-y-2">
+        <div className="border-t border-[var(--kp-border)]">
           {FAQ_ITEMS.map((item, index) => {
             const isOpen = openIndex === index;
             return (
-              <Reveal key={item.question} delay={index * 40}>
+              <div key={item.question} className="border-b border-[var(--kp-border)]">
+                <button
+                  type="button"
+                  onClick={() => setOpenIndex(isOpen ? null : index)}
+                  aria-expanded={isOpen}
+                  className="flex w-full items-center justify-between gap-6 py-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--kp-accent)]"
+                >
+                  <span className="text-[17px] font-medium text-[var(--kp-text)]">{item.question}</span>
+                  <Plus
+                    className={cn(
+                      "h-5 w-5 shrink-0 text-[var(--kp-text-muted)] transition-transform duration-300 ease-out motion-reduce:transition-none",
+                      isOpen && "rotate-45 text-[var(--kp-accent)]"
+                    )}
+                    aria-hidden="true"
+                  />
+                </button>
                 <div
                   className={cn(
-                    "rounded-xl border bg-[var(--kp-surface)] overflow-hidden transition-colors duration-200",
-                    isOpen
-                      ? "border-[var(--kp-accent)]/25 shadow-[var(--kp-shadow-xs)]"
-                      : "border-[var(--kp-border)]"
+                    "grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none",
+                    isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                   )}
                 >
-                  <button
-                    type="button"
-                    onClick={() => setOpenIndex(isOpen ? null : index)}
-                    aria-expanded={isOpen}
-                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--kp-accent)]"
-                  >
-                    <span className="text-sm font-semibold text-[var(--kp-text)] pr-2">
-                      {item.question}
-                    </span>
-                    <ChevronDown
-                      className={cn(
-                        "w-5 h-5 shrink-0 text-[var(--kp-text-muted)] transition-transform duration-300 ease-out motion-reduce:transition-none",
-                        isOpen && "rotate-180 text-[var(--kp-accent)]"
-                      )}
-                      aria-hidden="true"
-                    />
-                  </button>
-                  <div
-                    className={cn(
-                      "grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none",
-                      isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-                    )}
-                  >
-                    <div className="overflow-hidden">
-                      <p className="px-5 pb-4 text-sm text-[var(--kp-text-muted)] leading-relaxed">
-                        {item.answer}
-                      </p>
-                    </div>
+                  <div className="overflow-hidden">
+                    <p className="max-w-2xl pb-6 leading-relaxed text-[var(--kp-text-secondary)]">{item.answer}</p>
                   </div>
                 </div>
-              </Reveal>
+              </div>
             );
           })}
         </div>

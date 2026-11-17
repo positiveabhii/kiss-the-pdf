@@ -1,18 +1,24 @@
 "use client";
 
-import { useRef, useCallback, useEffect } from "react";
+import { useRef, useCallback, useEffect, type ReactNode } from "react";
 import { LandingHeader } from "./landing-header";
-import { LandingHero } from "./landing-hero";
+import { LandingHero, TrustStrip, type FeaturedPost } from "./landing-hero";
 import { ToolDirectory } from "./tool-directory";
 import { WhyKissPdf } from "./why-kisspdf";
 import { PrivacySection } from "./privacy-section";
-import { HowItWorks } from "./how-it-works";
 import { FaqSection } from "./faq-section";
 import { FinalCta } from "./final-cta";
 import { LandingFooter } from "./landing-footer";
 import { ScrollProgress } from "./scroll-progress";
 
-export function LandingPage() {
+interface LandingPageProps {
+  toolCount: number;
+  /** Server-rendered content section (blog and guides), placed after "How it works". */
+  learnSection?: ReactNode;
+  featuredPosts?: FeaturedPost[];
+}
+
+export function LandingPage({ toolCount, learnSection, featuredPosts }: LandingPageProps) {
   const searchRef = useRef<HTMLInputElement>(null);
 
   const focusSearch = useCallback(() => {
@@ -35,15 +41,16 @@ export function LandingPage() {
   }, [focusSearch]);
 
   return (
-        <div className="min-h-screen bg-(--kp-bg) text-(--kp-text) overflow-x-hidden">
+    <div className="min-h-screen bg-(--kp-bg) text-(--kp-text) overflow-x-hidden">
       <ScrollProgress />
       <LandingHeader onSearchFocus={focusSearch} />
       <main>
-        <LandingHero />
+        <LandingHero toolCount={toolCount} onSearchFocus={focusSearch} featuredPosts={featuredPosts} />
+        <TrustStrip toolCount={toolCount} />
         <ToolDirectory searchInputRef={searchRef} />
         <WhyKissPdf />
         <PrivacySection />
-        <HowItWorks />
+        {learnSection}
         <FaqSection />
         <FinalCta />
       </main>

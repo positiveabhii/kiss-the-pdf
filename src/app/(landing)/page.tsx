@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { LandingPage } from "@/components/landing/landing-page";
 import { siteConfig } from "@/config/site";
+import { tools } from "@/config/tools";
+import { FromTheBlog } from "@/components/landing/from-the-blog";
+import { posts } from "@/content/blog";
 
 export const metadata: Metadata = {
   title: {
@@ -71,7 +74,14 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebSite) }}
       />
-      <LandingPage />
+      <LandingPage
+        toolCount={tools.filter((t) => t.status === "implemented").length}
+        learnSection={<FromTheBlog />}
+        featuredPosts={(["Comparisons", "Open Source", "How-To"] as const)
+          .map((c) => posts.find((p) => p.category === c))
+          .filter((p) => p !== undefined)
+          .map(({ slug, title, category }) => ({ slug, title, category }))}
+      />
     </>
   );
 }
