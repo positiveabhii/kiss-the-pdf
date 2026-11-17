@@ -91,6 +91,17 @@ export default async function ToolPage({ params }: Props) {
   const guide = getGuideForTool(baseId);
   const siblingVariants = variant ? toolVariants.filter((v) => v.baseToolId === variant.baseToolId) : [];
 
+  // Server-rendered copy below the editor. The editor itself is client-only, so
+  // without this the page has almost no indexable text. Tools without their own
+  // copy fall back to their guide, then to same-category tools for links.
+  const aboutText = toolConfig.introParagraph ?? guide?.summary ?? toolConfig.description;
+  const faqs = toolConfig.faqs?.length ? toolConfig.faqs : (guide?.faqs ?? []);
+  const relatedTools = (
+    toolConfig.relatedTools?.length
+      ? toolConfig.relatedTools.map((id) => tools.find((t) => t.id === id))
+      : tools.filter((t) => t.category === toolConfig.category && t.id !== baseId).slice(0, 8)
+  ).filter((t): t is ToolDefinition => t !== undefined);
+
   const canonicalUrl = `${siteConfig.url}${toolConfig.href}`;
 
   const jsonLdApp = {
@@ -147,10 +158,10 @@ export default async function ToolPage({ params }: Props) {
     }))
   } : null;
 
-  const jsonLdFaq = toolConfig.faqs && toolConfig.faqs.length > 0 ? {
+  const jsonLdFaq = faqs.length > 0 ? {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": toolConfig.faqs.map(faq => ({
+    "mainEntity": faqs.map(faq => ({
       "@type": "Question",
       "name": faq.question,
       "acceptedAnswer": {
@@ -203,6 +214,85 @@ export default async function ToolPage({ params }: Props) {
           Step-by-step guide: {guide.title}
         </Link>
       )}
+
+      {siblingVariants.length > 0 && (
+        <nav aria-label="Other target sizes" className="flex flex-wrap items-center gap-2 text-sm">
+          <span className="text-slate-500">Other sizes:</span>
+          {siblingVariants.map((v) =>
+            v.slug === variant?.slug ? (
+              <span key={v.slug} className="rounded-full bg-slate-900 px-3 py-1 font-medium text-white">{v.label}</span>
+            ) : (
+              <Link key={v.slug} href={`/${v.slug}`} className="rounded-full bg-slate-100 px-3 py-1 font-medium hover:bg-slate-200">
+                {v.label}
+              </Link>
+            )
+          )}
+          <Link href={`/${baseId}`} className="rounded-full bg-slate-100 px-3 py-1 font-medium hover:bg-slate-200">
+            Any size
+          </Link>
+        </nav>
+      )}
+
+      {/* Server-rendered content for search engines and readers. Keep it: the
+          editor above is client-only, and FAQPage JSON-LD must match visible text. */}
+      <article className="mt-6 space-y-8 border-t border-slate-200 pt-8 text-slate-800">
+        <section className="space-y-3">
+          <h2 className="text-xl font-bold">About {toolConfig.name}</h2>
+          <p className="text-sm leading-relaxed text-slate-600">
+            <GuideText text={aboutText} />
+          </p>
+        </section>
+
+        {toolConfig.howTo && (
+          <section className="space-y-4">
+            <h2 className="text-xl font-bold">{toolConfig.seoH2s?.[0] || toolConfig.howTo.name}</h2>
+            <ol className="space-y-3">
+              {toolConfig.howTo.steps.map((step, i) => (
+                <li key={i} className="flex gap-4">
+                  <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 font-bold text-blue-700">
+                    {i + 1}
+                  </span>
+                  <div>
+                    <h3 className="font-semibold">{step.name}</h3>
+                    <p className="text-sm text-slate-600">{step.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
+
+        {faqs.length > 0 && (
+          <section className="space-y-4">
+            <h2 className="text-xl font-bold">{toolConfig.seoH2s?.[1] || `${toolConfig.name}: frequently asked questions`}</h2>
+            <div className="grid gap-4 md:grid-cols-2">
+              {faqs.map((faq) => (
+                <div key={faq.question} className="rounded-lg border border-slate-100 bg-slate-50 p-4">
+                  <h3 className="mb-2 font-semibold">{faq.question}</h3>
+                  <p className="text-sm text-slate-600"><GuideText text={faq.answer} /></p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {relatedTools.length > 0 && (
+          <section className="space-y-4">
+            <h2 className="text-xl font-bold">{toolConfig.seoH2s?.[2] || "Related tools"}</h2>
+            <div className="flex flex-wrap gap-2">
+              {relatedTools.map((related) => (
+                <Link
+                  key={related.id}
+                  href={related.href}
+                  className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1.5 text-sm font-medium transition-colors hover:bg-slate-200"
+                >
+                  {related.name}
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+      </article>
     </div>
   );
 }

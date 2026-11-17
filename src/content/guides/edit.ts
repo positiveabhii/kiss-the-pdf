@@ -52,7 +52,7 @@ export const editGuides: Guide[] = [
           },
           {
             type: "p",
-            text: "To correct a word, a date or a figure, cover it with the **Whiteout** tool, then type the replacement on top with the **Text** tool. Pick a matching font from Helvetica, Times or Courier and set the size so it lines up. The original text is still in the file under the white box, so this is a visual fix, not redaction. See [how to white out a PDF](/guides/how-to-white-out-pdf) for the details.",
+            text: "To correct a word, a date or a figure, cover it with the **Whiteout** tool, then type the replacement on top with the **Text** tool. Pick a matching font from Helvetica, Times or Courier and set the size so it lines up. The original text is still in the file under the white box, so this is a visual fix, not redaction. See [how to white out a PDF](/whiteout-pdf) for the details.",
           },
         ],
       },
@@ -436,7 +436,7 @@ export const editGuides: Guide[] = [
         blocks: [
           {
             type: "p",
-            text: "Add Shape is the right choice when one document needs a mix of boxes, circles and arrows. If you only need one kind, the focused pages open with it ready and each has its own walkthrough: [how to circle something in a PDF](/guides/how-to-circle-something-in-pdf), [how to draw straight lines](/guides/how-to-draw-straight-lines-on-pdf), [how to add arrows](/guides/how-to-add-arrows-to-pdf) and [how to add a rectangle](/guides/how-to-add-a-rectangle-to-pdf). For freehand marks rather than geometric shapes, use [Draw on PDF](/draw-on-pdf).",
+            text: "Add Shape is the right choice when one document needs a mix of boxes, circles and arrows. If you only need one kind, the focused pages open with it ready and each has its own walkthrough: [how to circle something in a PDF](/guides/how-to-circle-something-in-pdf), [how to draw straight lines](/add-line), [how to add arrows](/add-arrow) and [how to add a rectangle](/add-rectangle). For freehand marks rather than geometric shapes, use [Draw on PDF](/draw-on-pdf).",
           },
         ],
       },
@@ -883,7 +883,7 @@ export const editGuides: Guide[] = [
           },
           {
             type: "p",
-            text: "Be aware of how it is saved. The highlight is drawn into the page content rather than stored as a highlight annotation. It shows and prints in every reader, but it will not appear in Acrobat's or Preview's comment list, and nobody can remove it with a click later. If a reviewer needs to reply to your marks, pair the highlights with [comments](/guides/how-to-add-comments-to-pdf) or [sticky notes](/sticky-notes), which are saved as real annotations.",
+            text: "Be aware of how it is saved. The highlight is drawn into the page content rather than stored as a highlight annotation. It shows and prints in every reader, but it will not appear in Acrobat's or Preview's comment list, and nobody can remove it with a click later. If a reviewer needs to reply to your marks, pair the highlights with [comments](/pdf-comments) or [sticky notes](/sticky-notes), which are saved as real annotations.",
           },
         ],
       },

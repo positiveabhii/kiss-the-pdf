@@ -370,7 +370,7 @@ export const convertGuides: Guide[] = [
     title: "How to Convert a GIF to PDF (Every Frame or Just One)",
     seoTitle: "How to Convert GIF to PDF: Every Frame or One",
     description:
-      "Convert static or animated GIFs to PDF. Put every animation frame on its own page, or keep only the first frame. Free, no sign-up, and files stay on your device.",
+      "Convert static or animated GIFs to PDF. Put every animation frame on its own page or keep only the first. Free, no sign-up, and files stay on your device.",
     summary:
       "To convert a GIF to PDF, open KissThePDF's GIF to PDF tool and add your GIFs. For animated files, set Animated GIFs to Every frame as a page or First frame only. Choose page size, margin and background, then click Convert to PDF. The button shows the final page count before you start, for example (24 pages).",
     published: "2026-11-03",
@@ -485,7 +485,7 @@ export const convertGuides: Guide[] = [
     title: "How to Convert a Bitmap (BMP) to PDF",
     seoTitle: "How to Convert BMP (Bitmap) to PDF, Free",
     description:
-      "Convert BMP and DIB bitmap images to a compact PDF. Combine many bitmaps into one file and set page size and margins. Free, no sign-up, processed in your browser.",
+      "Convert BMP and DIB bitmap images to a compact PDF. Combine many bitmaps into one file and set page size and margins. Free, no sign-up, runs in your browser.",
     summary:
       "To convert a bitmap to PDF, open KissThePDF's BMP to PDF tool, add your .bmp or .dib files (up to 100, 25 MB each), arrange them, choose page size, orientation, margin and image placement, then click Convert to PDF and download. The uncompressed bitmap is stored as a compressed image, so the PDF is usually far smaller than the BMP.",
     published: "2026-11-03",
