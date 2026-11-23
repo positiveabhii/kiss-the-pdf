@@ -9,14 +9,12 @@ import { allTags, posts } from "@/content/blog";
 export default function sitemap(): MetadataRoute.Sitemap {
   const toolRoutes = tools.map((tool) => ({
     url: `${siteConfig.url}${tool.href}`,
-    lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.8,
   }));
 
   const variantRoutes = toolVariants.map((v) => ({
     url: `${siteConfig.url}/${v.slug}`,
-    lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.8,
   }));
@@ -24,7 +22,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const guideRoutes = [
     {
       url: `${siteConfig.url}/guides`,
-      lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.85,
     },
@@ -37,7 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const blogRoutes = [
-    { url: `${siteConfig.url}/blog`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.85 },
+    { url: `${siteConfig.url}/blog`, changeFrequency: "weekly" as const, priority: 0.85 },
     ...posts.map((p) => ({
       url: `${siteConfig.url}/blog/${p.slug}`,
       lastModified: new Date(p.updated ?? p.published),
@@ -48,19 +45,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Only tag pages with enough posts to be indexable (see blog/tag/[tag]/page.tsx).
     ...allTags()
       .filter((t) => t.count >= 3)
-      .map(({ tag }) => ({ url: `${siteConfig.url}/blog/tag/${tag}`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.5 })),
+      .map(({ tag }) => ({ url: `${siteConfig.url}/blog/tag/${tag}`, changeFrequency: "weekly" as const, priority: 0.5 })),
   ];
 
   const toolDocRoutes = tools.map((tool) => ({
     url: `${siteConfig.url}/docs/tools/${tool.id}`,
-    lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.7,
   }));
 
   const categoryDocRoutes = Object.values(CATEGORY_DETAILS).map((cat) => ({
     url: `${siteConfig.url}/docs/tools/${cat.slug}`,
-    lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.8,
   }));
@@ -79,7 +74,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/docs/changelog",
   ].map((route) => ({
     url: `${siteConfig.url}${route}`,
-    lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.85,
   }));
@@ -87,19 +81,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
     {
       url: siteConfig.url,
-      lastModified: new Date(),
       changeFrequency: "daily" as const,
       priority: 1.0,
     },
     {
       url: `${siteConfig.url}/tools`,
-      lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.9,
     },
     {
       url: `${siteConfig.url}/open-source`,
-      lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.8,
     },
@@ -109,7 +100,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "ilovepdf", "smallpdf", "pdf24", "sejda", "adobe-acrobat", "stirling-pdf"
   ].map((comp) => ({
     url: `${siteConfig.url}/${comp}-alternative`,
-    lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.7,
   }));
