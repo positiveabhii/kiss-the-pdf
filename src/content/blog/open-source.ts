@@ -553,7 +553,7 @@ export const openSourcePosts: BlogPost[] = [
           },
           {
             type: "p",
-            text: "To be precise about what does leave your browser: the site loads its own code and uses analytics scripts (Google Analytics and Microsoft Clarity) to count page visits. None of those requests contain your PDF, which you can confirm in the Network tab. The source code is public on [GitHub](https://github.com/positiveabhii/kiss-the-pdf) under the MIT license.",
+            text: "To be precise about what does leave your browser: the site loads its own code and uses an analytics script (Google Analytics) to count page visits. None of those requests contain your PDF, which you can confirm in the Network tab. The source code is public on [GitHub](https://github.com/positiveabhii/kiss-the-pdf) under the MIT license.",
           },
           {
             type: "p",
@@ -803,7 +803,7 @@ export const openSourcePosts: BlogPost[] = [
           },
           {
             type: "tip",
-            text: "You will still see small background requests on most sites, such as analytics pings and code files loading. On KissThePDF these include Google Analytics and Microsoft Clarity. What matters is that no request carries your document.",
+            text: "You will still see small background requests on most sites, such as analytics pings and code files loading. On KissThePDF these include Google Analytics. What matters is that no request carries your document.",
           },
         ],
       },

@@ -20,7 +20,7 @@ const FAQ_ITEMS = [
   {
     question: "Do I need to upload my PDFs?",
     answer:
-      "For supported browser-based tools, your files are processed locally in your browser. They are not uploaded to a KissPDF server for those tools.",
+      "No. Every tool processes files in your browser, and nothing is uploaded to a KissPDF server. The optional AI tools are the one exception by design: they send the document from your browser directly to the AI provider you choose, using your own API key.",
   },
   {
     question: "Does KissPDF work on mobile?",

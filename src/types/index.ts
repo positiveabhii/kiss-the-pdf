@@ -6,7 +6,8 @@ export type ToolCategory =
   | "Security"
   | "Forms"
   | "Enhancement"
-  | "Reading";
+  | "Reading"
+  | "AI";
 
 export type ToolStatus = "implemented" | "partially_implemented" | "planned" | "active" | "placeholder";
 

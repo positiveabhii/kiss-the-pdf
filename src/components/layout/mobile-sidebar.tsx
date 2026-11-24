@@ -88,13 +88,14 @@ export function MobileSidebar({ isOpen, setIsOpen }: MobileSidebarProps) {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto py-3 space-y-4 scrollbar-thin">
+        <div className="flex-1 overflow-y-auto py-2 space-y-0.5 scrollbar-thin">
           {Object.entries(filteredToolsByCategory).map(([category, toolsList]) => (
             <SidebarGroup
               key={category}
               title={category}
               tools={toolsList}
               isCollapsed={false}
+              forceOpen={searchQuery.trim().length > 0}
               onNavigate={() => setIsOpen(false)}
             />
           ))}

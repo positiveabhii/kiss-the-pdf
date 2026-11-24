@@ -24,7 +24,7 @@ const PRINCIPLES = [
 
 type Cell = boolean | string;
 const COMPARISON: { feature: string; kiss: Cell; typical: Cell }[] = [
-  { feature: "Files uploaded to a server", kiss: "Never", typical: "Every task" },
+  { feature: "Files uploaded to the site's servers", kiss: "Never", typical: "Every task" },
   { feature: "Account or email required", kiss: false, typical: "Often, for larger files" },
   { feature: "Daily task or file-size caps", kiss: "Device memory only", typical: "Common on free plans" },
   { feature: "Watermarks on output", kiss: false, typical: "Sometimes" },

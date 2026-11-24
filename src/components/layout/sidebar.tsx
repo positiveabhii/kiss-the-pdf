@@ -107,7 +107,7 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
       )}
 
       {/* Sidebar Navigation */}
-      <div className="flex-1 overflow-y-auto py-3 space-y-4 scrollbar-thin">
+      <div className="flex-1 overflow-y-auto py-2 space-y-0.5 scrollbar-thin">
         {Object.keys(filteredToolsByCategory).length > 0 ? (
           Object.entries(filteredToolsByCategory).map(([category, toolsList]) => (
             <SidebarGroup
@@ -115,6 +115,7 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
               title={category}
               tools={toolsList}
               isCollapsed={isCollapsed}
+              forceOpen={searchQuery.trim().length > 0}
             />
           ))
         ) : (

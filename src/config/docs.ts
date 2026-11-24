@@ -86,6 +86,12 @@ export const DOCS_NAV_GROUPS: DocNavGroup[] = [
         description: "Tools for viewing, searching text, fullscreen presentations, and compression.",
         isCategory: true,
       },
+      {
+        title: "AI",
+        href: "/docs/tools/ai",
+        description: "Chat with, summarize, search and compare PDFs using your own AI API key.",
+        isCategory: true,
+      },
     ],
   },
   {
@@ -264,4 +270,17 @@ export const CATEGORY_DETAILS: Record<
       "Compress PDF files to reduce attachment sizes for email.",
     ],
   },
+  ai: {
+    name: "AI",
+    slug: "ai",
+    description: "Bring-your-own-key AI tools: chat with a PDF, summarize it, search it by meaning, or compare two versions.",
+    summary:
+      "AI tools connect to the model you choose (Claude, ChatGPT or Gemini) with your own API key. The browser sends the document directly to that provider; there is no KissThePDF server in between, keys stay in your browser, and conversations are never saved.",
+    workflows: [
+      "Ask questions about a contract, report or paper and get answers with page citations.",
+      "Summarize a long PDF into bullet points or an executive brief, in any language.",
+      "Find passages by meaning rather than exact keywords.",
+      "Compare two versions of a document and list every changed term, date and amount.",
+    ],
+  }
 };

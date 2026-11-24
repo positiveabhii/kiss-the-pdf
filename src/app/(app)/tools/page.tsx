@@ -17,6 +17,7 @@ const CATEGORIES: { id: ToolCategory | "All"; label: string }[] = [
   { id: "Forms", label: "Forms" },
   { id: "Enhancement", label: "Enhancement" },
   { id: "Reading", label: "Reading" },
+  { id: "AI", label: "AI" },
 ];
 
 export default function AllToolsPage() {

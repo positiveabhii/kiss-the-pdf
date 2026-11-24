@@ -9,7 +9,8 @@ export type LandingToolCategoryId =
   | "security"
   | "forms-signatures"
   | "enhancement"
-  | "reading";
+  | "reading"
+  | "ai";
 
 export interface LandingToolCategory {
   id: LandingToolCategoryId;
@@ -29,6 +30,12 @@ export interface LandingTool {
 }
 
 export const LANDING_CATEGORIES: LandingToolCategory[] = [
+  {
+    id: "ai",
+    label: "AI",
+    heading: "AI Tools (your own key)",
+    description: "Chat with, summarize, search and compare PDFs using Claude, ChatGPT or Gemini.",
+  },
   {
     id: "organization",
     label: "Organization",
@@ -88,6 +95,7 @@ const CATEGORY_MAP: Record<string, LandingToolCategoryId> = {
   Forms: "forms-signatures",
   Enhancement: "enhancement",
   Reading: "reading",
+  AI: "ai",
 };
 
 export const LANDING_TOOLS: LandingTool[] = tools.map((t: ToolDefinition) => ({

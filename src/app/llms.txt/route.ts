@@ -15,7 +15,7 @@ Free, open-source, privacy-first PDF toolkit running 100% locally in your browse
 - **License**: ${siteConfig.license} Open Source License
 
 ## Product
-KissThePDF provides 100 free online PDF tools categorized across 8 primary domain groups: Organization, Pages, Convert, Edit, Security, Forms, Enhancement, and Reading. All PDF manipulation tasks execute inside the user's local web browser environment.
+KissThePDF provides 100 free online PDF tools categorized across 9 groups: Organization, Pages, Convert, Edit, Security, Forms, Enhancement, Reading, and AI. All PDF manipulation tasks execute inside the user's local web browser environment; the optional AI tools send document content directly from the browser to the AI provider the user picks, using the user's own API key.
 
 ## Documentation Index
 - **Documentation Portal**: ${siteConfig.url}/docs

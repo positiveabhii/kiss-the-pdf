@@ -7,6 +7,7 @@ import { securityTools } from "./security/registry";
 import { formsTools } from "./forms/registry";
 import { enhancementTools } from "./enhancement/registry";
 import { readingTools } from "./reading/registry";
+import { aiTools } from "./ai/registry";
 
 /** Every implemented tool, by id. A tool id with no entry renders the "coming soon" panel. */
 export const toolLoaders: ToolLoaders = {
@@ -18,6 +19,7 @@ export const toolLoaders: ToolLoaders = {
   ...formsTools,
   ...enhancementTools,
   ...readingTools,
+  ...aiTools,
 };
 
 export function getToolLoader(id: string): ToolLoader | undefined {

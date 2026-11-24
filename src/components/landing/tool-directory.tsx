@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useRef, useState } from "react";
 import {
   ArrowUpRight,
+  BrainCircuit,
   FileStack,
   FilePen,
   Files,
@@ -34,6 +35,7 @@ const CATEGORY_ICON: Record<LandingToolCategoryId, LucideIcon> = {
   "forms-signatures": FileStack,
   enhancement: Sparkles,
   reading: MonitorPlay,
+  ai: BrainCircuit,
 };
 
 const FILTERS: { id: LandingToolCategoryId | "all"; label: string }[] = [

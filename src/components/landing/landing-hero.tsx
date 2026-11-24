@@ -10,7 +10,7 @@ const POPULAR = [
   { label: "Edit PDF", href: "/edit-pdf" },
   { label: "Split PDF", href: "/split-pdf" },
   { label: "Sign PDF", href: "/draw-signature" },
-  { label: "PDF to JPG", href: "/pdf-to-jpg" },
+  { label: "Chat with PDF", href: "/chat-with-pdf" },
 ];
 
 /** Decorative illustration of a local merge: two files in, one out, zero bytes uploaded. */
@@ -122,7 +122,7 @@ export function LandingHero({ toolCount, onSearchFocus, featuredPosts = [] }: La
 
           <p className="kp-hero-reveal mt-6 max-w-lg text-lg leading-relaxed text-[var(--kp-text-secondary)]" style={{ ["--kp-hero-delay" as string]: "120ms" }}>
             Merge, compress, edit, sign and convert PDFs right in your browser. {toolCount} tools, no account, no watermark,
-            and nothing ever leaves your device.
+            and your files never touch our servers. New: chat with any PDF using your own AI key.
           </p>
 
           <div className="kp-hero-reveal mt-8 flex flex-wrap items-center gap-3" style={{ ["--kp-hero-delay" as string]: "180ms" }}>
@@ -188,7 +188,7 @@ export function LandingHero({ toolCount, onSearchFocus, featuredPosts = [] }: La
 export function TrustStrip({ toolCount }: { toolCount: number }) {
   const stats = [
     { value: `${toolCount}`, label: "PDF tools" },
-    { value: "0 B", label: "uploaded to a server" },
+    { value: "0 B", label: "uploaded to our servers" },
     { value: "MIT", label: "open-source license" },
     { value: "$0", label: "no plans, no paywall" },
   ];
