@@ -128,17 +128,39 @@ export const PRESETS: Preset[] = [
   },
 ];
 
-/** Same quad estimate the search tool uses: chars spread proportionally over the item width. */
-function itemRect(it: SearchTextItem, from: number, to: number) {
+/** A text item plus the CSS font family pdf.js reports for it, used to measure real glyph widths. */
+type MeasuredItem = SearchTextItem & { fontFamily?: string };
+
+let measureCtx: CanvasRenderingContext2D | null | undefined;
+/**
+ * Fraction of the item's width taken by its first `chars` characters, measured
+ * with the item's font. Proportional fonts make "chars / length" wrong by
+ * several points, enough to leave a letter of a redacted word visible.
+ */
+function widthFraction(it: MeasuredItem, chars: number): number {
+  const n = it.str.length || 1;
+  if (chars <= 0) return 0;
+  if (chars >= n) return 1;
+  if (measureCtx === undefined) measureCtx = typeof document === "undefined" ? null : document.createElement("canvas").getContext("2d");
+  if (!measureCtx) return chars / n;
+  measureCtx.font = `100px ${it.fontFamily || "sans-serif"}`;
+  const full = measureCtx.measureText(it.str).width;
+  return full > 0 ? measureCtx.measureText(it.str.slice(0, chars)).width / full : chars / n;
+}
+
+/** Box for characters [from, to) of a text item, following its direction and using measured glyph widths. */
+function itemRect(it: MeasuredItem, from: number, to: number) {
   const [a, b, c, d, e, f] = it.transform;
   const len = Math.hypot(a, b) || 1;
   const dir = [a / len, b / len];
   const cross = a * d - b * c;
   const up = cross >= 0 ? [-dir[1], dir[0]] : [dir[1], -dir[0]];
   const h = it.height || Math.hypot(c, d) || 10;
-  const n = it.str.length || 1;
-  const s = (it.width * from) / n;
-  const t = (it.width * to) / n;
+  // Half a character of slack on each side: covering a sliver of a neighbouring
+  // letter is acceptable, leaving part of a redacted word visible is not.
+  const slack = 0.5 * h;
+  const s = Math.max(0, it.width * widthFraction(it, from) - slack);
+  const t = Math.min(it.width, it.width * widthFraction(it, to) + slack);
   const pts = [
     [s, -0.25 * h],
     [t, -0.25 * h],
@@ -153,7 +175,7 @@ function itemRect(it: SearchTextItem, from: number, to: number) {
 /** Padding around text matches, in points, so ascenders/descenders are covered. */
 const TEXT_PAD = 1.5;
 
-function rectsForRange(items: SearchTextItem[], map: ([number, number] | null)[], at: number, end: number) {
+function rectsForRange(items: MeasuredItem[], map: ([number, number] | null)[], at: number, end: number) {
   const out: { x0: number; y0: number; x1: number; y1: number }[] = [];
   let cur: { item: number; from: number; to: number } | null = null;
   const flush = () => cur && out.push(itemRect(items[cur.item], cur.from, cur.to));
@@ -183,9 +205,12 @@ function toMark(page: number, r: { x0: number; y0: number; x1: number; y1: numbe
   };
 }
 
-async function pageItems(doc: PDFDocumentProxy, p: number): Promise<SearchTextItem[]> {
+async function pageItems(doc: PDFDocumentProxy, p: number): Promise<MeasuredItem[]> {
   const tc = await (await doc.getPage(p)).getTextContent();
-  return tc.items.filter(isTextItem) as SearchTextItem[];
+  return (tc.items.filter(isTextItem) as (SearchTextItem & { fontName?: string })[]).map((it) => ({
+    ...it,
+    fontFamily: it.fontName ? tc.styles[it.fontName]?.fontFamily : undefined,
+  }));
 }
 
 export interface FindResult {
