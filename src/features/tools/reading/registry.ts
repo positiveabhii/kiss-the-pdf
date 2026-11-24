@@ -11,4 +11,5 @@ export const readingTools: ToolLoaders = {
   "pdf-presentation": () => import("./PdfPresentation"),
   "add-qr-code": () => import("./AddQrCode"),
   "compress-pdf": () => import("./CompressPdf"),
+  "diff-pdf": () => import("./DiffPdf"),
 };

@@ -15,4 +15,6 @@ export const securityTools: ToolLoaders = {
   "copy-permissions": () => import("./CopyPermissions"),
   "editing-permissions": () => import("./EditingPermissions"),
   "comment-permissions": () => import("./CommentPermissions"),
+  "redact-pdf": () => import("./RedactPdf"),
+  "repair-pdf": () => import("./RepairPdf"),
 };

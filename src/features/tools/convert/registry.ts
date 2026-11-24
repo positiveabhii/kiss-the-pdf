@@ -31,4 +31,5 @@ export const convertTools: ToolLoaders = {
   "extract-images-from-pdf": () => import("./ExtractImagesFromPdf"),
   "photo-album-pdf": () => import("./PhotoAlbumPdf"),
   "contact-sheet-pdf": () => import("./ContactSheetPdf"),
+  "pdf-to-txt": () => import("./PdfToTxt"),
 };
