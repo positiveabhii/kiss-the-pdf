@@ -6,8 +6,9 @@ import { Copy, FileText, Loader2, RotateCcw, Send, Sparkles, Square, X } from "l
 import { FileDropZone } from "../core/FileDropZone";
 import { UserFacingError } from "../core/pdf-io";
 import { Field, Notice, PrimaryButton, Select, TextInput } from "../core/ui";
-import { AiSetupPanel, useModels } from "./AiSetupPanel";
+import { AiSetupPanel } from "./AiSetupPanel";
 import { Markdown } from "./Markdown";
+import { useModelLists } from "./models-store";
 import { prepareDocument } from "./pdf-text";
 import { AiError, PROVIDERS, streamAnswer, type AiDocument, type Turn } from "./providers";
 import { updateAiSettings, useAiSettings } from "./settings";
@@ -84,8 +85,8 @@ function historyOf(messages: Message[]): Turn[] {
 
 export function AiPdfTool({ mode }: { mode: AiMode }) {
   const settings = useAiSettings();
-  const models = useModels();
   const provider = settings.provider;
+  const models = useModelLists()[provider];
   const selectedModel = settings.models[provider];
   const model = selectedModel;
   const ready = models?.status === "ok" && Boolean(model);

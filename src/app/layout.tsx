@@ -17,8 +17,10 @@ export const metadata: Metadata = {
   authors: [{ name: siteConfig.author.name, url: siteConfig.author.url }],
   creator: siteConfig.author.name,
   publisher: siteConfig.name,
+  // "./" resolves against each route's own path, so a page that sets no
+  // canonical of its own is self-canonical instead of pointing at the homepage.
   alternates: {
-    canonical: siteConfig.url,
+    canonical: "./",
   },
   robots: {
     index: true,

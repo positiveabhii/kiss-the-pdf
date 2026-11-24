@@ -1,49 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Check, ChevronDown, Eye, EyeOff, KeyRound, Loader2, ShieldCheck } from "lucide-react";
 
 import { Checkbox, Field, TextInput } from "../core/ui";
-import { listModels, PROVIDERS, type ModelOption, type ProviderId } from "./providers";
+import { PROVIDERS, type ProviderId } from "./providers";
+import type { ModelState } from "./models-store";
 import { clearAiKeys, updateAiSettings, useAiSettings } from "./settings";
 
-type ModelState = { provider: ProviderId; key: string; status: "loading" | "ok" | "error"; models: ModelOption[]; error?: string };
-
-/** Loads the model list for the active provider and key (this also checks the key). */
-export function useModels() {
-  const s = useAiSettings();
-  const key = s.keys[s.provider];
-  const [state, setState] = useState<ModelState | null>(null);
-
-  useEffect(() => {
-    if (!key.trim()) return;
-    let cancelled = false;
-    const t = window.setTimeout(() => {
-      setState({ provider: s.provider, key, status: "loading", models: [] });
-      listModels(s.provider, key)
-        .then((models) => {
-          if (cancelled) return;
-          setState({ provider: s.provider, key, status: "ok", models });
-          // Pick a model automatically if none is chosen or the saved one isn't available.
-          const chosen = s.models[s.provider];
-          if (models.length && (!chosen || !models.some((m) => m.id === chosen))) {
-            const preferred = models.find((m) => m.id === PROVIDERS[s.provider].defaultModel) ?? models[0];
-            updateAiSettings((cur) => ({ models: { ...cur.models, [s.provider]: preferred.id } }));
-          }
-        })
-        .catch((e) => !cancelled && setState({ provider: s.provider, key, status: "error", models: [], error: e instanceof Error ? e.message : String(e) }));
-    }, 500);
-    return () => {
-      cancelled = true;
-      window.clearTimeout(t);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- reload only when provider or key changes
-  }, [s.provider, key]);
-
-  return state && state.provider === s.provider && state.key === key && key.trim() ? state : null;
-}
-
-export function AiSetupPanel({ models }: { models: ModelState | null }) {
+/** Provider, key and model setup. `forceOpen` keeps it expanded (e.g. opened from the model switcher). */
+export function AiSetupPanel({ models, forceOpen = false, onClose }: { models: ModelState | null; forceOpen?: boolean; onClose?: () => void }) {
   const s = useAiSettings();
   const [showKey, setShowKey] = useState(false);
   const p = PROVIDERS[s.provider];
@@ -51,7 +17,7 @@ export function AiSetupPanel({ models }: { models: ModelState | null }) {
   const ready = models?.status === "ok" && Boolean(s.models[s.provider]);
   // Open until the key works, then collapsed unless the user reopens it.
   const [manualOpen, setOpen] = useState<boolean | null>(null);
-  const open = manualOpen ?? !ready;
+  const open = forceOpen || (manualOpen ?? !ready);
   const currentModel = models?.models.find((m) => m.id === s.models[s.provider]);
 
   if (ready && !open) {
@@ -85,7 +51,14 @@ export function AiSetupPanel({ models }: { models: ModelState | null }) {
           <p className="mt-0.5 text-xs text-slate-500">Bring your own API key. You pay your provider directly; KissThePDF never sees the key.</p>
         </div>
         {ready && (
-          <button type="button" onClick={() => setOpen(false)} className="text-xs font-medium text-slate-500 hover:text-slate-900">
+          <button
+            type="button"
+            onClick={() => {
+              setOpen(false);
+              onClose?.();
+            }}
+            className="text-xs font-medium text-slate-500 hover:text-slate-900"
+          >
             Done
           </button>
         )}

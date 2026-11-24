@@ -36,3 +36,24 @@ export async function prepareDocument(file: File, onProgress?: (done: number, to
   }
   return { name: file.name, bytes, pages, emptyPages };
 }
+
+/**
+ * The same document limited to `pageNumbers` (1-based, original numbering):
+ * a new PDF holding only those pages, their text, and the original numbers so
+ * the model cites pages as they appear in the user's file.
+ */
+export async function subsetDocument(doc: AiDocument, pageNumbers: number[]): Promise<AiDocument> {
+  const { PDFDocument } = await import("pdf-lib");
+  const src = await PDFDocument.load(doc.bytes, { ignoreEncryption: true });
+  const out = await PDFDocument.create();
+  const copied = await out.copyPages(src, pageNumbers.map((n) => n - 1));
+  copied.forEach((p) => out.addPage(p));
+  const pages = pageNumbers.map((n) => doc.pages[n - 1] ?? "");
+  return {
+    name: doc.name,
+    bytes: await out.save(),
+    pages,
+    emptyPages: pages.filter((t) => !t.trim()).length,
+    pageNumbers,
+  };
+}

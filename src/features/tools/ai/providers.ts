@@ -55,7 +55,18 @@ export interface AiDocument {
   pages: string[];
   /** Pages that yielded no text (likely scanned images). */
   emptyPages: number;
+  /**
+   * Original page numbers of `pages` when only some pages are in context.
+   * `bytes` then holds just those pages, and citations use these numbers.
+   */
+  pageNumbers?: number[];
 }
+
+/** Original page number of the i-th page in a (possibly partial) document. */
+const pageNo = (d: AiDocument, i: number) => d.pageNumbers?.[i] ?? i + 1;
+const isSubset = (d: AiDocument) => Boolean(d.pageNumbers);
+const subsetNote = (d: AiDocument) =>
+  `"${d.name}" here contains only original pages ${d.pageNumbers!.join(", ")}, in that order. Cite those original page numbers.`;
 
 export interface Turn {
   role: "user" | "assistant";
@@ -73,6 +84,8 @@ export interface StreamRequest {
   turns: Turn[];
   /** Text used to pick the most relevant pages when a document is too long to send whole. */
   focusQuery: string;
+  /** Reasoning depth for models that support it (Claude effort). */
+  effort?: "low" | "medium" | "high";
   signal: AbortSignal;
   onText: (delta: string) => void;
 }
@@ -140,7 +153,7 @@ const words = (s: string) => s.toLowerCase().match(/[\p{L}\p{N}]{3,}/gu) ?? [];
  * report it, rather than silently cutting the end off.
  */
 function pagedText(doc: AiDocument, budget: number, focusQuery: string): { text: string; notice?: string } {
-  const tagged = doc.pages.map((t, i) => `[Page ${i + 1}]\n${t.trim()}`);
+  const tagged = doc.pages.map((t, i) => `[Page ${pageNo(doc, i)}]\n${t.trim()}`);
   const total = tagged.reduce((n, p) => n + p.length, 0);
   if (total <= budget) return { text: tagged.join("\n\n") };
 
@@ -160,7 +173,7 @@ function pagedText(doc: AiDocument, budget: number, focusQuery: string): { text:
   const text = tagged.filter((_, i) => keep.has(i)).join("\n\n");
   return {
     text,
-    notice: `"${doc.name}" is too long to send whole, so ${keep.size} of ${doc.pages.length} pages were sent (the opening pages plus those most relevant to your request).`,
+    notice: `"${doc.name}" is too long to send whole, so ${keep.size} of ${doc.pages.length} pages in context were sent (the opening pages plus those most relevant to your request).`,
   };
 }
 
@@ -228,6 +241,8 @@ function anthropicClient(apiKey: string) {
 
 /** Models that accept server-side refusal fallbacks (`fallbacks: "default"`). */
 const FALLBACK_MODELS = /^claude-(fable-5-[12]|opus-5-5|opus-5|sonnet-5-5)$/;
+/** Models that accept `output_config.effort`. */
+const EFFORT_MODELS = /^claude-((fable|mythos|opus|sonnet|haiku)-5|opus-4-[5-8]|sonnet-4-6)/;
 /** Native PDF input is billed per page as text + image; above this, plain text is cheaper and safer. */
 const CLAUDE_NATIVE_PDF_MAX_PAGES = 100;
 const CLAUDE_NATIVE_PDF_MAX_BYTES = 30 * 1024 * 1024;
@@ -246,12 +261,15 @@ async function streamAnthropic(req: StreamRequest): Promise<StreamResult> {
   const notices: string[] = [];
   const docBlocks: Anthropic.Beta.BetaContentBlockParam[] = req.documents.map((d) => {
     const scanned = d.emptyPages === d.pages.length;
+    // A page subset goes as tagged text (exact original page numbers) unless it has no text at all.
     const native =
-      d.bytes.length <= CLAUDE_NATIVE_PDF_MAX_BYTES && (d.pages.length <= CLAUDE_NATIVE_PDF_MAX_PAGES || scanned);
+      d.bytes.length <= CLAUDE_NATIVE_PDF_MAX_BYTES &&
+      (isSubset(d) ? scanned : d.pages.length <= CLAUDE_NATIVE_PDF_MAX_PAGES || scanned);
     if (native) {
       return {
         type: "document",
         title: d.name,
+        ...(isSubset(d) ? { context: subsetNote(d) } : {}),
         source: { type: "base64", media_type: "application/pdf", data: toBase64(d.bytes) },
       };
     }
@@ -277,6 +295,7 @@ async function streamAnthropic(req: StreamRequest): Promise<StreamResult> {
         // Cache the document prefix so follow-up questions don't pay for it again.
         cache_control: { type: "ephemeral" },
         messages,
+        ...(req.effort && EFFORT_MODELS.test(req.model) ? { output_config: { effort: req.effort } } : {}),
         ...(useFallbacks ? { betas: ["server-side-fallback-2026-07-01"], fallbacks: "default" as const } : {}),
       },
       { signal: req.signal }
@@ -391,7 +410,8 @@ const GEMINI_INLINE_MAX_BYTES = 14 * 1024 * 1024;
 async function streamGemini(req: StreamRequest): Promise<StreamResult> {
   const notices: string[] = [];
   const docParts = req.documents.map((d) => {
-    if (d.bytes.length <= GEMINI_INLINE_MAX_BYTES) {
+    const scanned = d.emptyPages === d.pages.length;
+    if (d.bytes.length <= GEMINI_INLINE_MAX_BYTES && (!isSubset(d) || scanned)) {
       return { inlineData: { mimeType: "application/pdf", data: toBase64(d.bytes) } };
     }
     const { text, notice } = pagedText(d, TEXT_BUDGET_CHARS, req.focusQuery);
@@ -403,7 +423,11 @@ async function streamGemini(req: StreamRequest): Promise<StreamResult> {
     role: t.role === "assistant" ? "model" : "user",
     parts:
       i === 0 && t.role === "user"
-        ? [...req.documents.map((d) => ({ text: `Document: ${d.name}` })), ...docParts, { text: t.text }]
+        ? [
+            ...req.documents.map((d) => ({ text: isSubset(d) ? subsetNote(d) : `Document: ${d.name}` })),
+            ...docParts,
+            { text: t.text },
+          ]
         : [{ text: t.text }],
   }));
 
