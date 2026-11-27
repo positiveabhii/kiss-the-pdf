@@ -5,8 +5,8 @@ import { DocsCTA } from "@/components/docs/docs-cta";
 import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "KissThePDF Security Policy & Vulnerability Reporting | Privacy-First PDF Tools",
-  description: "Understand KissThePDF's official security policy, client-side processing, and how to responsibly report vulnerabilities for our privacy-first, open-source PDF tools.",
+  title: "Security Policy & Vulnerability Reporting",
+  description: "KissThePDF's security policy: how client-side processing protects your files, and how to report a vulnerability responsibly.",
 };
 
 const headings = [

@@ -3,6 +3,7 @@ import { Inter, Instrument_Serif } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 import Script from "next/script";
+import { baseOpenGraph } from "@/lib/og";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const serif = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], variable: "--font-display" });
@@ -42,20 +43,9 @@ export const metadata: Metadata = {
     shortcut: siteConfig.logo,
   },
   openGraph: {
+    ...baseOpenGraph,
     title: `${siteConfig.name} — ${siteConfig.tagline}`,
     description: siteConfig.description,
-    url: siteConfig.url,
-    siteName: siteConfig.name,
-    images: [
-      {
-        url: siteConfig.ogImage,
-        width: 1200,
-        height: 630,
-        alt: `${siteConfig.name} — Free Open-Source PDF Toolkit`,
-      },
-    ],
-    locale: "en_US",
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",

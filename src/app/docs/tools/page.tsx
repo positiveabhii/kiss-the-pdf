@@ -6,7 +6,7 @@ import { CATEGORY_DETAILS } from "@/config/docs";
 import { DocsCTA } from "@/components/docs/docs-cta";
 
 export const metadata: Metadata = {
-  title: "All 100 Tools Documentation",
+  title: "All PDF Tools Reference",
   description: "Complete technical documentation directory for all 100 KissThePDF tools across 8 functional domain categories.",
 };
 

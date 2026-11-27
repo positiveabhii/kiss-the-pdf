@@ -37,7 +37,7 @@ export type BlogPost = {
   category: BlogCategory;
   /** Page H1. */
   title: string;
-  /** <title>, 60 characters or fewer, without the site name. */
+  /** <title>, 57 characters or fewer, without the site name (the full title stays within 70). */
   seoTitle: string;
   /** Meta description, 110–160 characters. */
   description: string;

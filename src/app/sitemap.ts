@@ -4,7 +4,7 @@ import { siteConfig } from "@/config/site";
 import { CATEGORY_DETAILS } from "@/config/docs";
 import { toolVariants } from "@/config/tool-variants";
 import { guides } from "@/content/guides";
-import { allTags, posts } from "@/content/blog";
+import { allTags, MIN_TAG_POSTS, posts } from "@/content/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const toolRoutes = tools.map((tool) => ({
@@ -44,7 +44,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     // Only tag pages with enough posts to be indexable (see blog/tag/[tag]/page.tsx).
     ...allTags()
-      .filter((t) => t.count >= 3)
+      .filter((t) => t.count >= MIN_TAG_POSTS)
       .map(({ tag }) => ({ url: `${siteConfig.url}/blog/tag/${tag}`, changeFrequency: "weekly" as const, priority: 0.5 })),
   ];
 

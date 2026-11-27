@@ -77,7 +77,7 @@ export const tools: ToolDefinition[] = [
     icon: "FileOutput",
     status: "implemented",
     seoTitle: "Extract Pages from PDF Online",
-    seoDescription: "Extract selected pages from a PDF into a new document directly in your browser.",
+    seoDescription: "Extract selected pages from a PDF into a new document. Free, no sign-up, and processed entirely in your browser, so your file is never uploaded.",
     keywords: ["extract pdf pages", "extract pages from pdf", "pull pages from pdf"],
   },
   {
@@ -89,7 +89,7 @@ export const tools: ToolDefinition[] = [
     icon: "Trash2",
     status: "implemented",
     seoTitle: "Delete PDF Pages Online for Free",
-    seoDescription: "Easily select and remove specific pages from your PDF document without server upload.",
+    seoDescription: "Select and remove unwanted pages from a PDF, then download the cleaned-up file. Free, no sign-up, and nothing is uploaded: it all runs in your browser.",
     keywords: ["delete pdf pages", "remove pdf pages", "delete page from pdf"],
   },
   {
@@ -101,7 +101,7 @@ export const tools: ToolDefinition[] = [
     icon: "ArrowUpDown",
     status: "implemented",
     seoTitle: "Reorder PDF Pages Free Online",
-    seoDescription: "Rearrange page order in any PDF with simple visual drag and drop.",
+    seoDescription: "Rearrange the page order of any PDF with visual drag and drop, then download the result. Free, no sign-up, and your file never leaves your browser.",
     keywords: ["reorder pdf pages", "rearrange pdf", "sort pdf pages"],
   },
   {
@@ -145,7 +145,7 @@ export const tools: ToolDefinition[] = [
     icon: "FilePlus",
     status: "implemented",
     seoTitle: "Insert Blank Page into PDF",
-    seoDescription: "Add blank pages to your PDF document at specific page positions.",
+    seoDescription: "Add blank pages to a PDF at any position you choose, for notes or print layout. Free, no sign-up, and processed privately in your browser.",
     keywords: ["insert blank page pdf", "add empty page to pdf"],
   },
   {
@@ -157,7 +157,7 @@ export const tools: ToolDefinition[] = [
     icon: "FileInput",
     status: "implemented",
     seoTitle: "Insert PDF Pages Online",
-    seoDescription: "Combine pages from external PDFs directly into target page positions.",
+    seoDescription: "Insert pages from another PDF into your document at the exact position you want. Free, no sign-up, and both files stay in your browser, never uploaded.",
     keywords: ["insert pages into pdf", "add pages from pdf"],
   },
   {
@@ -169,7 +169,7 @@ export const tools: ToolDefinition[] = [
     icon: "ArrowLeftRight",
     status: "implemented",
     seoTitle: "Move Pages Between PDFs",
-    seoDescription: "Transfer selected pages interactively between multiple PDF files.",
+    seoDescription: "Move selected pages between multiple PDF files interactively and download the updated documents. Free, private, and processed in your browser.",
     keywords: ["move pages between pdfs", "transfer pdf pages"],
   },
   {
@@ -181,7 +181,7 @@ export const tools: ToolDefinition[] = [
     icon: "LayoutGrid",
     status: "implemented",
     seoTitle: "Organize PDF Pages Free",
-    seoDescription: "All-in-one visual page manager to rearrange, rotate, duplicate, and delete PDF pages.",
+    seoDescription: "Rearrange, rotate, duplicate, and delete PDF pages in one visual page manager. Free, no sign-up, and your document is processed in your browser.",
     keywords: ["organize pdf", "manage pdf pages"],
   },
 
@@ -197,7 +197,7 @@ export const tools: ToolDefinition[] = [
     icon: "RotateCw",
     status: "implemented",
     seoTitle: "Rotate PDF Pages Online",
-    seoDescription: "Rotate individual PDF pages or the entire document with visual page previews.",
+    seoDescription: "Rotate individual PDF pages or the whole document with live page previews, then save the fixed file. Free, no sign-up, and nothing is uploaded.",
     keywords: ["rotate pdf", "turn pdf", "change pdf orientation"],
   },
   {
@@ -209,7 +209,7 @@ export const tools: ToolDefinition[] = [
     icon: "RotateCcw",
     status: "implemented",
     seoTitle: "Rotate Entire PDF Document",
-    seoDescription: "Batch rotate all pages in your PDF document simultaneously.",
+    seoDescription: "Rotate every page of a PDF at once to fix sideways or upside-down scans. Free, no sign-up, and the file is processed privately in your browser.",
     keywords: ["rotate all pdf pages", "rotate document"],
   },
   {
@@ -265,7 +265,7 @@ export const tools: ToolDefinition[] = [
     icon: "Smartphone",
     status: "implemented",
     seoTitle: "Change PDF Page Orientation",
-    seoDescription: "Toggle PDF pages between landscape and portrait orientation.",
+    seoDescription: "Switch PDF pages between portrait and landscape orientation in a few clicks. Free, no sign-up, and processed in your browser with no upload.",
     keywords: ["pdf landscape to portrait", "change page orientation"],
   },
   {
@@ -277,7 +277,7 @@ export const tools: ToolDefinition[] = [
     icon: "Ratio",
     status: "implemented",
     seoTitle: "Change PDF Page Format",
-    seoDescription: "Change document pages to standard paper formats.",
+    seoDescription: "Change PDF pages to standard paper formats such as A4, Letter, and Legal. Free, no sign-up, and your file is resized privately in your browser.",
     keywords: ["change page size pdf", "convert pdf size"],
   },
   {
@@ -313,7 +313,7 @@ export const tools: ToolDefinition[] = [
     icon: "FileText",
     status: "implemented",
     seoTitle: "Convert PDF to US Letter Size",
-    seoDescription: "Convert document pages to US Letter standard paper dimensions.",
+    seoDescription: "Convert PDF pages to US Letter size (8.5 x 11 in) for printing and sharing. Free, no sign-up, and the conversion runs entirely in your browser.",
     keywords: ["letter size pdf", "us letter pdf"],
   },
   {
@@ -325,7 +325,7 @@ export const tools: ToolDefinition[] = [
     icon: "FileText",
     status: "implemented",
     seoTitle: "Convert PDF to US Legal Size",
-    seoDescription: "Format document pages to US Legal paper dimensions.",
+    seoDescription: "Convert PDF pages to US Legal size (8.5 x 14 in) for contracts and filings. Free, no sign-up, and the file is processed privately in your browser.",
     keywords: ["legal size pdf", "us legal pdf"],
   },
   {
@@ -337,7 +337,7 @@ export const tools: ToolDefinition[] = [
     icon: "Ruler",
     status: "implemented",
     seoTitle: "Custom PDF Page Dimensions",
-    seoDescription: "Define exact custom dimensions in mm, inches, or points for PDF pages.",
+    seoDescription: "Set exact custom PDF page dimensions in millimetres, inches, or points. Free, no sign-up, and your document is resized privately in your browser.",
     keywords: ["custom pdf page size", "set pdf width height"],
   },
   {
@@ -361,7 +361,7 @@ export const tools: ToolDefinition[] = [
     icon: "Minimize2",
     status: "implemented",
     seoTitle: "Remove PDF Margins",
-    seoDescription: "Trim outer whitespace margins to maximize printable page area.",
+    seoDescription: "Trim the white margins around PDF pages to make the content larger on screen and in print. Free, no sign-up, and processed in your browser.",
     keywords: ["remove pdf margins", "crop white space pdf"],
   },
   {
@@ -373,7 +373,7 @@ export const tools: ToolDefinition[] = [
     icon: "AlignCenter",
     status: "implemented",
     seoTitle: "Center Content on PDF Pages",
-    seoDescription: "Center page content horizontally and vertically on PDF pages.",
+    seoDescription: "Center the content of PDF pages horizontally and vertically for cleaner printing. Free, no sign-up, and processed privately in your browser.",
     keywords: ["center pdf content", "align pdf page"],
   },
   {
@@ -385,7 +385,7 @@ export const tools: ToolDefinition[] = [
     icon: "Shrink",
     status: "implemented",
     seoTitle: "Fit Content to PDF Page Size",
-    seoDescription: "Automatically scale page elements to fit inside standard margins.",
+    seoDescription: "Scale PDF page content automatically so it fits inside standard margins without clipping. Free, no sign-up, and processed in your browser.",
     keywords: ["fit to page pdf", "scale content pdf"],
   },
   {
@@ -397,7 +397,7 @@ export const tools: ToolDefinition[] = [
     icon: "Expand",
     status: "implemented",
     seoTitle: "Scale PDF Pages Up or Down",
-    seoDescription: "Proportionally scale page content up or down by custom percentage.",
+    seoDescription: "Scale PDF page content up or down by a custom percentage while keeping its proportions. Free, no sign-up, and processed privately in your browser.",
     keywords: ["scale pdf", "zoom pdf content"],
   },
   {
@@ -409,7 +409,7 @@ export const tools: ToolDefinition[] = [
     icon: "ArrowDownUp",
     status: "implemented",
     seoTitle: "Reverse PDF Page Order",
-    seoDescription: "Reverse page sequence so the last page comes first.",
+    seoDescription: "Reverse the page order of a PDF so the last page comes first, ideal for back-to-front scans. Free, no sign-up, and processed in your browser.",
     keywords: ["reverse page order pdf", "invert pdf pages"],
   },
   {
@@ -433,7 +433,7 @@ export const tools: ToolDefinition[] = [
     icon: "Hash",
     status: "implemented",
     seoTitle: "Extract Odd Pages from PDF",
-    seoDescription: "Extract odd-numbered pages into an independent PDF document.",
+    seoDescription: "Extract only the odd-numbered pages of a PDF into a separate document, useful for duplex scans. Free, private, and processed in your browser.",
     keywords: ["extract odd pages pdf", "odd pages pdf"],
   },
   {
@@ -445,7 +445,7 @@ export const tools: ToolDefinition[] = [
     icon: "Hash",
     status: "implemented",
     seoTitle: "Extract Even Pages from PDF",
-    seoDescription: "Extract even-numbered pages into an independent PDF document.",
+    seoDescription: "Extract only the even-numbered pages of a PDF into a separate document, useful for duplex scans. Free, private, and processed in your browser.",
     keywords: ["extract even pages pdf", "even pages pdf"],
   },
 
@@ -461,7 +461,7 @@ export const tools: ToolDefinition[] = [
     icon: "FileImage",
     status: "implemented",
     seoTitle: "Convert JPG to PDF Free Online",
-    seoDescription: "Convert JPG and JPEG images into a single PDF document in your browser.",
+    seoDescription: "Convert JPG and JPEG images into a single PDF document. Free, no sign-up, no watermark, and your photos stay in your browser, never uploaded.",
     keywords: ["jpg to pdf", "image to pdf", "convert jpg to pdf"],
     seoH1: "JPG to PDF Online Free",
     seoH2s: ["How to JPG to PDF", "Related Tools"],
@@ -490,7 +490,7 @@ export const tools: ToolDefinition[] = [
     icon: "Image",
     status: "implemented",
     seoTitle: "Convert PNG to PDF Online Free",
-    seoDescription: "Convert PNG graphics into PDF documents with custom page margins.",
+    seoDescription: "Convert PNG images into PDF documents with custom page margins. Free, no sign-up, no watermark, and your images are never uploaded to a server.",
     keywords: ["png to pdf", "image to pdf"],
   },
   {
@@ -502,7 +502,7 @@ export const tools: ToolDefinition[] = [
     icon: "Image",
     status: "implemented",
     seoTitle: "Convert WebP to PDF Free",
-    seoDescription: "Convert WebP images directly into PDF documents in your browser.",
+    seoDescription: "Convert WebP images into PDF documents in seconds. Free, no sign-up, no watermark, and the conversion happens privately in your browser.",
     keywords: ["webp to pdf", "convert webp to pdf"],
   },
   {
@@ -582,7 +582,7 @@ export const tools: ToolDefinition[] = [
     icon: "Images",
     status: "implemented",
     seoTitle: "Combine Images to PDF",
-    seoDescription: "Merge multiple images of different formats (JPG, PNG, WebP) into a single PDF.",
+    seoDescription: "Combine multiple images in different formats (JPG, PNG, WebP) into a single PDF. Free, no sign-up, and your images are never uploaded.",
     keywords: ["images to pdf", "combine pictures to pdf"],
   },
   {
@@ -594,7 +594,7 @@ export const tools: ToolDefinition[] = [
     icon: "ImageDown",
     status: "implemented",
     seoTitle: "Convert PDF to JPG Online",
-    seoDescription: "Convert PDF pages into high quality JPG images in your browser.",
+    seoDescription: "Convert PDF pages into high-quality JPG images you can download right away. Free, no sign-up, and the file is processed privately in your browser.",
     keywords: ["pdf to jpg", "pdf to jpeg", "convert pdf to image"],
     seoH1: "PDF to JPG Online Free",
     seoH2s: ["How to PDF to JPG", "Related Tools"],
@@ -635,7 +635,7 @@ export const tools: ToolDefinition[] = [
     icon: "ImageDown",
     status: "implemented",
     seoTitle: "Convert PDF to WebP Online",
-    seoDescription: "Convert PDF pages to modern WebP images directly in your browser.",
+    seoDescription: "Convert PDF pages into compact WebP images for the web. Free, no sign-up, and the conversion runs in your browser, so nothing is uploaded.",
     keywords: ["pdf to webp", "convert pdf to webp"],
   },
   {
@@ -660,7 +660,7 @@ export const tools: ToolDefinition[] = [
     icon: "FileArchive",
     status: "implemented",
     seoTitle: "Export PDF Pages to ZIP Images",
-    seoDescription: "Export every page of a PDF as individual image files bundled in a ZIP archive.",
+    seoDescription: "Export every page of a PDF as an individual image file, bundled into one ZIP download. Free, no sign-up, and processed in your browser.",
     keywords: ["pdf to zip images", "export pdf pages zip"],
   },
   {
@@ -672,7 +672,7 @@ export const tools: ToolDefinition[] = [
     icon: "ScanLine",
     status: "implemented",
     seoTitle: "Extract Embedded Images from PDF",
-    seoDescription: "Extract original embedded images contained inside your PDF document.",
+    seoDescription: "Extract the original embedded images from a PDF document and download them. Free, no sign-up, and your file is processed privately in your browser.",
     keywords: ["extract images from pdf", "rip images pdf"],
   },
   {
@@ -716,7 +716,7 @@ export const tools: ToolDefinition[] = [
     icon: "Grid3x3",
     status: "implemented",
     seoTitle: "Create Image Contact Sheet PDF",
-    seoDescription: "Organize image thumbnails into a structured contact sheet PDF.",
+    seoDescription: "Arrange image thumbnails into a tidy contact sheet PDF for proofs and photo overviews. Free, no sign-up, and your images are never uploaded.",
     keywords: ["contact sheet pdf", "image grid pdf"],
   },
 
@@ -765,7 +765,7 @@ export const tools: ToolDefinition[] = [
     icon: "Type",
     status: "implemented",
     seoTitle: "Add Text to PDF Online",
-    seoDescription: "Place new text blocks onto PDF pages with custom font sizes and colors.",
+    seoDescription: "Add new text to PDF pages with your choice of font size and color, then download the edited file. Free, no sign-up, and nothing is uploaded.",
     keywords: ["add text to pdf", "write on pdf"],
   },
   {
@@ -777,7 +777,7 @@ export const tools: ToolDefinition[] = [
     icon: "ImagePlus",
     status: "implemented",
     seoTitle: "Insert Image into PDF",
-    seoDescription: "Insert image logos or photos onto specific page coordinates.",
+    seoDescription: "Insert a logo, photo, or other image onto any PDF page and position it where you need it. Free, no sign-up, and processed in your browser.",
     keywords: ["insert image in pdf", "add picture to pdf"],
   },
   {
@@ -789,7 +789,7 @@ export const tools: ToolDefinition[] = [
     icon: "Shapes",
     status: "implemented",
     seoTitle: "Add Shapes to PDF",
-    seoDescription: "Add geometric shapes and callout boxes onto PDF pages.",
+    seoDescription: "Add geometric shapes and callout boxes to PDF pages to highlight what matters. Free, no sign-up, and the file is edited privately in your browser.",
     keywords: ["add shape to pdf", "draw shapes pdf"],
   },
   {
@@ -867,7 +867,7 @@ export const tools: ToolDefinition[] = [
     icon: "Eraser",
     status: "implemented",
     seoTitle: "PDF Eraser Tool",
-    seoDescription: "Erase added annotations, drawings, and shapes from PDF pages.",
+    seoDescription: "Erase annotations, drawings, and shapes you have added to PDF pages. Free, no sign-up, and the document is edited privately in your browser.",
     keywords: ["pdf eraser", "erase notes pdf"],
   },
   {
@@ -891,7 +891,7 @@ export const tools: ToolDefinition[] = [
     icon: "Underline",
     status: "implemented",
     seoTitle: "Underline PDF Text",
-    seoDescription: "Add underline markup annotations to PDF document text.",
+    seoDescription: "Underline text in a PDF with markup annotations to emphasise key passages. Free, no sign-up, and the file is processed privately in your browser.",
     keywords: ["underline text pdf", "markup pdf"],
   },
   {
@@ -936,7 +936,7 @@ export const tools: ToolDefinition[] = [
     icon: "ArrowRight",
     status: "implemented",
     seoTitle: "Add Arrow Pointer to PDF",
-    seoDescription: "Insert directional arrows to point out key document details.",
+    seoDescription: "Add arrows to PDF pages to point out key details for reviewers and readers. Free, no sign-up, and the document is edited in your browser.",
     keywords: ["add arrow to pdf", "arrow annotation pdf"],
   },
   {
@@ -948,7 +948,7 @@ export const tools: ToolDefinition[] = [
     icon: "Minus",
     status: "implemented",
     seoTitle: "Add Straight Line to PDF",
-    seoDescription: "Draw straight lines across PDF pages.",
+    seoDescription: "Draw straight lines on PDF pages to separate sections or strike through content. Free, no sign-up, and the file is edited in your browser.",
     keywords: ["add line to pdf", "draw line pdf"],
   },
   {
@@ -960,7 +960,7 @@ export const tools: ToolDefinition[] = [
     icon: "Square",
     status: "implemented",
     seoTitle: "Add Rectangle Box to PDF",
-    seoDescription: "Insert rectangular boxes with stroke and fill options.",
+    seoDescription: "Draw rectangles on PDF pages with custom stroke and fill options to frame or highlight content. Free, no sign-up, and edited in your browser.",
     keywords: ["add rectangle pdf", "draw box pdf"],
   },
   {
@@ -1005,7 +1005,7 @@ export const tools: ToolDefinition[] = [
     icon: "Triangle",
     status: "implemented",
     seoTitle: "Add Polygon Shape to PDF",
-    seoDescription: "Draw multi-sided custom polygon shapes on PDF pages.",
+    seoDescription: "Draw custom multi-sided polygon shapes on PDF pages to mark up plans and diagrams. Free, no sign-up, and edited privately in your browser.",
     keywords: ["add polygon pdf", "draw polygon"],
   },
   {
@@ -1050,7 +1050,7 @@ export const tools: ToolDefinition[] = [
     icon: "MessageSquare",
     status: "implemented",
     seoTitle: "Add PDF Comments & Annotations",
-    seoDescription: "Add comment threads and text feedback to PDF pages.",
+    seoDescription: "Add comments and text feedback to PDF pages for review and collaboration. Free, no sign-up, and the document never leaves your browser.",
     keywords: ["pdf comments", "annotate pdf"],
   },
   {
@@ -1062,7 +1062,7 @@ export const tools: ToolDefinition[] = [
     icon: "Paintbrush",
     status: "implemented",
     seoTitle: "Whiteout PDF Content",
-    seoDescription: "Cover sensitive information with an opaque whiteout overlay.",
+    seoDescription: "Cover sensitive or unwanted content in a PDF with an opaque whiteout overlay. Free, no sign-up, and the file is edited privately in your browser.",
     keywords: ["whiteout pdf", "hide text pdf", "redact pdf"],
   },
 
@@ -1078,7 +1078,7 @@ export const tools: ToolDefinition[] = [
     icon: "Lock",
     status: "implemented",
     seoTitle: "Password Protect PDF Online",
-    seoDescription: "Add password encryption to restrict reading or modifying your PDF.",
+    seoDescription: "Add a password to a PDF to restrict who can open or modify it. Free, no sign-up, and encryption happens in your browser, so nothing is uploaded.",
     keywords: ["protect pdf", "password protect pdf", "lock pdf"],
     seoH1: "Protect PDF Online Free",
     seoH2s: ["How to Protect PDF", "Related Tools"],
@@ -1107,7 +1107,7 @@ export const tools: ToolDefinition[] = [
     icon: "LockOpen",
     status: "implemented",
     seoTitle: "Remove PDF Password Protection",
-    seoDescription: "Unlock password-protected PDF files when authorized.",
+    seoDescription: "Unlock password-protected PDF files you are authorized to open and save an unrestricted copy. Free, private, and processed in your browser.",
     keywords: ["remove pdf password", "unlock pdf"],
   },
   {
@@ -1119,7 +1119,7 @@ export const tools: ToolDefinition[] = [
     icon: "Shield",
     status: "implemented",
     seoTitle: "Encrypt PDF Files Online",
-    seoDescription: "Encrypt PDF files locally with strong encryption algorithms.",
+    seoDescription: "Encrypt PDF files with a password using strong encryption, right on your device. Free, no sign-up, and your document is never uploaded.",
     keywords: ["encrypt pdf", "pdf encryption"],
   },
   {
@@ -1131,7 +1131,7 @@ export const tools: ToolDefinition[] = [
     icon: "ShieldOff",
     status: "implemented",
     seoTitle: "Decrypt PDF Files Online",
-    seoDescription: "Decrypt encrypted PDF files directly in your browser.",
+    seoDescription: "Decrypt encrypted PDF files and save an unlocked copy. Free, no sign-up, and both the file and its password stay in your browser.",
     keywords: ["decrypt pdf", "pdf decryption"],
   },
   {
@@ -1143,7 +1143,7 @@ export const tools: ToolDefinition[] = [
     icon: "KeyRound",
     status: "implemented",
     seoTitle: "Set PDF Document Permissions",
-    seoDescription: "Configure allowed actions for PDF files (printing, copying, editing).",
+    seoDescription: "Choose which actions are allowed on a PDF, including printing, copying, and editing. Free, no sign-up, and applied privately in your browser.",
     keywords: ["pdf permissions", "restrict printing pdf"],
   },
   {
@@ -1155,7 +1155,7 @@ export const tools: ToolDefinition[] = [
     icon: "Printer",
     status: "implemented",
     seoTitle: "Control PDF Printing Permissions",
-    seoDescription: "Restrict or enable document printing rights.",
+    seoDescription: "Restrict or allow printing of a PDF document by setting its print permissions. Free, no sign-up, and applied privately in your browser.",
     keywords: ["disable printing pdf", "printing permissions"],
   },
   {
@@ -1167,7 +1167,7 @@ export const tools: ToolDefinition[] = [
     icon: "Copy",
     status: "implemented",
     seoTitle: "Restrict Text Copying in PDF",
-    seoDescription: "Prevent unauthorized copying of text and content from your PDF.",
+    seoDescription: "Stop text and content from being copied out of your PDF by setting copy permissions. Free, no sign-up, and applied privately in your browser.",
     keywords: ["prevent copy pdf", "copy permissions"],
   },
   {
@@ -1179,7 +1179,7 @@ export const tools: ToolDefinition[] = [
     icon: "FilePenLine",
     status: "implemented",
     seoTitle: "Set PDF Editing Restrictions",
-    seoDescription: "Prevent unauthorized edits or page modifications in your PDF.",
+    seoDescription: "Stop unwanted edits and page changes by setting editing permissions on your PDF. Free, no sign-up, and applied privately in your browser.",
     keywords: ["prevent editing pdf", "edit permissions"],
   },
   {
@@ -1191,7 +1191,7 @@ export const tools: ToolDefinition[] = [
     icon: "MessageCircle",
     status: "implemented",
     seoTitle: "Control PDF Commenting Rights",
-    seoDescription: "Restrict or grant commenting and annotation privileges on your PDF.",
+    seoDescription: "Restrict or allow commenting and annotation on your PDF by setting its permissions. Free, no sign-up, and applied privately in your browser.",
     keywords: ["comment permissions pdf"],
   },
 
@@ -1231,7 +1231,7 @@ export const tools: ToolDefinition[] = [
     icon: "ClipboardList",
     status: "implemented",
     seoTitle: "Fill PDF Forms Online",
-    seoDescription: "Fill text fields, checkboxes, and radio buttons in PDF forms.",
+    seoDescription: "Fill in text fields, checkboxes, and radio buttons in PDF forms, then download the completed file. Free, private, and nothing is uploaded.",
     keywords: ["fill pdf form", "pdf form filler"],
   },
   {
@@ -1243,7 +1243,7 @@ export const tools: ToolDefinition[] = [
     icon: "TextCursor",
     status: "implemented",
     seoTitle: "Add Interactive Text Field to PDF",
-    seoDescription: "Insert fillable text input fields onto PDF forms.",
+    seoDescription: "Add fillable text input fields to a PDF to turn it into an interactive form. Free, no sign-up, and the file is processed in your browser.",
     keywords: ["add text field pdf", "create form field"],
   },
   {
@@ -1288,7 +1288,7 @@ export const tools: ToolDefinition[] = [
     icon: "CircleDot",
     status: "implemented",
     seoTitle: "Add Radio Buttons to PDF",
-    seoDescription: "Create mutually exclusive radio button field groups.",
+    seoDescription: "Add radio button groups to a PDF form so only one option can be selected at a time. Free, no sign-up, and processed in your browser.",
     keywords: ["add radio button pdf"],
   },
   {
@@ -1300,7 +1300,7 @@ export const tools: ToolDefinition[] = [
     icon: "ChevronDown",
     status: "implemented",
     seoTitle: "Add Dropdown Select Menu to PDF",
-    seoDescription: "Insert interactive dropdown select menus into PDF forms.",
+    seoDescription: "Add interactive dropdown select menus to PDF forms with your own list of options. Free, no sign-up, and processed privately in your browser.",
     keywords: ["add dropdown pdf", "select menu pdf"],
   },
   {
@@ -1324,7 +1324,7 @@ export const tools: ToolDefinition[] = [
     icon: "Calendar",
     status: "implemented",
     seoTitle: "Add Date Input Field to PDF",
-    seoDescription: "Insert formatted date input fields onto form pages.",
+    seoDescription: "Add formatted date input fields to PDF form pages so dates are entered consistently. Free, no sign-up, and processed in your browser.",
     keywords: ["add date field pdf"],
   },
   {
@@ -1336,7 +1336,7 @@ export const tools: ToolDefinition[] = [
     icon: "CaseSensitive",
     status: "implemented",
     seoTitle: "Add Initials to PDF Document",
-    seoDescription: "Insert initial stamps and placeholders for contract sign-offs.",
+    seoDescription: "Add initials stamps and placeholders to PDF pages for contract sign-offs. Free, no sign-up, and your document never leaves your browser.",
     keywords: ["add initials pdf"],
   },
   {
@@ -1348,7 +1348,7 @@ export const tools: ToolDefinition[] = [
     icon: "PenTool",
     status: "implemented",
     seoTitle: "Draw Signature on PDF Online",
-    seoDescription: "Draw your signature on an interactive pad and place it onto document pages.",
+    seoDescription: "Draw your signature on an on-screen pad and place it on any PDF page. Free, no sign-up, and your signature and file stay in your browser.",
     keywords: ["draw signature pdf", "e-sign pdf"],
   },
   {
@@ -1360,7 +1360,7 @@ export const tools: ToolDefinition[] = [
     icon: "Upload",
     status: "implemented",
     seoTitle: "Upload & Place Signature Image on PDF",
-    seoDescription: "Upload a signature photo or PNG image and place it onto your PDF.",
+    seoDescription: "Upload a photo or PNG of your signature and place it on your PDF. Free, no sign-up, and your signature and document are never uploaded to a server.",
     keywords: ["upload signature pdf", "sign pdf image"],
   },
   {
@@ -1408,7 +1408,7 @@ export const tools: ToolDefinition[] = [
     icon: "ListOrdered",
     status: "implemented",
     seoTitle: "Add Page Numbers to PDF Online",
-    seoDescription: "Number PDF pages with custom position, font, and format options.",
+    seoDescription: "Add page numbers to a PDF with custom position, font, and number format. Free, no sign-up, and the file is processed privately in your browser.",
     keywords: ["page numbers pdf", "add page numbers to pdf"],
   },
   {
@@ -1420,7 +1420,7 @@ export const tools: ToolDefinition[] = [
     icon: "AlignVerticalSpaceAround",
     status: "implemented",
     seoTitle: "Add Header & Footer to PDF",
-    seoDescription: "Add custom text, dates, and page counts to headers and footers.",
+    seoDescription: "Add custom text, dates, and page counts to the headers and footers of a PDF. Free, no sign-up, and processed privately in your browser.",
     keywords: ["header footer pdf", "add header to pdf"],
   },
   {
@@ -1432,7 +1432,7 @@ export const tools: ToolDefinition[] = [
     icon: "Droplets",
     status: "implemented",
     seoTitle: "Add Watermark to PDF Online",
-    seoDescription: "Stamp custom text or logo image watermarks on PDF pages.",
+    seoDescription: "Stamp a custom text or logo image watermark on PDF pages to brand or protect documents. Free, no sign-up, and processed in your browser.",
     keywords: ["watermark pdf", "add watermark to pdf"],
     seoH1: "Watermark PDF Online Free",
     seoH2s: ["How to Watermark PDF", "Related Tools"],
@@ -1461,7 +1461,7 @@ export const tools: ToolDefinition[] = [
     icon: "Droplets",
     status: "implemented",
     seoTitle: "Remove Watermark from PDF",
-    seoDescription: "Remove watermark overlay elements from PDF document pages.",
+    seoDescription: "Remove watermark overlay elements from PDF pages and download a clean copy. Free, no sign-up, and the file is processed in your browser.",
     keywords: ["remove watermark pdf"],
   },
   {
@@ -1473,7 +1473,7 @@ export const tools: ToolDefinition[] = [
     icon: "Bookmark",
     status: "implemented",
     seoTitle: "Add Bookmarks to PDF Document",
-    seoDescription: "Create outline bookmarks and chapter links in PDF files.",
+    seoDescription: "Add outline bookmarks and chapter links to a PDF so readers can navigate it easily. Free, no sign-up, and processed privately in your browser.",
     keywords: ["pdf bookmarks", "add bookmarks pdf"],
   },
   {
@@ -1485,7 +1485,7 @@ export const tools: ToolDefinition[] = [
     icon: "BookmarkPlus",
     status: "implemented",
     seoTitle: "Edit PDF Bookmarks & Outline",
-    seoDescription: "Modify, rename, or delete existing PDF outline bookmarks.",
+    seoDescription: "Rename, modify, or delete the existing outline bookmarks in a PDF. Free, no sign-up, and the document is edited privately in your browser.",
     keywords: ["edit bookmarks pdf"],
   },
   {
@@ -1497,7 +1497,7 @@ export const tools: ToolDefinition[] = [
     icon: "Table",
     status: "implemented",
     seoTitle: "Generate PDF Table of Contents",
-    seoDescription: "Generate a hyperlinked Table of Contents page from headings.",
+    seoDescription: "Generate a hyperlinked table of contents page for a PDF from its headings. Free, no sign-up, and the file is processed in your browser.",
     keywords: ["table of contents pdf", "pdf index"],
   },
   {
@@ -1509,7 +1509,7 @@ export const tools: ToolDefinition[] = [
     icon: "Link",
     status: "implemented",
     seoTitle: "Add Clickable Hyperlinks to PDF",
-    seoDescription: "Add clickable URL links and internal page jump links onto PDF pages.",
+    seoDescription: "Add clickable web links and internal page jump links to PDF pages. Free, no sign-up, and the document is edited privately in your browser.",
     keywords: ["add link to pdf", "hyperlink pdf"],
   },
   {
@@ -1521,7 +1521,7 @@ export const tools: ToolDefinition[] = [
     icon: "ExternalLink",
     status: "implemented",
     seoTitle: "Extract URLs & Links from PDF",
-    seoDescription: "Extract all embedded web hyperlinks from inside a PDF document.",
+    seoDescription: "Extract every web hyperlink embedded in a PDF document into a list you can copy. Free, no sign-up, and the file never leaves your browser.",
     keywords: ["extract links pdf", "find urls pdf"],
   },
 
@@ -1537,7 +1537,7 @@ export const tools: ToolDefinition[] = [
     icon: "QrCode",
     status: "implemented",
     seoTitle: "Add QR Code to PDF Page",
-    seoDescription: "Generate scannable QR codes pointing to URLs or text and stamp onto PDF.",
+    seoDescription: "Generate a scannable QR code for a URL or text and stamp it onto your PDF pages. Free, no sign-up, and processed privately in your browser.",
     keywords: ["add qr code to pdf", "stamp qr code"],
   },
   {
@@ -1549,7 +1549,7 @@ export const tools: ToolDefinition[] = [
     icon: "BookOpen",
     status: "implemented",
     seoTitle: "Free Browser PDF Reader",
-    seoDescription: "Read PDF files directly in your browser with zoom and thumbnail navigation.",
+    seoDescription: "Read PDF files in your browser with zoom and thumbnail navigation, no software to install. Free, no sign-up, and your file is never uploaded.",
     keywords: ["pdf reader online", "view pdf browser"],
   },
   {
@@ -1574,7 +1574,7 @@ export const tools: ToolDefinition[] = [
     icon: "Search",
     status: "implemented",
     seoTitle: "Search Text Inside PDF Online",
-    seoDescription: "Search text keywords across PDF pages with instant match highlighting.",
+    seoDescription: "Search for keywords across all pages of a PDF with instant match highlighting. Free, no sign-up, and the document stays in your browser.",
     keywords: ["search text in pdf", "pdf search tool"],
   },
   {
@@ -1586,7 +1586,7 @@ export const tools: ToolDefinition[] = [
     icon: "MonitorPlay",
     status: "implemented",
     seoTitle: "PDF Slide Presentation Mode",
-    seoDescription: "Present PDF document pages as slides with keyboard presentation controls.",
+    seoDescription: "Present PDF pages as full-screen slides with keyboard controls, no slide software needed. Free, and the file stays in your browser.",
     keywords: ["pdf presentation", "present pdf slides"],
   },
   {

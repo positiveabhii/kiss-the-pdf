@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { baseOpenGraph } from "@/lib/og";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Layers, ArrowRight, ShieldCheck, CheckCircle2, AlertCircle, ArrowLeft, ExternalLink } from "lucide-react";
@@ -24,19 +25,20 @@ export async function generateMetadata({ params }: ToolOrCategoryDocPageProps): 
   // Check if category first
   const cat = findCategoryBySlug(slug);
   if (cat) {
-    return {
-      title: `${cat.name} PDF Tools Documentation`,
-      description: cat.description,
-    };
+    const title = `${cat.name} PDF Tools Reference`;
+    const description = `${cat.description} Browse each tool's docs and common workflows.`;
+    return { title, description, openGraph: { ...baseOpenGraph, title, description } };
   }
 
   // Check if tool
   const tool = tools.find((t) => t.id === slug);
   if (tool) {
-    return {
-      title: `${tool.name} Documentation`,
-      description: tool.description,
-    };
+    // Keep the description inside the ~120-160 character range search engines display.
+    const full = `${tool.description} ${tool.name} docs: how to use it, supported formats, privacy, and limitations.`;
+    const compact = `${tool.description} ${tool.name} docs: usage steps, formats, and privacy.`;
+    const title = `${tool.name} Reference`;
+    const description = full.length <= 158 ? full : compact;
+    return { title, description, openGraph: { ...baseOpenGraph, title, description } };
   }
 
   return { title: "Documentation Page Not Found" };

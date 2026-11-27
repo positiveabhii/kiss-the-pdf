@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { siteConfig } from "@/config/site";
-import { BLOG_CATEGORIES, allTags, posts, tagLabel } from "@/content/blog";
+import { BLOG_CATEGORIES, MIN_TAG_POSTS, allTags, posts, tagLabel } from "@/content/blog";
 import { PostCard } from "@/components/blog/post-card";
 
 const title = "PDF Blog: Open Source Tools, Comparisons & Guides";
@@ -85,7 +85,7 @@ export default function BlogIndex() {
         <section className="space-y-4 border-t border-[var(--kp-border)] pt-10">
           <h2 className="font-serif text-2xl text-slate-900">Browse by topic</h2>
           <div className="flex flex-wrap gap-2">
-            {tags.map(({ tag, count }) => (
+            {tags.filter(({ count }) => count >= MIN_TAG_POSTS).map(({ tag, count }) => (
               <Link
                 key={tag}
                 href={`/blog/tag/${tag}`}

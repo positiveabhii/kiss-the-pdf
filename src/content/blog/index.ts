@@ -42,6 +42,17 @@ export function allTags(): { tag: string; count: number }[] {
   return [...counts].map(([tag, count]) => ({ tag, count })).sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag));
 }
 
+/**
+ * A tag page is indexed (and linked) only once it lists enough posts to be a
+ * useful hub. Thinner tag pages stay reachable but are noindex and unlinked,
+ * so crawlers don't spend time on near-duplicate list pages.
+ */
+export const MIN_TAG_POSTS = 3;
+
+export function isIndexableTag(tag: string): boolean {
+  return postsWithTag(tag).length >= MIN_TAG_POSTS;
+}
+
 export function postsWithTag(tag: string): BlogPost[] {
   return posts.filter((p) => p.tags.includes(tag));
 }

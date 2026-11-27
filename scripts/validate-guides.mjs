@@ -46,7 +46,8 @@ for (const g of guides) {
   if (!toolIds.includes(g.toolId)) err(g, `unknown toolId ${g.toolId}`);
   if (toolsCovered.has(g.toolId)) err(g, `toolId ${g.toolId} already covered by ${toolsCovered.get(g.toolId)}`);
   toolsCovered.set(g.toolId, g.slug);
-  if (g.seoTitle.length > 60) err(g, `seoTitle ${g.seoTitle.length} chars (>60)`);
+  // The layout appends " | KissThePDF" (13 chars); keep the full <title> within 70, where SEO tools flag it.
+  if (g.seoTitle.length > 57) err(g, `seoTitle ${g.seoTitle.length} chars (>57; full title would exceed 70)`);
   if (/kissthepdf/i.test(g.seoTitle)) err(g, "seoTitle must not include the site name (template adds it)");
   if (g.description.length < 110 || g.description.length > 160) err(g, `description ${g.description.length} chars (want 110-160)`);
   const sw = words(g.summary);

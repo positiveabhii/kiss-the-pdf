@@ -62,7 +62,8 @@ for (const p of posts) {
   seen.add(p.slug);
   if (guideSlugs.has(p.slug)) err(p, "slug collides with a guide");
   if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(p.slug)) err(p, "slug not kebab-case");
-  if (p.seoTitle.length > 60) err(p, `seoTitle ${p.seoTitle.length} chars (>60)`);
+  // The layout appends " | KissThePDF" (13 chars); keep the full <title> within 70, where SEO tools flag it.
+  if (p.seoTitle.length > 57) err(p, `seoTitle ${p.seoTitle.length} chars (>57; full title would exceed 70)`);
   if (/kissthepdf/i.test(p.seoTitle) && !/vs/i.test(p.seoTitle)) err(p, "seoTitle must not include the site name (template adds it)");
   if (p.description.length < 110 || p.description.length > 160) err(p, `description ${p.description.length} chars (want 110-160)`);
   const sw = words(p.summary);

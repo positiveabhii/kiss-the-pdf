@@ -5,7 +5,7 @@ import { ArrowRight, Clock } from "lucide-react";
 
 import { siteConfig } from "@/config/site";
 import { tools } from "@/config/tools";
-import { getPost, posts, readingMinutes, tagLabel } from "@/content/blog";
+import { getPost, isIndexableTag, posts, readingMinutes, tagLabel } from "@/content/blog";
 import { BlogBlock } from "@/components/blog/blog-block";
 import { PostCard, formatDate } from "@/components/blog/post-card";
 import { GuideText, guidePlainText } from "@/components/guides/guide-text";
@@ -189,15 +189,22 @@ export default async function BlogPostPage({ params }: Props) {
 
       <footer className="space-y-4 border-t border-[var(--kp-border)] pt-8">
         <div className="flex flex-wrap items-center gap-2">
-          {post.tags.map((t) => (
-            <Link
-              key={t}
-              href={`/blog/tag/${t}`}
-              className="rounded-full border border-[var(--kp-border)] bg-white px-3 py-1 text-sm text-slate-700 transition-colors hover:border-[var(--kp-accent)] hover:text-[var(--kp-accent-hover)]"
-            >
-              #{tagLabel(t).replace(/\s+/g, "")}
-            </Link>
-          ))}
+          {post.tags.map((t) =>
+            // Only link tag pages that are indexable; thin ones render as plain labels.
+            isIndexableTag(t) ? (
+              <Link
+                key={t}
+                href={`/blog/tag/${t}`}
+                className="rounded-full border border-[var(--kp-border)] bg-white px-3 py-1 text-sm text-slate-700 transition-colors hover:border-[var(--kp-accent)] hover:text-[var(--kp-accent-hover)]"
+              >
+                #{tagLabel(t).replace(/\s+/g, "")}
+              </Link>
+            ) : (
+              <span key={t} className="rounded-full border border-[var(--kp-border)] bg-white px-3 py-1 text-sm text-slate-500">
+                #{tagLabel(t).replace(/\s+/g, "")}
+              </span>
+            )
+          )}
         </div>
         <p className="flex flex-wrap items-center gap-3 text-sm text-slate-500">
           Share:

@@ -5,7 +5,7 @@ export const siteConfig = {
   tagline: "Free, Open-Source, Privacy-First PDF Toolkit",
 
   description:
-    "Free, open-source PDF tools that run locally in your browser. Merge, split, compress, edit, convert, organize, rotate, protect, and manage PDF files without uploads or signup.",
+    "Free, open-source PDF tools that run in your browser. Merge, split, compress, edit, convert and protect PDFs with no uploads and no sign-up.",
 
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.kissthepdf.space",
 

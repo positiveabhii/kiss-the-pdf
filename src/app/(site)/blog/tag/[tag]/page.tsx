@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { siteConfig } from "@/config/site";
-import { allTags, postsWithTag, tagLabel } from "@/content/blog";
+import { allTags, isIndexableTag, postsWithTag, tagLabel } from "@/content/blog";
 import { PostCard } from "@/components/blog/post-card";
 
 interface Props {
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: `${items.length} articles about ${label.toLowerCase()} and PDFs: comparisons, explainers and step-by-step tutorials from KissThePDF.`,
     alternates: { canonical: url },
     // Thin tag pages compete with the posts they list; let them pass link equity without being indexed.
-    robots: items.length < 3 ? { index: false, follow: true } : undefined,
+    robots: isIndexableTag(tag) ? undefined : { index: false, follow: true },
   };
 }
 
