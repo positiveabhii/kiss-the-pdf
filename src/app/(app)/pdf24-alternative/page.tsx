@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { Check, X } from "lucide-react";
 import Link from "next/link";
+import { baseOpenGraph } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Free PDF24 Alternative (Cross-Platform & Private)",
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
     canonical: `${siteConfig.url}/pdf24-alternative`,
   },
   openGraph: {
-    title: "Free PDF24 Alternative (Cross-Platform & Private) | ${siteConfig.name}",
+    ...baseOpenGraph,
+    title: `Free PDF24 Alternative (Cross-Platform & Private) | ${siteConfig.name}`,
     description: "Looking for a modern, browser-native PDF24 alternative? KissThePDF runs 100% client-side with no server uploads, across Mac, Windows, and Linux.",
     url: `${siteConfig.url}/pdf24-alternative`,
     siteName: siteConfig.name,
@@ -18,7 +20,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free PDF24 Alternative (Cross-Platform & Private) | ${siteConfig.name}",
+    title: `Free PDF24 Alternative (Cross-Platform & Private) | ${siteConfig.name}`,
     description: "Looking for a modern, browser-native PDF24 alternative? KissThePDF runs 100% client-side with no server uploads, across Mac, Windows, and Linux.",
   },
 };

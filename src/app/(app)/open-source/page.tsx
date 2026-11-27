@@ -3,6 +3,7 @@ import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { FaGithub } from "react-icons/fa";
 import { ShieldCheck, Code2, Lock, Cpu, Star, Bug, GitPullRequest, ArrowRight, Heart } from "lucide-react";
+import { baseOpenGraph } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Open Source Architecture & GitHub Repository",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     canonical: `${siteConfig.url}/open-source`,
   },
   openGraph: {
+    ...baseOpenGraph,
     title: `Open Source Architecture & GitHub Repository | ${siteConfig.name}`,
     description:
       "KissThePDF is a 100% free, open-source, browser-local PDF toolkit. Discover our privacy architecture, MIT license, and GitHub repository.",

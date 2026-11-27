@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { Check, X } from "lucide-react";
 import Link from "next/link";
+import { baseOpenGraph } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Free iLovePDF Alternative (100% Client-Side)",
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
     canonical: `${siteConfig.url}/ilovepdf-alternative`,
   },
   openGraph: {
-    title: "Free iLovePDF Alternative (100% Client-Side) | ${siteConfig.name}",
+    ...baseOpenGraph,
+    title: `Free iLovePDF Alternative (100% Client-Side) | ${siteConfig.name}`,
     description: "Looking for a free alternative to iLovePDF? KissThePDF processes documents locally in your browser with no upload limits, paywalls, or privacy risks.",
     url: `${siteConfig.url}/ilovepdf-alternative`,
     siteName: siteConfig.name,
@@ -18,7 +20,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free iLovePDF Alternative (100% Client-Side) | ${siteConfig.name}",
+    title: `Free iLovePDF Alternative (100% Client-Side) | ${siteConfig.name}`,
     description: "Looking for a free alternative to iLovePDF? KissThePDF processes documents locally in your browser with no upload limits, paywalls, or privacy risks.",
   },
 };

@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { Check, X } from "lucide-react";
 import Link from "next/link";
+import { baseOpenGraph } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Free Sejda PDF Alternative (Local & Private)",
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
     canonical: `${siteConfig.url}/sejda-alternative`,
   },
   openGraph: {
-    title: "Free Sejda PDF Alternative (Local & Private) | ${siteConfig.name}",
+    ...baseOpenGraph,
+    title: `Free Sejda PDF Alternative (Local & Private) | ${siteConfig.name}`,
     description: "Looking for a free Sejda PDF alternative? KissThePDF processes PDFs locally in your browser with no 3 tasks/hour limit and zero file uploads.",
     url: `${siteConfig.url}/sejda-alternative`,
     siteName: siteConfig.name,
@@ -18,7 +20,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free Sejda PDF Alternative (Local & Private) | ${siteConfig.name}",
+    title: `Free Sejda PDF Alternative (Local & Private) | ${siteConfig.name}`,
     description: "Looking for a free Sejda PDF alternative? KissThePDF processes PDFs locally in your browser with no 3 tasks/hour limit and zero file uploads.",
   },
 };

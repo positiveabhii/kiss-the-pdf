@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { Check, X } from "lucide-react";
 import Link from "next/link";
+import { baseOpenGraph } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Zero-Install Stirling PDF Alternative (Web-Native)",
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
     canonical: `${siteConfig.url}/stirling-pdf-alternative`,
   },
   openGraph: {
-    title: "Zero-Install Stirling PDF Alternative (Web-Native) | ${siteConfig.name}",
+    ...baseOpenGraph,
+    title: `Zero-Install Stirling PDF Alternative (Web-Native) | ${siteConfig.name}`,
     description: "Want Stirling PDF privacy without Docker setup? KissThePDF runs 100+ client-side tools instantly in your browser with zero server installation required.",
     url: `${siteConfig.url}/stirling-pdf-alternative`,
     siteName: siteConfig.name,
@@ -18,7 +20,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Zero-Install Stirling PDF Alternative (Web-Native) | ${siteConfig.name}",
+    title: `Zero-Install Stirling PDF Alternative (Web-Native) | ${siteConfig.name}`,
     description: "Want Stirling PDF privacy without Docker setup? KissThePDF runs 100+ client-side tools instantly in your browser with zero server installation required.",
   },
 };

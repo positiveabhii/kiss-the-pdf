@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
+import { baseOpenGraph } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Free PDF Tools Directory (All 100+ Tools)",
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
     canonical: `${siteConfig.url}/tools`,
   },
   openGraph: {
+    ...baseOpenGraph,
     title: `Free PDF Tools Directory (All 100+ Tools) | ${siteConfig.name}`,
     description:
       "Explore all 100+ free browser-local PDF tools. Merge, split, compress, edit, convert, organize, and secure PDF documents 100% client-side with KissThePDF.",

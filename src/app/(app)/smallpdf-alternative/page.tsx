@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { Check, X } from "lucide-react";
 import Link from "next/link";
+import { baseOpenGraph } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Free Smallpdf Alternative (No Daily Limits)",
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
     canonical: `${siteConfig.url}/smallpdf-alternative`,
   },
   openGraph: {
-    title: "Free Smallpdf Alternative (No Daily Limits) | ${siteConfig.name}",
+    ...baseOpenGraph,
+    title: `Free Smallpdf Alternative (No Daily Limits) | ${siteConfig.name}`,
     description: "Tired of Smallpdf daily limits and paywalls? KissThePDF is a free, open-source alternative processing PDFs locally in your browser without uploads.",
     url: `${siteConfig.url}/smallpdf-alternative`,
     siteName: siteConfig.name,
@@ -18,7 +20,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free Smallpdf Alternative (No Daily Limits) | ${siteConfig.name}",
+    title: `Free Smallpdf Alternative (No Daily Limits) | ${siteConfig.name}`,
     description: "Tired of Smallpdf daily limits and paywalls? KissThePDF is a free, open-source alternative processing PDFs locally in your browser without uploads.",
   },
 };

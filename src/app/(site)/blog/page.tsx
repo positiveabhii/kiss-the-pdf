@@ -4,6 +4,7 @@ import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { BLOG_CATEGORIES, MIN_TAG_POSTS, allTags, posts, tagLabel } from "@/content/blog";
 import { PostCard } from "@/components/blog/post-card";
+import { baseOpenGraph } from "@/lib/og";
 
 const title = "PDF Blog: Open Source Tools, Comparisons & Guides";
 const description =
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: `${siteConfig.url}/blog` },
-  openGraph: { title, description, url: `${siteConfig.url}/blog`, siteName: siteConfig.name, type: "website" },
+  openGraph: { ...baseOpenGraph, title, description, url: `${siteConfig.url}/blog`, siteName: siteConfig.name, type: "website" },
 };
 
 export default function BlogIndex() {

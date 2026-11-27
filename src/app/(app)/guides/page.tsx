@@ -4,6 +4,7 @@ import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { tools } from "@/config/tools";
 import { guides } from "@/content/guides";
+import { baseOpenGraph } from "@/lib/og";
 
 const title = "PDF How-To Guides: Step-by-Step Tutorials";
 const description = `${guides.length} free step-by-step guides to merge, split, compress, convert, edit, sign and protect PDF files, all done in your browser with no upload.`;
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: `${siteConfig.url}/guides` },
-  openGraph: { title, description, url: `${siteConfig.url}/guides`, siteName: siteConfig.name, type: "website" },
+  openGraph: { ...baseOpenGraph, title, description, url: `${siteConfig.url}/guides`, siteName: siteConfig.name, type: "website" },
 };
 
 export default function GuidesIndex() {

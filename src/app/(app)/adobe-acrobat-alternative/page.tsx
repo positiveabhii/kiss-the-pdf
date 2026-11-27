@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { Check, X } from "lucide-react";
 import Link from "next/link";
+import { baseOpenGraph } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Free Adobe Acrobat Alternative (Browser-Local)",
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
     canonical: `${siteConfig.url}/adobe-acrobat-alternative`,
   },
   openGraph: {
-    title: "Free Adobe Acrobat Alternative (Browser-Local) | ${siteConfig.name}",
+    ...baseOpenGraph,
+    title: `Free Adobe Acrobat Alternative (Browser-Local) | ${siteConfig.name}`,
     description: "Looking for a free Adobe Acrobat alternative? KissThePDF gives you 100+ browser-local PDF editing and conversion tools with no sign-in or cloud upload.",
     url: `${siteConfig.url}/adobe-acrobat-alternative`,
     siteName: siteConfig.name,
@@ -18,7 +20,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free Adobe Acrobat Alternative (Browser-Local) | ${siteConfig.name}",
+    title: `Free Adobe Acrobat Alternative (Browser-Local) | ${siteConfig.name}`,
     description: "Looking for a free Adobe Acrobat alternative? KissThePDF gives you 100+ browser-local PDF editing and conversion tools with no sign-in or cloud upload.",
   },
 };
